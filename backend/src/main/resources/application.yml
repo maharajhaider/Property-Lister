@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: dbhost.students.cs.ubc.ca
-    username: #username
-    password: #password
+    url: jdbc:oracle:thin:@//dbhost.students.cs.ubc.ca:1522/stu
+    username: ora_jean9739
+    password: a81824658
     driver-class-name: oracle.jdbc.OracleDriver
 
 
