@@ -2,7 +2,7 @@ spring:
   application:
     name: real-estate-project
   datasource:
-    url: jdbc:oracle:thin:@//dbhost.students.cs.ubc.ca:1522/stu
+    url: jdbc:oracle:thin:@localhost:3336:stu
     username: #username
     password: #password
     driver-class-name: oracle.jdbc.OracleDriver
