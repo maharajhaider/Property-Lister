@@ -9,7 +9,14 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.OracleDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+  flyway:
+    enabled: true
+    url: jdbc:oracle:thin:@localhost:3336:stu
+    user: #username
+    password: #password
+    schemas: ORA_JEAN9739
+    locations: classpath:db/migration/oracle
 
 server:
   port: 8080
