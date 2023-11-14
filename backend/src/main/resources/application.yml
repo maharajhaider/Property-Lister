@@ -15,7 +15,7 @@ spring:
     url: jdbc:oracle:thin:@localhost:3336:stu
     user: #username
     password: #password
-    schemas: ORA_JEAN9739
+    schemas: #schema
     locations: classpath:db/migration/oracle
 
 server:
