@@ -15,9 +15,9 @@ public class ListingView extends JFrame {
         setLocationRelativeTo(null);
 
         // Create components
-        nameLabel = createStyledLabel("Name: " + name);
+        nameLabel = createStyledLabel("ID: " + name);
         priceLabel = createStyledLabel("Price: " + price);
-        locationLabel = createStyledLabel("Location: " + location);
+        locationLabel = createStyledLabel("Type(sale/rent): " + location);
         backButton = createStyledButton("Back");
 
         // Set layout manager
