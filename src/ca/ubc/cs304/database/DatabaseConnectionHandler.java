@@ -10,6 +10,8 @@ import java.util.Set;
 import ca.ubc.cs304.model.Listing;
 import ca.ubc.cs304.util.PrintablePreparedStatement;
 
+import static ca.ubc.cs304.sql.scripts.SQLScripts.*;
+
 /**
  * This class handles all database related transactions
  */
@@ -22,192 +24,21 @@ public class DatabaseConnectionHandler {
     private static final String WARNING_TAG = "[WARNING]";
 
     private static final Map<String, String> CREATE_TABLE_DDL = Map.ofEntries(
-            Map.entry(
-                    "person",
-                    """
-                            CREATE TABLE Person
-                            (
-                                phone CHAR(20) PRIMARY KEY,
-                                name  CHAR(255),
-                                email CHAR(255)
-                            );"""),
-            Map.entry(
-                    "homeowner",
-                    """
-                            CREATE TABLE Homeowner
-                            (
-                                phone CHAR(20) PRIMARY KEY,
-                                FOREIGN KEY (phone) REFERENCES Person (phone)
-                                    ON DELETE CASCADE
-                            );
-                            """),
-            Map.entry(
-                    "realestateagency",
-                    """
-                            CREATE TABLE RealEstateAgency
-                            (
-                                agencyID INTEGER PRIMARY KEY,
-                                name     CHAR(255),
-                                rating   DOUBLE PRECISION
-                            );"""),
-            Map.entry(
-                    "realestateagent",
-                    """
-                            CREATE TABLE RealEstateAgent
-                            (
-                                phone          CHAR(20) PRIMARY KEY,
-                                agentLicenseId INTEGER UNIQUE,
-                                yearsOfExp     INTEGER,
-                                agencyID       INTEGER NOT NULL,
-                                FOREIGN KEY (phone) REFERENCES Person (phone)
-                                    ON DELETE CASCADE,
-                                FOREIGN KEY (agencyID) REFERENCES RealEstateAgency (agencyID)
-                                    ON DELETE CASCADE
-                            );"""),
-            Map.entry(
-                    "developer",
-                    """
-                            CREATE TABLE Developer
-                            (
-                                developerLicenseID INTEGER PRIMARY KEY,
-                                name               CHAR(255)
-                            );"""),
-            Map.entry(
-                    "contractorcompany",
-                    """
-                            CREATE TABLE ContractorCompany
-                            (
-                                contractorID   INTEGER PRIMARY KEY,
-                                name           CHAR(255),
-                                chargeSchedule CHAR(255)
-                            );"""),
-            Map.entry(
-                    "strata",
-                    """
-                            CREATE TABLE Strata
-                            (
-                                strataID INTEGER PRIMARY KEY,
-                                name     VARCHAR(255)
-                            );"""),
-            Map.entry(
-                    "city",
-                    """
-                            CREATE TABLE City
-                            (
-                                province CHAR(255),
-                                name     CHAR(255),
-                                taxRate  DOUBLE PRECISION,
-                                PRIMARY KEY (province, name)
-                            );"""),
-            Map.entry(
-                    "property",
-                    """
-                            CREATE TABLE Property
-                            (
-                                streetAddress      CHAR(255),
-                                province           CHAR(255),
-                                cityName           CHAR(255),
-                                developerLicenseID INTEGER NOT NULL,
-                                strataID           INTEGER,
-                                phone              CHAR(20),
-                                bedrooms           INTEGER,
-                                bathrooms          INTEGER,
-                                sizeInSqft         INTEGER,
-                                hasAC              Number(1,0),
-                                PRIMARY KEY (streetAddress, province, cityName),
-                                FOREIGN KEY (province, cityName) REFERENCES City (province, name)
-                                    ON DELETE CASCADE,
-                                FOREIGN KEY (strataID) REFERENCES Strata (strataID),
-                                FOREIGN KEY (phone) REFERENCES Homeowner (phone),
-                                FOREIGN KEY (developerLicenseID) REFERENCES Developer (developerLicenseID)
-                                    ON DELETE CASCADE
-                            );"""),
-            Map.entry(
-                    "listing",
-                    """
-                            CREATE TABLE Listing
-                            (
-                                listingID     INTEGER PRIMARY KEY,
-                                streetAddress CHAR(255),
-                                province      CHAR(255),
-                                cityName      CHAR(255),
-                                type          CHAR(255),
-                                price         INTEGER,
-                                active        NUMBER(1,0),
-                                FOREIGN KEY (streetAddress, cityName, province) REFERENCES Property (streetAddress, cityName, province)
-                                    ON DELETE CASCADE,
-                                UNIQUE (streetAddress, cityName, province)
-                            );"""),
-            Map.entry(
-                    "hiresrea",
-                    """
-                            CREATE TABLE HiresREA
-                            (
-                                homeownerPhone       CHAR(20),
-                                realEstateAgentPhone CHAR(20),
-                                PRIMARY KEY (homeownerPhone, realEstateAgentPhone),
-                                FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone)
-                                    ON DELETE CASCADE,
-                                FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (phone)
-                                    ON DELETE CASCADE
-                            );"""),
-            Map.entry(
-                    "hirescontractor",
-                    """
-                            CREATE TABLE HiresContractor
-                            (
-                                homeownerPhone CHAR(20),
-                                contractorID   INTEGER,
-                                PRIMARY KEY (homeownerPhone, contractorID),
-                                FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone)
-                                    ON DELETE CASCADE,
-                                FOREIGN KEY (contractorID) REFERENCES ContractorCompany (contractorID)
-                                    ON DELETE CASCADE
-                            );"""),
-            Map.entry(
-                    "pays",
-                    """
-                            CREATE TABLE Pays
-                            (
-                                homeownerPhone CHAR(20),
-                                strataID       INTEGER,
-                                fee            INTEGER,
-                                PRIMARY KEY (homeownerPhone, strataID),
-                                FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone)
-                                    ON DELETE CASCADE,
-                                FOREIGN KEY (strataID) REFERENCES Strata (strataID)
-                                    ON DELETE CASCADE
-                            );"""),
-            Map.entry(
-                    "maintains",
-                    """
-                            CREATE TABLE Maintains
-                            (
-                                contractorID         INTEGER,
-                                streetAddress        CHAR(255),
-                                province             CHAR(255),
-                                cityName             CHAR(255),
-                                areaOfResponsibility CHAR(255),
-                                PRIMARY KEY (contractorID, streetAddress, province, cityName),
-                                FOREIGN KEY (streetAddress, cityName, province) REFERENCES Property (streetAddress, cityName, province)
-                                    ON DELETE CASCADE,
-                                FOREIGN KEY (contractorID) REFERENCES ContractorCompany (contractorID)
-                                    ON DELETE CASCADE,
-                                UNIQUE (streetAddress, province, cityName, areaOfResponsibility)
-                            );"""),
-            Map.entry(
-                    "manageslisting",
-                    """
-                            CREATE TABLE ManagesListing
-                            (
-                                realEstateAgentPhone CHAR(20),
-                                listingID            INTEGER,
-                                PRIMARY KEY (listingID, realEstateAgentPhone),
-                                FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (phone)
-                                    ON DELETE CASCADE,
-                                FOREIGN KEY (listingID) REFERENCES Listing (listingID)
-                                    ON DELETE CASCADE
-                            );""")
+            Map.entry("person", CREATE_TABLE_PERSON),
+            Map.entry("homeowner", CREATE_TABLE_HOMEOWNER),
+            Map.entry("realestateagency", CREATE_TABLE_REAL_ESTATE_AGENCY),
+            Map.entry("realestateagent", CREATE_TABLE_REAL_ESTATE_AGENT),
+            Map.entry("developer", CREATE_TABLE_DEVELOPER),
+            Map.entry("contractorcompany", CREATE_TABLE_CONTRACTOR_COMPANY),
+            Map.entry("strata", CREATE_TABLE_STRATA),
+            Map.entry("city", CREATE_TABLE_CITY),
+            Map.entry("property", CREATE_TABLE_PROPERTY),
+            Map.entry("listing", CREATE_TABLE_LISTING),
+            Map.entry("hiresrea", CREATE_TABLE_HIRES_REA),
+            Map.entry("hirescontractor", CREATE_TABLE_HIRES_CONTRACTOR),
+            Map.entry("pays", CREATE_TABLE_PAYS),
+            Map.entry("maintains", CREATE_TABLE_MAINTAINS),
+            Map.entry("manageslisting", CREATE_TABLE_MANAGES_LISTING)
     );
 
     private Connection connection = null;
