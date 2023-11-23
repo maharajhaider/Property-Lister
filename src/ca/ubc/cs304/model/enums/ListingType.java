@@ -4,9 +4,9 @@ public enum ListingType {
     RENT("rent"),
     SALE("sale");
 
-    public final String name;
+    public final String label;
 
-    ListingType(String name) {
-        this.name = name;
+    ListingType(String label) {
+        this.label = label;
     }
 }

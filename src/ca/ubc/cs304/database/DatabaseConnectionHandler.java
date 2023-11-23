@@ -7,9 +7,11 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 
+import ca.ubc.cs304.model.EntityModel;
 import ca.ubc.cs304.model.Listing;
 import ca.ubc.cs304.util.PrintablePreparedStatement;
 
+import static ca.ubc.cs304.sql.scripts.InitialData.INITIAL_DATA;
 import static ca.ubc.cs304.sql.scripts.SQLScripts.*;
 
 /**
@@ -63,18 +65,6 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void deleteListing(int listingId) {
-        //
-    }
-
-    public void insertListing(Listing listing) {
-        //
-    }
-
-    public Listing[] getListingInfo() {
-        return new Listing[0];
-    }
-
     public boolean login(String username, String password) {
         try {
             if (connection != null) {
@@ -102,17 +92,8 @@ public class DatabaseConnectionHandler {
 
     public void databaseSetup() {
         dropTablesIfExist();
-
-        try {
-            for (String table: CREATE_TABLE_DDL.keySet()) {
-                String query = CREATE_TABLE_DDL.get(table);
-                PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
-                ps.executeUpdate();
-                ps.close();
-            }
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-        }
+        createTables();
+        fillInitialData();
     }
 
     private void dropTablesIfExist() {
@@ -135,5 +116,48 @@ public class DatabaseConnectionHandler {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
+    }
+
+    private void createTables() {
+        try {
+            for (String table: CREATE_TABLE_DDL.keySet()) {
+                String query = CREATE_TABLE_DDL.get(table);
+                PrintablePreparedStatement ps = getPS(query);
+                ps.executeUpdate();
+                ps.close();
+            }
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+    }
+
+    public void fillInitialData() {
+        for (EntityModel data: INITIAL_DATA) {
+            insertData(data);
+        }
+    }
+
+    public void insertData(EntityModel data) {
+        try {
+            String insertStatement = data.insertStatement();
+            PrintablePreparedStatement ps = getPS(insertStatement);
+            ps.executeUpdate();
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+    }
+
+    private PrintablePreparedStatement getPS(String script) throws SQLException {
+        return new PrintablePreparedStatement(connection.prepareStatement(script), script, false);
+    }
+
+    public Listing[] getListingInfo() {
+        return new Listing[0];
+    }
+
+    public void deleteListing(int listingId) {
+        //
     }
 }

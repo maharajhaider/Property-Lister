@@ -12,9 +12,9 @@ public enum Province {
     ALBERTA("AB"),
     NEWFOUNDLAND_AND_LABRADOR("NL");
 
-    private String name;
+    public final String label;
 
-    Province(String name) {
-        this.name = name;
+    Province(String label) {
+        this.label = label;
     }
 }

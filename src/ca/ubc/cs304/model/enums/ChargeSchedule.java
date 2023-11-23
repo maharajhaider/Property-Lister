@@ -4,9 +4,9 @@ public enum ChargeSchedule {
     FIXED_PRICE("Fixed Price"),
     HOURLY("Hourly");
 
-    private String name;
+    public final String label;
 
-    ChargeSchedule(String name) {
-        this.name = name;
+    ChargeSchedule(String label) {
+        this.label = label;
     }
 }
