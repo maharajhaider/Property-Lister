@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,23 +26,26 @@ public class DatabaseConnectionHandler {
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
 
-    private static final Map<String, String> CREATE_TABLE_DDL = Map.ofEntries(
-            Map.entry("person", CREATE_TABLE_PERSON),
-            Map.entry("homeowner", CREATE_TABLE_HOMEOWNER),
-            Map.entry("realestateagency", CREATE_TABLE_REAL_ESTATE_AGENCY),
-            Map.entry("realestateagent", CREATE_TABLE_REAL_ESTATE_AGENT),
-            Map.entry("developer", CREATE_TABLE_DEVELOPER),
-            Map.entry("contractorcompany", CREATE_TABLE_CONTRACTOR_COMPANY),
-            Map.entry("strata", CREATE_TABLE_STRATA),
-            Map.entry("city", CREATE_TABLE_CITY),
-            Map.entry("property", CREATE_TABLE_PROPERTY),
-            Map.entry("listing", CREATE_TABLE_LISTING),
-            Map.entry("hiresrea", CREATE_TABLE_HIRES_REA),
-            Map.entry("hirescontractor", CREATE_TABLE_HIRES_CONTRACTOR),
-            Map.entry("pays", CREATE_TABLE_PAYS),
-            Map.entry("maintains", CREATE_TABLE_MAINTAINS),
-            Map.entry("manageslisting", CREATE_TABLE_MANAGES_LISTING)
-    );
+    private static final Map<String, String> CREATE_TABLE_DDL;
+
+    static {
+        CREATE_TABLE_DDL = new LinkedHashMap<>();
+        CREATE_TABLE_DDL.put("person", CREATE_TABLE_PERSON);
+        CREATE_TABLE_DDL.put("homeowner", CREATE_TABLE_HOMEOWNER);
+        CREATE_TABLE_DDL.put("realestateagency", CREATE_TABLE_REAL_ESTATE_AGENCY);
+        CREATE_TABLE_DDL.put("realestateagent", CREATE_TABLE_REAL_ESTATE_AGENT);
+        CREATE_TABLE_DDL.put("developer", CREATE_TABLE_DEVELOPER);
+        CREATE_TABLE_DDL.put("contractorcompany", CREATE_TABLE_CONTRACTOR_COMPANY);
+        CREATE_TABLE_DDL.put("strata", CREATE_TABLE_STRATA);
+        CREATE_TABLE_DDL.put("city", CREATE_TABLE_CITY);
+        CREATE_TABLE_DDL.put("property", CREATE_TABLE_PROPERTY);
+        CREATE_TABLE_DDL.put("listing", CREATE_TABLE_LISTING);
+        CREATE_TABLE_DDL.put("hiresrea", CREATE_TABLE_HIRES_REA);
+        CREATE_TABLE_DDL.put("hirescontractor", CREATE_TABLE_HIRES_CONTRACTOR);
+        CREATE_TABLE_DDL.put("pays", CREATE_TABLE_PAYS);
+        CREATE_TABLE_DDL.put("maintains", CREATE_TABLE_MAINTAINS);
+        CREATE_TABLE_DDL.put("manageslisting", CREATE_TABLE_MANAGES_LISTING);
+    }
 
     private Connection connection = null;
 
@@ -104,9 +108,10 @@ public class DatabaseConnectionHandler {
             ResultSet rs = ps.executeQuery();
 
             Set<String> tableNames = CREATE_TABLE_DDL.keySet();
-            while(rs.next()) {
+            while (rs.next()) {
                 String tableFound = rs.getString(1).toLowerCase();
-                if(tableNames.contains(tableFound)) {
+                if (tableNames.contains(tableFound)) {
+                    ps.execute("DELETE FROM " + tableFound);
                     ps.execute("DROP TABLE " + tableFound);
                 }
             }
@@ -120,7 +125,7 @@ public class DatabaseConnectionHandler {
 
     private void createTables() {
         try {
-            for (String table: CREATE_TABLE_DDL.keySet()) {
+            for (String table : CREATE_TABLE_DDL.keySet()) {
                 String query = CREATE_TABLE_DDL.get(table);
                 PrintablePreparedStatement ps = getPS(query);
                 ps.executeUpdate();
@@ -132,7 +137,7 @@ public class DatabaseConnectionHandler {
     }
 
     public void fillInitialData() {
-        for (EntityModel data: INITIAL_DATA) {
+        for (EntityModel data : INITIAL_DATA) {
             insertData(data);
         }
     }
