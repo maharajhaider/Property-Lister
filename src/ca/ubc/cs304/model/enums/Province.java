@@ -1,5 +1,7 @@
 package ca.ubc.cs304.model.enums;
 
+import java.util.Arrays;
+
 public enum Province {
     ONTARIO("ON"),
     QUEBEC("QC"),
@@ -16,5 +18,12 @@ public enum Province {
 
     Province(String label) {
         this.label = label;
+    }
+
+    public static Province fromLabel(String label) {
+        return Arrays.stream(values())
+                .filter(e->e.label.equals(label))
+                .findFirst()
+                .orElseThrow();
     }
 }

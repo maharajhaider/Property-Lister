@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import ca.ubc.cs304.model.EntityModel;
 import ca.ubc.cs304.model.Listing;
+import ca.ubc.cs304.model.enums.ListingType;
+import ca.ubc.cs304.model.enums.Province;
 import ca.ubc.cs304.util.PrintablePreparedStatement;
 
 import static ca.ubc.cs304.sql.scripts.InitialData.INITIAL_DATA;
@@ -159,7 +159,30 @@ public class DatabaseConnectionHandler {
     }
 
     public Listing[] getListingInfo() {
-        return new Listing[0];
+        List<Listing> result = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM Listing";
+            PrintablePreparedStatement ps = getPS(query);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                Listing listing = new Listing(
+                        rs.getInt("listingID"),
+                        rs.getString("streetAddress").trim(),
+                        Province.fromLabel(rs.getString("province").trim()),
+                        rs.getString("cityName").trim(),
+                        ListingType.fromLabel(rs.getString("type").trim()),
+                        rs.getInt("price"),
+                        rs.getInt("active"));
+                result.add(listing);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return result.toArray(new Listing[0]);
     }
 
     public void deleteListing(int listingId) {
