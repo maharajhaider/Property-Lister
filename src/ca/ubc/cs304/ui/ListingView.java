@@ -90,13 +90,13 @@ public class ListingView extends JFrame {
         // Append information about each listing to the text area
         for (Listing listing : listings) {
             textArea.append("Listing"+count+" Info is below: "+"\n");
-            textArea.append("ID: " + listing.getListingId() + "\n");
-            textArea.append("Address: " + listing.getStreetAddress() + "\n");
-            textArea.append("Province: " + listing.getProvince() + "\n");
-            textArea.append("City: " + listing.getCityName() + "\n");
-            textArea.append("Type: " + listing.getType() + "\n");
-            textArea.append("Price: $" + listing.getPrice() + "\n");
-            textArea.append("Active: " + (listing.getActive() == 1 ? "Yes" : "No") + "\n");
+            textArea.append("ID: " + listing.getlistingID() + "\n");
+            textArea.append("Address: " + listing.streetAddress() + "\n");
+            textArea.append("Province: " + listing.province() + "\n");
+            textArea.append("City: " + listing.cityName() + "\n");
+            textArea.append("Type: " + listing.type() + "\n");
+            textArea.append("Price: $" + listing.price() + "\n");
+            textArea.append("Active: " + (listing.active() == 1 ? "Yes" : "No") + "\n");
             textArea.append("\n");
             count++;
         }

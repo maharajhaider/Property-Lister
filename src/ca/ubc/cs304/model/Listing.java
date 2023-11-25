@@ -11,6 +11,41 @@ public record Listing(
         ListingType type,
         Integer price,
         Integer active) implements EntityModel {
+
+    public Integer getlistingID() {
+        return listingID;
+    }
+
+    @Override
+    public String streetAddress() {
+        return streetAddress;
+    }
+
+    @Override
+    public Province province() {
+        return province;
+    }
+
+    @Override
+    public String cityName() {
+        return cityName;
+    }
+
+    @Override
+    public ListingType type() {
+        return type;
+    }
+
+    @Override
+    public Integer price() {
+        return price;
+    }
+
+    @Override
+    public Integer active() {
+        return active;
+    }
+
     public Listing {
         if (active != 0 && active != 1) {
             throw new IllegalArgumentException("active must be 0 or 1");
