@@ -1,16 +1,16 @@
 package ca.ubc.cs304.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
-
 import ca.ubc.cs304.model.EntityModel;
 import ca.ubc.cs304.model.Listing;
 import ca.ubc.cs304.model.enums.ListingType;
 import ca.ubc.cs304.model.enums.Province;
 import ca.ubc.cs304.util.PrintablePreparedStatement;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
 
 import static ca.ubc.cs304.sql.scripts.InitialData.INITIAL_DATA;
 import static ca.ubc.cs304.sql.scripts.SQLScripts.*;
@@ -155,12 +155,15 @@ public class DatabaseConnectionHandler {
     }
 
     private PrintablePreparedStatement getPS(String script) throws SQLException {
+
         return new PrintablePreparedStatement(connection.prepareStatement(script), script, false);
     }
 
     public Listing[] getListingInfo() {
         List<Listing> result = new ArrayList<>();
         try {
+            connection = DriverManager.getConnection(ORACLE_URL, "ora_bansal21", "a67617654");
+            connection.setAutoCommit(false);
             String query = "SELECT * FROM Listing";
             PrintablePreparedStatement ps = getPS(query);
             ResultSet rs = ps.executeQuery();
