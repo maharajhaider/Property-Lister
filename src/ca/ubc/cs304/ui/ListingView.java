@@ -51,21 +51,6 @@ public class ListingView extends JFrame {
         textArea.setForeground(Color.GREEN);
         textArea.setFont(new Font("Arial", Font.ITALIC, 20));
 
-//        listings = new Listing[1];
-//        Province province = Province.BRITISH_COLUMBIA;
-//
-//        Listing dummylisting = new Listing(
-//                1,                  // listingID
-//                "123 Main St",      // streetAddress
-//                province,        // province
-//                "Vancouver",        // cityName
-//                ListingType.SALE,   // type
-//                500000,             // price
-//                1                   // active
-//        );
-//
-//        listings[0] = dummylisting;
-
         int count =1;
         // Append information about each listing to the text area
         for (Listing listing : listings) {
