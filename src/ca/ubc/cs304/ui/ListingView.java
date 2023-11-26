@@ -1,3 +1,5 @@
+package ca.ubc.cs304.ui;
+
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.Listing;
 
