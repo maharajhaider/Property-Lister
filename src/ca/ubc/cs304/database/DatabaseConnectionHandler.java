@@ -184,6 +184,33 @@ public class DatabaseConnectionHandler {
         }
         return result.toArray(new Listing[0]);
     }
+    public Listing[] getListingInfo(String startOfAddress) {
+        List<Listing> result = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM Listing" +
+                    " WHERE streetAddress LIKE '%"+ startOfAddress+"%'";
+            PrintablePreparedStatement ps = getPS(query);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                Listing listing = new Listing(
+                        rs.getInt("listingID"),
+                        rs.getString("streetAddress").trim(),
+                        Province.fromLabel(rs.getString("province").trim()),
+                        rs.getString("cityName").trim(),
+                        ListingType.fromLabel(rs.getString("type").trim()),
+                        rs.getInt("price"),
+                        rs.getInt("active"));
+                result.add(listing);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return result.toArray(new Listing[0]);
+    }
 
     public void deleteListing(int listingId) {
         //
