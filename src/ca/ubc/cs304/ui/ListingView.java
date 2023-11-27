@@ -91,7 +91,7 @@ public class ListingView extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             DatabaseConnectionHandler connectionHandler = new DatabaseConnectionHandler();
-            connectionHandler.login("ora_bansal21","a67617654");
+//            connectionHandler.login("ora_bansal21","a67617654");
             Listing[] listings = connectionHandler.getListingInfo();
 
             ListingView listingView = new ListingView(listings);
