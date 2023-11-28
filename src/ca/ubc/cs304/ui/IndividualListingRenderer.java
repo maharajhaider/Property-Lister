@@ -44,7 +44,7 @@ public class IndividualListingRenderer extends JPanel implements ListCellRendere
 
     @Override
     public Component getListCellRendererComponent(JList<? extends Listing> list, Listing value, int index, boolean isSelected, boolean cellHasFocus) {
-        listingIDLabel.setText(value.listingID().toString());
+        listingIDLabel.setText(value.listingId().toString());
         addressLabel.setText(value.streetAddress());
         return this;
     }
