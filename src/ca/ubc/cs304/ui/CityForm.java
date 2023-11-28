@@ -51,7 +51,6 @@ public class CityForm extends JFrame {
         EntityModel city = new City(selectedProvince, cityName, taxRate);
 
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-//        databaseConnectionHandler.login("ora_bansal21","a67617654");
         databaseConnectionHandler.insertData(city);
 
         // Print the insert statement (you can replace this with your database interaction)

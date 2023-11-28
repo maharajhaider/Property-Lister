@@ -50,7 +50,6 @@ public class ContractorCompanyForm extends JFrame {
         // Create a ContractorCompany object
         EntityModel contractorCompany = new ContractorCompany(contractorId, companyName, selectedChargeSchedule);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-//        databaseConnectionHandler.login("ora_bansal21","a67617654");
         databaseConnectionHandler.insertData(contractorCompany);
 
         // Print the insert statement (you can replace this with your database interaction)
