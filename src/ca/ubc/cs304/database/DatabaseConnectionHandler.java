@@ -106,18 +106,17 @@ public class DatabaseConnectionHandler {
             String query = "select table_name from user_tables";
             PrintablePreparedStatement ps =
                     new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
-            ResultSet rs = ps.executeQuery();
 
             Set<String> tableNames = CREATE_TABLE_DDL.keySet();
-            while (rs.next()) {
-                String tableFound = rs.getString(1).toLowerCase();
-                if (tableNames.contains(tableFound)) {
-                    ps.execute("DELETE FROM " + tableFound);
-                    ps.execute("DROP TABLE " + tableFound);
+            for (String table: tableNames) {
+                try {
+                    ps.execute("DROP TABLE " + table + " CASCADE CONSTRAINTS");
+                    System.out.println("Dropped " + table);
+                } catch (SQLException e) {
+                    // Do nothing
                 }
             }
 
-            rs.close();
             ps.close();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
