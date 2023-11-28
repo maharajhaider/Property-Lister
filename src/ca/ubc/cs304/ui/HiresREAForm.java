@@ -43,10 +43,7 @@ public class HiresREAForm extends JFrame {
         // Create a HiresREA object
         EntityModel hiresREA = new HiresREA(homeownerPhone, realEstateAgentPhone);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(hiresREA);
-
-        // Print the insert statement (you can replace this with your database interaction)
-        System.out.println(hiresREA.insertStatement());
+        databaseConnectionHandler.insertData(hiresREA, null);
     }
 
     public static void main(String[] args) {

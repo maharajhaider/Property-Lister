@@ -9,7 +9,7 @@ public record Maintains(
         String cityName,
         String areaOfResponsibility) implements EntityModel {
     @Override
-    public String insertStatement() {
+    public String insertStatement(Integer id) {
         return "INSERT INTO Maintains VALUES (%d, '%s', '%s', '%s', '%s')"
                 .formatted(contractorId, streetAddress, province.label, cityName, areaOfResponsibility);
     }

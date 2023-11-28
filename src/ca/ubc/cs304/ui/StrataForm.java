@@ -2,6 +2,7 @@ package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.EntityModel;
+import ca.ubc.cs304.model.HasID;
 import ca.ubc.cs304.model.Strata;
 
 import javax.swing.*;
@@ -60,36 +61,13 @@ public class StrataForm extends JFrame {
     }
 
     private void saveStrata() {
-        // Get values from the form
-        int strataId;
-
-        try {
-            strataId = Integer.parseInt(strataIdTextField.getText());
-
-            // Validate strataId
-            if (strataId < 0) {
-                validationLabel.setText("Strata ID should be non-negative");
-                return; // Stop processing if validation fails
-            }
-
-            // Clear validation message if validation passes
-            validationLabel.setText("");
-
-        } catch (NumberFormatException ex) {
-            // Handle parsing error (non-numeric input for strataId)
-            validationLabel.setText("Invalid input format for Strata ID");
-            return; // Stop processing if validation fails
-        }
-
         String name = nameTextField.getText();
 
         // Create a Strata object
-        EntityModel strata = new Strata(strataId, name);
+        HasID strata = new Strata(null, name);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(strata);
-
-        // Print the insert statement (you can replace this with your database interaction)
-        System.out.println(strata.insertStatement());
+        int strataId = databaseConnectionHandler.generateId(strata);
+        databaseConnectionHandler.insertData(strata, strataId);
     }
 
     public static void main(String[] args) {

@@ -62,9 +62,7 @@ public class MaintainsForm extends JFrame {
         // Create a Maintains object
         EntityModel maintains = new Maintains(contractorId, streetAddress, selectedProvince, cityName, areaOfResponsibility);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(maintains);
-        // Print the insert statement (you can replace this with your database interaction)
-        System.out.println(maintains.insertStatement());
+        databaseConnectionHandler.insertData(maintains, null);
     }
 
     public static void main(String[] args) {

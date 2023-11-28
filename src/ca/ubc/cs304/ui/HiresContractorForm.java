@@ -43,10 +43,7 @@ public class HiresContractorForm extends JFrame {
         // Create a HiresContractor object
         EntityModel hiresContractor = new HiresContractor(homeownerPhone, contractorId);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(hiresContractor);
-
-        // Print the insert statement (you can replace this with your database interaction)
-        System.out.println(hiresContractor.insertStatement());
+        databaseConnectionHandler.insertData(hiresContractor, null);
     }
 
     public static void main(String[] args) {

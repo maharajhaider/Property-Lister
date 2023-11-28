@@ -1,6 +1,7 @@
 package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.model.EntityModel;
+import ca.ubc.cs304.model.HasID;
 import ca.ubc.cs304.model.Listing;
 import ca.ubc.cs304.model.enums.ListingType;
 import ca.ubc.cs304.model.enums.Province;
@@ -138,13 +139,13 @@ public class DatabaseConnectionHandler {
 
     public void fillInitialData() {
         for (EntityModel data : INITIAL_DATA) {
-            insertData(data);
+            insertData(data, null);
         }
     }
 
-    public void insertData(EntityModel data) {
+    public void insertData(EntityModel data, Integer id) {
         try {
-            String insertStatement = data.insertStatement();
+            String insertStatement = data.insertStatement(id);
             PrintablePreparedStatement ps = getPS(insertStatement);
             ps.executeUpdate();
             connection.commit();
@@ -170,7 +171,7 @@ public class DatabaseConnectionHandler {
 
             while(rs.next()) {
                 Listing listing = new Listing(
-                        rs.getInt("listingID"),
+                        rs.getInt("listingId"),
                         rs.getString("streetAddress").trim(),
                         Province.fromLabel(rs.getString("province").trim()),
                         rs.getString("cityName").trim(),
@@ -197,7 +198,7 @@ public class DatabaseConnectionHandler {
 
             while(rs.next()) {
                 Listing listing = new Listing(
-                        rs.getInt("listingID"),
+                        rs.getInt("listingId"),
                         rs.getString("streetAddress").trim(),
                         Province.fromLabel(rs.getString("province").trim()),
                         rs.getString("cityName").trim(),
@@ -213,6 +214,28 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
         return result.toArray(new Listing[0]);
+    }
+
+    public Integer generateId(HasID model) {
+        try {
+            String query = model.getIdSQL();
+            PrintablePreparedStatement ps = getPS(query);
+            ResultSet rs = ps.executeQuery();
+            int id;
+            if (rs.next()) {
+                int largestId = rs.getInt(1);
+                id = largestId + 1;
+            } else {
+                id =  model.defaultId();
+            }
+
+            ps.close();
+            return id;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return null;
     }
 
     public void deleteListing(int listingId) {

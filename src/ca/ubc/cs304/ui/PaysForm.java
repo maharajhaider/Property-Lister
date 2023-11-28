@@ -49,10 +49,7 @@ public class PaysForm extends JFrame {
         // Create a Pays object
         EntityModel pays = new Pays(homeownerPhone, strataId, fee);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(pays);
-
-        // Print the insert statement (you can replace this with your database interaction)
-        System.out.println(pays.insertStatement());
+        databaseConnectionHandler.insertData(pays, null);
     }
 
     public static void main(String[] args) {

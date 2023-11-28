@@ -43,8 +43,7 @@ public class ManagesListingForm extends JFrame {
         // Create a ManagesListing object
         EntityModel managesListing = new ManagesListing(realEstateAgentPhone, listingId);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(managesListing);
-
+        databaseConnectionHandler.insertData(managesListing, null);
     }
 
     public static void main(String[] args) {

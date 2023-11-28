@@ -49,10 +49,7 @@ public class PersonForm extends JFrame {
         // Create a Person object
         EntityModel person = new Person(phone, name, email);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(person);
-
-        // Print the insert statement (you can replace this with your database interaction)
-        System.out.println(person.insertStatement());
+        databaseConnectionHandler.insertData(person, null);
     }
 
     public static void main(String[] args) {

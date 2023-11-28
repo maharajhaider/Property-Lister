@@ -2,6 +2,7 @@ package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.EntityModel;
+import ca.ubc.cs304.model.HasID;
 import ca.ubc.cs304.model.Listing;
 import ca.ubc.cs304.model.Property;
 import ca.ubc.cs304.model.enums.ListingType;
@@ -139,9 +140,8 @@ public class PropertyForm extends JFrame {
                 bedrooms, bathrooms, sizeInSqft, hasAC
         );
 
-        int largestListingId = 1;
-        EntityModel listing = new Listing(
-                largestListingId, // Set the listingID to null or any appropriate value
+        HasID listing = new Listing(
+                null,
                 streetAddress,
                 selectedProvince,
                 cityName,
@@ -151,12 +151,9 @@ public class PropertyForm extends JFrame {
         );
 
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(property);
-        databaseConnectionHandler.insertData(listing);
-
-
-        // Print the insert statement (you can replace this with your database interaction)
-        System.out.println(property.insertStatement());
+        databaseConnectionHandler.insertData(property, null);
+        int listingId = databaseConnectionHandler.generateId(listing);
+        databaseConnectionHandler.insertData(listing, listingId);
     }
 
     public static void main(String[] args) {

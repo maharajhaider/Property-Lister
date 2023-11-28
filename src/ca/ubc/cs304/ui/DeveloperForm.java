@@ -3,6 +3,7 @@ package ca.ubc.cs304.ui;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.Developer;
 import ca.ubc.cs304.model.EntityModel;
+import ca.ubc.cs304.model.HasID;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,13 +38,13 @@ public class DeveloperForm extends JFrame {
 
     private void saveDeveloper() {
         // Get values from the form
-        int developerLicenseId = Integer.parseInt(licenseIdTextField.getText());
         String developerName = nameTextField.getText();
 
         // Create a Developer object
-        EntityModel developer = new Developer(developerLicenseId, developerName);
+        HasID developer = new Developer(null, developerName);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(developer);
+        int developerLicenseId = databaseConnectionHandler.generateId(developer);
+        databaseConnectionHandler.insertData(developer, developerLicenseId);
     }
 
     public static void main(String[] args) {

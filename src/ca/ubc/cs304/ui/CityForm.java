@@ -51,10 +51,10 @@ public class CityForm extends JFrame {
         EntityModel city = new City(selectedProvince, cityName, taxRate);
 
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(city);
+        databaseConnectionHandler.insertData(city, null);
 
         // Print the insert statement (you can replace this with your database interaction)
-        System.out.println(city.insertStatement());
+        System.out.println(city.insertStatement(null));
     }
 
     public static void main(String[] args) {

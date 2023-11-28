@@ -37,7 +37,7 @@ public class HomeownerForm extends JFrame {
         // Create a Homeowner object
         EntityModel homeowner = new Homeowner(phone);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(homeowner);
+        databaseConnectionHandler.insertData(homeowner, null);
     }
 
     public static void main(String[] args) {

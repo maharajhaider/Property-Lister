@@ -1,6 +1,3 @@
-
-
-
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
@@ -60,7 +57,7 @@ public class ListingView extends JFrame {
 
             if(listing.active() == 1) {
                 textArea.append("Listing" + count + " Info is below: " + "\n");
-                textArea.append("ID: " + listing.listingID() + "\n");
+                textArea.append("ID: " + listing.listingId() + "\n");
                 textArea.append("Address: " + listing.streetAddress() + "\n");
                 textArea.append("Province: " + listing.province() + "\n");
                 textArea.append("City: " + listing.cityName() + "\n");

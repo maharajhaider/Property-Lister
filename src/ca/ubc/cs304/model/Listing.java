@@ -4,13 +4,13 @@ import ca.ubc.cs304.model.enums.ListingType;
 import ca.ubc.cs304.model.enums.Province;
 
 public record Listing(
-        Integer listingID,
+        Integer listingId,
         String streetAddress,
         Province province,
         String cityName,
         ListingType type,
         Integer price,
-        Integer active) implements EntityModel {
+        Integer active) implements HasID {
 
     public Listing {
         if (active != 0 && active != 1) {
@@ -19,8 +19,18 @@ public record Listing(
     }
     
     @Override
-    public String insertStatement() {
+    public String insertStatement(Integer id) {
         return "INSERT INTO Listing VALUES (%d, '%s', '%s', '%s', '%s', %d, %d)"
-                .formatted(listingID, streetAddress, province.label, cityName, type.label, price, active);
+                .formatted(id == null? listingId : id, streetAddress, province.label, cityName, type.label, price, active);
+    }
+
+    @Override
+    public String getIdSQL() {
+        return "SELECT max(listingID) FROM Listing";
+    }
+
+    @Override
+    public Integer defaultId() {
+        return 5000001;
     }
 }

@@ -3,6 +3,7 @@ package ca.ubc.cs304.ui;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.ContractorCompany;
 import ca.ubc.cs304.model.EntityModel;
+import ca.ubc.cs304.model.HasID;
 import ca.ubc.cs304.model.enums.ChargeSchedule;
 
 import javax.swing.*;
@@ -43,17 +44,14 @@ public class ContractorCompanyForm extends JFrame {
 
     private void saveContractorCompany() {
         // Get values from the form
-        int contractorId = Integer.parseInt(contractorIdTextField.getText());
         String companyName = nameTextField.getText();
         ChargeSchedule selectedChargeSchedule = (ChargeSchedule) chargeScheduleComboBox.getSelectedItem();
 
         // Create a ContractorCompany object
-        EntityModel contractorCompany = new ContractorCompany(contractorId, companyName, selectedChargeSchedule);
+        HasID contractorCompany = new ContractorCompany(null, companyName, selectedChargeSchedule);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(contractorCompany);
-
-        // Print the insert statement (you can replace this with your database interaction)
-        System.out.println(contractorCompany.insertStatement());
+        int contractorId = databaseConnectionHandler.generateId(contractorCompany);
+        databaseConnectionHandler.insertData(contractorCompany, contractorId);
     }
 
     public static void main(String[] args) {

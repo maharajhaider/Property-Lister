@@ -2,6 +2,7 @@ package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.EntityModel;
+import ca.ubc.cs304.model.HasID;
 import ca.ubc.cs304.model.RealEstateAgency;
 
 import javax.swing.*;
@@ -55,17 +56,14 @@ public class RealEstateAgencyForm extends JFrame {
 
     private void saveRealEstateAgency() {
         // Get values from the form
-        int agencyId = Integer.parseInt(agencyIdTextField.getText());
         String name = nameTextField.getText();
         double rating = Double.parseDouble(ratingTextField.getText());
 
         // Create a RealEstateAgency object
-        EntityModel realEstateAgency = new RealEstateAgency(agencyId, name, rating);
+        HasID realEstateAgency = new RealEstateAgency(null, name, rating);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(realEstateAgency);
-
-        // Print the insert statement (you can replace this with your database interaction)
-        System.out.println(realEstateAgency.insertStatement());
+        int agencyId = databaseConnectionHandler.generateId(realEstateAgency);
+        databaseConnectionHandler.insertData(realEstateAgency, agencyId);
     }
 
     public static void main(String[] args) {
