@@ -10,6 +10,10 @@ public class ListingView extends JFrame {
     private JTextArea listingTextArea;
     private JButton backButton;
 
+    private JButton editButton;
+
+    private JButton deleteButton;
+
     private DatabaseConnectionHandler databaseConnectionHandler;
 
     public ListingView(Listing[] listings) {
@@ -26,6 +30,8 @@ public class ListingView extends JFrame {
         listingTextArea = createStyledTextArea(listings);
         JScrollPane scrollPane = new JScrollPane(listingTextArea);
         backButton = createStyledButton("Back");
+        editButton = createStyledButton("Edit");
+        deleteButton = createStyledButton("Delete");
 
         // Set layout to null
         setLayout(null);
@@ -37,12 +43,30 @@ public class ListingView extends JFrame {
         backButton.setBounds(10, 320, 80, 30);
         add(backButton);
 
+        editButton.setBounds(100, 320, 80, 30);
+        add(editButton);
+
+        deleteButton.setBounds(200, 320, 80, 30);
+        add(deleteButton);
+
         // Add action listener for the back button
         backButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(null, "Going back to the Search UI");
             setVisible(false);
             dispose();
         });
+
+        // Add action listener for the editButton
+        editButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(null, "Going to edit screen");
+        });
+
+        // Add action listener for the deleteButton
+        deleteButton.addActionListener(e -> {
+            databaseConnectionHandler.deleteListing(listings[0].listingId()); //change to listing only
+        });
+
+
     }
 
     private JTextArea createStyledTextArea(Listing[] listings) {
