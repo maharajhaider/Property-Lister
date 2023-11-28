@@ -1,5 +1,8 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.DatabaseConnectionHandler;
+import ca.ubc.cs304.model.Listing;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +14,12 @@ public class SearchScreen extends JFrame {
     private JPanel backgroundPanel;
     private JTextField searchBar;
 
+    private DatabaseConnectionHandler databaseConnectionHandler;
+
     public SearchScreen() throws IOException {
+        databaseConnectionHandler = new DatabaseConnectionHandler();
+        databaseConnectionHandler.login("ora_mhaider0", "a94579901");
+        databaseConnectionHandler.databaseSetup();
         //background
         backgroundImage = ImageIO.read(new File("resources/SearchScreenBackground.png"));
         setLayout(new BorderLayout());
@@ -31,8 +39,8 @@ public class SearchScreen extends JFrame {
         JButton searchButton = new JButton("Search");
         searchButton.addActionListener(e -> {
             String searchText = searchBar.getText();
-            //TODO: search bar to query and switch to search result screen
-            JOptionPane.showMessageDialog(null, searchText);
+            Listing[] resultListings = databaseConnectionHandler.getListingInfo(searchText);
+            new SearchResultScreen(resultListings);
         });
 
 

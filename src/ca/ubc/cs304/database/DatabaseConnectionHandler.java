@@ -11,6 +11,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+<<<<<<< HEAD
+=======
+
+import ca.ubc.cs304.model.EntityModel;
+import ca.ubc.cs304.model.Listing;
+import ca.ubc.cs304.model.enums.ListingType;
+import ca.ubc.cs304.model.enums.Province;
+import ca.ubc.cs304.util.PrintablePreparedStatement;
+>>>>>>> 32d6cdbd087072e94376811cfdda7119f78abe7b
 
 import static ca.ubc.cs304.sql.scripts.InitialData.INITIAL_DATA;
 import static ca.ubc.cs304.sql.scripts.SQLScripts.*;
@@ -162,8 +171,11 @@ public class DatabaseConnectionHandler {
     public Listing[] getListingInfo() {
         List<Listing> result = new ArrayList<>();
         try {
+<<<<<<< HEAD
             connection = DriverManager.getConnection(ORACLE_URL, "ora_bansal21", "a67617654");
             connection.setAutoCommit(false);
+=======
+>>>>>>> 32d6cdbd087072e94376811cfdda7119f78abe7b
             String query = "SELECT * FROM Listing";
             PrintablePreparedStatement ps = getPS(query);
             ResultSet rs = ps.executeQuery();
@@ -186,6 +198,36 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
         return result.toArray(new Listing[0]);
+<<<<<<< HEAD
+=======
+    }
+    public Listing[] getListingInfo(String startOfAddress) {
+        List<Listing> result = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM Listing" +
+                    " WHERE streetAddress LIKE '%"+ startOfAddress+"%'";
+            PrintablePreparedStatement ps = getPS(query);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                Listing listing = new Listing(
+                        rs.getInt("listingID"),
+                        rs.getString("streetAddress").trim(),
+                        Province.fromLabel(rs.getString("province").trim()),
+                        rs.getString("cityName").trim(),
+                        ListingType.fromLabel(rs.getString("type").trim()),
+                        rs.getInt("price"),
+                        rs.getInt("active"));
+                result.add(listing);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return result.toArray(new Listing[0]);
+>>>>>>> 32d6cdbd087072e94376811cfdda7119f78abe7b
     }
 
     public void deleteListing(int listingId) {
