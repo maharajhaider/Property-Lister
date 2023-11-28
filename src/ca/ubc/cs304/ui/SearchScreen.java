@@ -40,7 +40,7 @@ public class SearchScreen extends JFrame {
         searchButton.addActionListener(e -> {
             String searchText = searchBar.getText();
             Listing[] resultListings = databaseConnectionHandler.getListingInfo(searchText);
-            new SearchResultScreen(resultListings);
+            new SearchResultScreen(resultListings,databaseConnectionHandler);
         });
 
 

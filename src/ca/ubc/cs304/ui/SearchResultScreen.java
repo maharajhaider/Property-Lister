@@ -1,12 +1,15 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.Listing;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class SearchResultScreen extends JFrame {
-    public SearchResultScreen(Listing[] results) {
+
+    public SearchResultScreen(Listing[] results, DatabaseConnectionHandler databaseConnectionHandler) {
+
         // Set the layout manager for the JFrame
         setLayout(new BorderLayout());
 
@@ -16,7 +19,7 @@ public class SearchResultScreen extends JFrame {
         }
 
         JList<Listing> resultJList = new JList<>(resultList);
-        resultJList.setFont(new Font("Arial", Font.PLAIN, 14));
+        resultJList.setCellRenderer(new IndividualListingRenderer(databaseConnectionHandler));
 
         // Create a scroll pane for the JList
         JScrollPane scrollPane = new JScrollPane(resultJList);
