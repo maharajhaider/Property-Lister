@@ -26,7 +26,7 @@ public final class SQLScripts {
                     "CREATE TABLE RealEstateAgent " +
                     "(" +
                         "phone          CHAR(20) PRIMARY KEY, " +
-                        "agentLicenseId INTEGER UNIQUE, " +
+                        "agentLicenseID INTEGER UNIQUE, " +
                         "yearsOfExp     INTEGER, " +
                         "agencyID       INTEGER NOT NULL, " +
                         "FOREIGN KEY (phone) REFERENCES Person (phone) " +
@@ -85,7 +85,7 @@ public final class SQLScripts {
     public static final String CREATE_TABLE_LISTING =            
                     "CREATE TABLE Listing " +
                     "(" +
-                        "listingID     INTEGER PRIMARY KEY, " +
+                        "listingId     INTEGER PRIMARY KEY, " +
                         "streetAddress CHAR(255), " +
                         "province      CHAR(255), " +
                         "cityName      CHAR(255), " +
@@ -149,11 +149,11 @@ public final class SQLScripts {
                     "CREATE TABLE ManagesListing " +
                     "(" +
                         "realEstateAgentPhone CHAR(20), " +
-                        "listingID            INTEGER, " +
-                        "PRIMARY KEY (listingID, realEstateAgentPhone), " +
+                        "listingId            INTEGER, " +
+                        "PRIMARY KEY (listingId, realEstateAgentPhone), " +
                         "FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (phone) " +
                             "ON DELETE CASCADE, " +
-                        "FOREIGN KEY (listingID) REFERENCES Listing (listingID) " +
+                        "FOREIGN KEY (listingId) REFERENCES Listing (listingId) " +
                             "ON DELETE CASCADE" +
                     ")";
 }

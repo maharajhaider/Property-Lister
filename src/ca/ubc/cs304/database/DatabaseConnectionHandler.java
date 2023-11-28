@@ -1,16 +1,17 @@
 package ca.ubc.cs304.database;
 
+import ca.ubc.cs304.model.EntityModel;
+import ca.ubc.cs304.model.HasID;
+import ca.ubc.cs304.model.Listing;
+import ca.ubc.cs304.model.enums.ListingType;
+import ca.ubc.cs304.model.enums.Province;
+import ca.ubc.cs304.util.PrintablePreparedStatement;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-
-import ca.ubc.cs304.model.EntityModel;
-import ca.ubc.cs304.model.Listing;
-import ca.ubc.cs304.model.enums.ListingType;
-import ca.ubc.cs304.model.enums.Province;
-import ca.ubc.cs304.util.PrintablePreparedStatement;
 
 import static ca.ubc.cs304.sql.scripts.InitialData.INITIAL_DATA;
 import static ca.ubc.cs304.sql.scripts.SQLScripts.*;
@@ -54,6 +55,7 @@ public class DatabaseConnectionHandler {
             // Load the Oracle JDBC driver
             // Note that the path could change for new drivers
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
@@ -105,18 +107,17 @@ public class DatabaseConnectionHandler {
             String query = "select table_name from user_tables";
             PrintablePreparedStatement ps =
                     new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
-            ResultSet rs = ps.executeQuery();
 
             Set<String> tableNames = CREATE_TABLE_DDL.keySet();
-            while (rs.next()) {
-                String tableFound = rs.getString(1).toLowerCase();
-                if (tableNames.contains(tableFound)) {
-                    ps.execute("DELETE FROM " + tableFound);
-                    ps.execute("DROP TABLE " + tableFound);
+            for (String table: tableNames) {
+                try {
+                    ps.execute("DROP TABLE " + table + " CASCADE CONSTRAINTS");
+                    System.out.println("Dropped " + table);
+                } catch (SQLException e) {
+                    // Do nothing
                 }
             }
 
-            rs.close();
             ps.close();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
@@ -138,13 +139,13 @@ public class DatabaseConnectionHandler {
 
     public void fillInitialData() {
         for (EntityModel data : INITIAL_DATA) {
-            insertData(data);
+            insertData(data, null);
         }
     }
 
-    public void insertData(EntityModel data) {
+    public void insertData(EntityModel data, Integer id) {
         try {
-            String insertStatement = data.insertStatement();
+            String insertStatement = data.insertStatement(id);
             PrintablePreparedStatement ps = getPS(insertStatement);
             ps.executeUpdate();
             connection.commit();
@@ -155,19 +156,22 @@ public class DatabaseConnectionHandler {
     }
 
     private PrintablePreparedStatement getPS(String script) throws SQLException {
+
         return new PrintablePreparedStatement(connection.prepareStatement(script), script, false);
     }
 
     public Listing[] getListingInfo() {
         List<Listing> result = new ArrayList<>();
         try {
+            connection = DriverManager.getConnection(ORACLE_URL, "ora_bansal21", "a67617654");
+            connection.setAutoCommit(false);
             String query = "SELECT * FROM Listing";
             PrintablePreparedStatement ps = getPS(query);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
                 Listing listing = new Listing(
-                        rs.getInt("listingID"),
+                        rs.getInt("listingId"),
                         rs.getString("streetAddress").trim(),
                         Province.fromLabel(rs.getString("province").trim()),
                         rs.getString("cityName").trim(),
@@ -194,7 +198,7 @@ public class DatabaseConnectionHandler {
 
             while(rs.next()) {
                 Listing listing = new Listing(
-                        rs.getInt("listingID"),
+                        rs.getInt("listingId"),
                         rs.getString("streetAddress").trim(),
                         Province.fromLabel(rs.getString("province").trim()),
                         rs.getString("cityName").trim(),
@@ -210,6 +214,28 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
         return result.toArray(new Listing[0]);
+    }
+
+    public Integer generateId(HasID model) {
+        try {
+            String query = model.getIdSQL();
+            PrintablePreparedStatement ps = getPS(query);
+            ResultSet rs = ps.executeQuery();
+            int id;
+            if (rs.next()) {
+                int largestId = rs.getInt(1);
+                id = largestId + 1;
+            } else {
+                id =  model.defaultId();
+            }
+
+            ps.close();
+            return id;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return null;
     }
 
     public void deleteListing(int listingId) {

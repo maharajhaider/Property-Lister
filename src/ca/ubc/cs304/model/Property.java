@@ -20,7 +20,7 @@ public record Property(
     }
 
     @Override
-    public String insertStatement() {
+    public String insertStatement(Integer id) {
         return "INSERT INTO Property VALUES ('%s', '%s', '%s', %d, %d, '%s', %d, %d, %d, %d)"
                 .formatted(
                         streetAddress,

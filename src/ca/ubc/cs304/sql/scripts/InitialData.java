@@ -36,11 +36,11 @@ public final class InitialData {
 
     private static final List<EntityModel> REAL_ESTATE_AGENT_DATA =
             List.of(
-                    new RealEstateAgent("123 456 7890", 9876, 5, 01000001),
-                    new RealEstateAgent("234 567 8901", 6543, 3, 01000002),
-                    new RealEstateAgent("345 678 9012", 7890, 7, 01000003),
-                    new RealEstateAgent("456 789 0123", 7290, 0, 01000002),
-                    new RealEstateAgent("164 551 5313", 7990, 12, 01000005));
+                    new RealEstateAgent("123 456 7890", 06000001, 5, 01000001),
+                    new RealEstateAgent("234 567 8901", 06000002, 3, 01000002),
+                    new RealEstateAgent("345 678 9012", 06000003, 7, 01000003),
+                    new RealEstateAgent("456 789 0123", 06000004, 0, 01000002),
+                    new RealEstateAgent("164 551 5313", 06000005, 12, 01000005));
 
     private static final List<EntityModel> DEVELOPER_DATA =
             List.of(
