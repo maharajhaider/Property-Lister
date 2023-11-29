@@ -2,8 +2,18 @@ package ca.ubc.cs304.model;
 
 import ca.ubc.cs304.model.enums.ChargeSchedule;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public record ContractorCompany(Integer contractorId, String name, ChargeSchedule chargeSchedule)
         implements HasID {
+    public ContractorCompany(ResultSet rs) throws SQLException {
+        this(
+                rs.getInt("contractorID"),
+                rs.getString("name"),
+                ChargeSchedule.fromLabel(rs.getString("chargeSchedule"))
+        );
+    }
 
     @Override
     public String insertStatement(Integer id) {

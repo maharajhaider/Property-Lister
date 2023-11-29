@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class SearchScreen extends JFrame {
     private Image backgroundImage;
@@ -39,7 +40,7 @@ public class SearchScreen extends JFrame {
         JButton searchButton = new JButton("Search");
         searchButton.addActionListener(e -> {
             String searchText = searchBar.getText();
-            Listing[] resultListings = databaseConnectionHandler.getListingInfo(searchText);
+            List<Listing> resultListings = databaseConnectionHandler.getListingInfo(searchText);
             new SearchResultScreen(resultListings,databaseConnectionHandler);
         });
 

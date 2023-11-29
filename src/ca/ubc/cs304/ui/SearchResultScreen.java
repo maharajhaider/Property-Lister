@@ -9,11 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class SearchResultScreen extends JFrame {
     JList<ButtonItem> resultJList;
 
-    public SearchResultScreen(Listing[] results, DatabaseConnectionHandler databaseConnectionHandler) {
+    public SearchResultScreen(List<Listing> results, DatabaseConnectionHandler databaseConnectionHandler) {
 
         // Set the layout manager for the JFrame
         setLayout(new BorderLayout());

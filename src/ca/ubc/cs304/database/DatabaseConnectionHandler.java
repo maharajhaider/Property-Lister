@@ -1,5 +1,6 @@
 package ca.ubc.cs304.database;
 
+import ca.ubc.cs304.model.ContractorCompany;
 import ca.ubc.cs304.model.EntityModel;
 import ca.ubc.cs304.model.HasID;
 import ca.ubc.cs304.model.Listing;
@@ -160,35 +161,7 @@ public class DatabaseConnectionHandler {
         return new PrintablePreparedStatement(connection.prepareStatement(script), script, false);
     }
 
-    public Listing[] getListingInfo() {
-        List<Listing> result = new ArrayList<>();
-        try {
-            connection = DriverManager.getConnection(ORACLE_URL, "ora_bansal21", "a67617654");
-            connection.setAutoCommit(false);
-            String query = "SELECT * FROM Listing";
-            PrintablePreparedStatement ps = getPS(query);
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()) {
-                Listing listing = new Listing(
-                        rs.getInt("listingId"),
-                        rs.getString("streetAddress").trim(),
-                        Province.fromLabel(rs.getString("province").trim()),
-                        rs.getString("cityName").trim(),
-                        ListingType.fromLabel(rs.getString("type").trim()),
-                        rs.getInt("price"),
-                        rs.getInt("active"));
-                result.add(listing);
-            }
-
-            rs.close();
-            ps.close();
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-        }
-        return result.toArray(new Listing[0]);
-    }
-    public Listing[] getListingInfo(String startOfAddress) {
+    public List<Listing> getListingInfo(String startOfAddress) {
         List<Listing> result = new ArrayList<>();
         try {
             String query = "SELECT * FROM Listing" +
@@ -213,7 +186,7 @@ public class DatabaseConnectionHandler {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        return result.toArray(new Listing[0]);
+        return result;
     }
 
     public Integer generateId(HasID model) {
@@ -226,7 +199,7 @@ public class DatabaseConnectionHandler {
                 int largestId = rs.getInt(1);
                 id = largestId + 1;
             } else {
-                id =  model.defaultId();
+                id = model.defaultId();
             }
 
             ps.close();
@@ -236,6 +209,26 @@ public class DatabaseConnectionHandler {
         }
 
         return null;
+    }
+
+    public <T extends EntityModel> List<T> getAllEntities(Class<T> type) {
+        List<T> result = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM " + type.getSimpleName();
+            PrintablePreparedStatement ps = getPS(query);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                T newTuple = type.getConstructor(ResultSet.class).newInstance(rs);
+                result.add(newTuple);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return result;
     }
 
     public void deleteListing(int listingId) {

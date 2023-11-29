@@ -1,6 +1,16 @@
 package ca.ubc.cs304.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public record Developer(Integer developerLicenseId, String name) implements HasID {
+    public Developer(ResultSet rs) throws SQLException {
+        this(
+                rs.getInt("developerLicenseID"),
+                rs.getString("name")
+        );
+    }
+
     @Override
     public String insertStatement(Integer id) {
         return "INSERT INTO Developer VALUES (%d, '%s')"

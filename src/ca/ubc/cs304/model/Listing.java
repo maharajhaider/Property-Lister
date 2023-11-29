@@ -3,6 +3,9 @@ package ca.ubc.cs304.model;
 import ca.ubc.cs304.model.enums.ListingType;
 import ca.ubc.cs304.model.enums.Province;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public record Listing(
         Integer listingId,
         String streetAddress,
@@ -11,11 +14,22 @@ public record Listing(
         ListingType type,
         Integer price,
         Integer active) implements HasID {
-
     public Listing {
         if (active != 0 && active != 1) {
             throw new IllegalArgumentException("active must be 0 or 1");
         }
+    }
+
+    public Listing(ResultSet rs) throws SQLException {
+        this(
+                rs.getInt("listingId"),
+                rs.getString("streetAddress").trim(),
+                Province.fromLabel(rs.getString("province").trim()),
+                rs.getString("cityName").trim(),
+                ListingType.fromLabel(rs.getString("type").trim()),
+                rs.getInt("price"),
+                rs.getInt("active")
+        );
     }
     
     @Override

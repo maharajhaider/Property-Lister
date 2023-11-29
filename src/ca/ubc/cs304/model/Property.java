@@ -1,6 +1,8 @@
 package ca.ubc.cs304.model;
 
 import ca.ubc.cs304.model.enums.Province;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public record Property(
         String streetAddress,
@@ -17,6 +19,21 @@ public record Property(
         if (hasAC != 0 && hasAC != 1) {
             throw new IllegalArgumentException("hasAC must be 0 or 1");
         }
+    }
+
+    public Property(ResultSet rs) throws SQLException {
+        this(
+                rs.getString("streetAddress"),
+                Province.fromLabel(rs.getString("province")),
+                rs.getString("cityName"),
+                rs.getInt("developerLicenseID"),
+                rs.getInt("strataID"),
+                rs.getString("phone"),
+                rs.getInt("bedrooms"),
+                rs.getInt("bathroom"),
+                rs.getInt("sizeInSqft"),
+                rs.getInt("hasAC")
+        );
     }
 
     @Override
