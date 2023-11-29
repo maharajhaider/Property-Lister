@@ -22,10 +22,10 @@ public class MaintainsForm extends JFrame {
         setSize(400, 300);
         setLayout(new GridLayout(6, 2));
 
-        // Create and add components
-        add(new JLabel("Contractor ID:"));
-        contractorIdTextField = new JTextField();
-        add(contractorIdTextField);
+//        // Create and add components
+//        add(new JLabel("Contractor ID:"));
+//        contractorIdTextField = new JTextField();
+//        add(contractorIdTextField);
 
         add(new JLabel("Street Address:"));
         streetAddressTextField = new JTextField();
@@ -53,14 +53,15 @@ public class MaintainsForm extends JFrame {
 
     private void saveMaintains() {
         // Get values from the form
-        int contractorId = Integer.parseInt(contractorIdTextField.getText());
+
+
         String streetAddress = streetAddressTextField.getText();
         Province selectedProvince = (Province) provinceComboBox.getSelectedItem();
         String cityName = cityNameTextField.getText();
         String areaOfResponsibility = areaOfResponsibilityTextField.getText();
 
         // Create a Maintains object
-        EntityModel maintains = new Maintains(contractorId, streetAddress, selectedProvince, cityName, areaOfResponsibility);
+        EntityModel maintains = new Maintains(null, streetAddress, selectedProvince, cityName, areaOfResponsibility);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         databaseConnectionHandler.insertData(maintains, null);
     }

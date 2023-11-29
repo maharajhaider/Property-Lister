@@ -39,7 +39,7 @@ public class PropertyForm extends JFrame {
         addComboBoxWithLabel("Province:");
         addTextFieldWithLabel("City Name:", cityNameTextField);
         addTextFieldWithLabel("Developer License ID:", developerLicenseIDTextField);
-        addTextFieldWithLabel("Strata ID:", strataIDTextField);
+//        addTextFieldWithLabel("Strata ID:", strataIDTextField);
         addTextFieldWithLabel("Phone:", phoneTextField);
         addTextFieldWithLabel("Bedrooms:", bedroomsTextField);
         addTextFieldWithLabel("Bathrooms:", bathroomsTextField);
@@ -124,7 +124,7 @@ public class PropertyForm extends JFrame {
         Province selectedProvince = (Province) provinceComboBox.getSelectedItem();
         String cityName = cityNameTextField.getText();
         int developerLicenseID = Integer.parseInt(developerLicenseIDTextField.getText());
-        int strataID = Integer.parseInt(strataIDTextField.getText());
+//        int strataID = Integer.parseInt(strataIDTextField.getText());
         String phone = phoneTextField.getText();
         int bedrooms = Integer.parseInt(bedroomsTextField.getText());
         int bathrooms = Integer.parseInt(bathroomsTextField.getText());
@@ -136,7 +136,7 @@ public class PropertyForm extends JFrame {
         // Create a Property object
         EntityModel property = new Property(
                 streetAddress, selectedProvince, cityName,
-                developerLicenseID, strataID, phone,
+                developerLicenseID, null, phone,
                 bedrooms, bathrooms, sizeInSqft, hasAC
         );
 

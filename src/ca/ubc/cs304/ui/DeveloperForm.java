@@ -2,7 +2,6 @@ package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.Developer;
-import ca.ubc.cs304.model.EntityModel;
 import ca.ubc.cs304.model.HasID;
 
 import javax.swing.*;
@@ -20,9 +19,9 @@ public class DeveloperForm extends JFrame {
         setLayout(new GridLayout(3, 2));
 
         // Create and add components
-        add(new JLabel("Developer License ID:"));
-        licenseIdTextField = new JTextField();
-        add(licenseIdTextField);
+//        add(new JLabel("Developer License ID:"));
+//        licenseIdTextField = new JTextField();
+//        add(licenseIdTextField);
 
         add(new JLabel("Name:"));
         nameTextField = new JTextField();

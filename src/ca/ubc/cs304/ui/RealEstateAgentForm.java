@@ -1,7 +1,6 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.model.EntityModel;
 import ca.ubc.cs304.model.HasID;
 import ca.ubc.cs304.model.RealEstateAgent;
 
@@ -26,7 +25,7 @@ public class RealEstateAgentForm extends JFrame {
         addTextFieldWithLabel("Phone:", phoneTextField);
         addTextFieldWithLabel("Agent License ID:", agentLicenseIdTextField);
         addTextFieldWithLabel("Years of Experience:", yearsOfExpTextField);
-        addTextFieldWithLabel("Agency ID:", agencyIdTextField);
+//        addTextFieldWithLabel("Agency ID:", agencyIdTextField);
 
         validationLabel = new JLabel("");
         validationLabel.setForeground(Color.RED); // Set the text color to red for better visibility

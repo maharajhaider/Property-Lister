@@ -2,7 +2,6 @@ package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.ContractorCompany;
-import ca.ubc.cs304.model.EntityModel;
 import ca.ubc.cs304.model.HasID;
 import ca.ubc.cs304.model.enums.ChargeSchedule;
 
@@ -22,9 +21,9 @@ public class ContractorCompanyForm extends JFrame {
         setLayout(new GridLayout(4, 2));
 
         // Create and add components
-        add(new JLabel("Contractor ID:"));
-        contractorIdTextField = new JTextField();
-        add(contractorIdTextField);
+//        add(new JLabel("Contractor ID:"));
+//        contractorIdTextField = new JTextField();
+//        add(contractorIdTextField);
 
         add(new JLabel("Name:"));
         nameTextField = new JTextField();

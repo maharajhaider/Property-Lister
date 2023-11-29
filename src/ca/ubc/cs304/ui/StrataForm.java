@@ -1,7 +1,6 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.model.EntityModel;
 import ca.ubc.cs304.model.HasID;
 import ca.ubc.cs304.model.Strata;
 
@@ -21,7 +20,7 @@ public class StrataForm extends JFrame {
         setLayout(new GridLayout(3, 2, 10, 10)); // Added spacing between rows and columns
 
         // Create and add components with labels
-        addTextFieldWithLabel("Strata ID:", strataIdTextField);
+//        addTextFieldWithLabel("Strata ID:", strataIdTextField);
         addTextFieldWithLabel("Name:", nameTextField);
 
         validationLabel = new JLabel("");
