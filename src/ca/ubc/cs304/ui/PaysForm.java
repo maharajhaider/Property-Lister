@@ -24,9 +24,9 @@ public class PaysForm extends JFrame {
         homeownerPhoneTextField = new JTextField();
         add(homeownerPhoneTextField);
 
-//        add(new JLabel("Strata ID:"));
-//        strataIdTextField = new JTextField();
-//        add(strataIdTextField);
+        add(new JLabel("Strata ID:"));
+        strataIdTextField = new JTextField();
+        add(strataIdTextField);
 
         add(new JLabel("Fee:"));
         feeTextField = new JTextField();
@@ -43,11 +43,11 @@ public class PaysForm extends JFrame {
     private void savePays() {
         // Get values from the form
         String homeownerPhone = homeownerPhoneTextField.getText();
-//        int strataId = Integer.parseInt(strataIdTextField.getText());
+        int strataId = Integer.parseInt(strataIdTextField.getText());
         int fee = Integer.parseInt(feeTextField.getText());
 
         // Create a Pays object
-        EntityModel pays = new Pays(homeownerPhone, null, fee);
+        EntityModel pays = new Pays(homeownerPhone, strataId, fee);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         databaseConnectionHandler.insertData(pays, null);
     }

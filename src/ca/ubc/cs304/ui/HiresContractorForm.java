@@ -23,9 +23,9 @@ public class HiresContractorForm extends JFrame {
         homeownerPhoneTextField = new JTextField();
         add(homeownerPhoneTextField);
 
-//        add(new JLabel("Contractor ID:"));
-//        contractorIdTextField = new JTextField();
-//        add(contractorIdTextField);
+        add(new JLabel("Contractor ID:"));
+        contractorIdTextField = new JTextField();
+        add(contractorIdTextField);
 
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e -> saveHiresContractor());

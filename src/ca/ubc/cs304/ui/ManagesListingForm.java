@@ -23,9 +23,9 @@ public class ManagesListingForm extends JFrame {
         realEstateAgentPhoneTextField = new JTextField();
         add(realEstateAgentPhoneTextField);
 
-//        add(new JLabel("Listing ID:"));
-//        listingIdTextField = new JTextField();
-//        add(listingIdTextField);
+        add(new JLabel("Listing ID:"));
+        listingIdTextField = new JTextField();
+        add(listingIdTextField);
 
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e -> saveManagesListing());
@@ -38,10 +38,10 @@ public class ManagesListingForm extends JFrame {
     private void saveManagesListing() {
         // Get values from the form
         String realEstateAgentPhone = realEstateAgentPhoneTextField.getText();
-//        int listingId = Integer.parseInt(listingIdTextField.getText());
+        int listingId = Integer.parseInt(listingIdTextField.getText());
 
         // Create a ManagesListing object
-        EntityModel managesListing = new ManagesListing(realEstateAgentPhone, null);
+        EntityModel managesListing = new ManagesListing(realEstateAgentPhone, listingId);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         databaseConnectionHandler.insertData(managesListing, null);
     }
