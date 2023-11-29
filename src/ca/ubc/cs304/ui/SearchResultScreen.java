@@ -86,7 +86,8 @@ public class SearchResultScreen extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ListingView(new Listing[] {listing});
+                System.out.println("View clicked");
+                new ListingView(listing).setVisible(true);
             }
         }
     }

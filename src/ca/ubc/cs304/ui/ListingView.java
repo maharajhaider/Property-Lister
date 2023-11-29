@@ -142,10 +142,11 @@ public class ListingView extends JFrame {
         backButton.setBounds(10, 220, 80, 30);
         add(backButton);
 
-        editButton.setBounds(100, 320, 80, 30);
+        editButton.setBounds(100, 220, 80, 30);
+        editButton.setVisible(true);
         add(editButton);
 
-        deleteButton.setBounds(200, 320, 80, 30);
+        deleteButton.setBounds(200, 220, 80, 30);
         add(deleteButton);
 
         // Add action listener for the back button
@@ -162,7 +163,7 @@ public class ListingView extends JFrame {
 
         // Add action listener for the deleteButton
         deleteButton.addActionListener(e -> {
-            databaseConnectionHandler.deleteListing(listings[0].listingId()); //change to listing only
+            databaseConnectionHandler.deleteListing(listing.listingId()); //change to listing only
         });
 
 
