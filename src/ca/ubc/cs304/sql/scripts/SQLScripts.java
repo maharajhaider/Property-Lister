@@ -4,15 +4,15 @@ public final class SQLScripts {
     public static final String CREATE_TABLE_PERSON =
                     "CREATE TABLE Person " +
                     "(" +
-                        "homeownerPhone CHAR(20) PRIMARY KEY, " +
+                        "phone CHAR(20) PRIMARY KEY, " +
                         "name  CHAR(255), " +
                         "email CHAR(255)" +
                     ")";
     public static final String CREATE_TABLE_HOMEOWNER =
                     "CREATE TABLE Homeowner " +
                     "(" +
-                        "homeownerPhone CHAR(20) PRIMARY KEY, " +
-                        "FOREIGN KEY (homeownerPhone) REFERENCES Person (homeownerPhone) " +
+                        "phone CHAR(20) PRIMARY KEY, " +
+                        "FOREIGN KEY (phone) REFERENCES Person (phone) " +
                             "ON DELETE CASCADE" +
                     ")";
     public static final String CREATE_TABLE_REAL_ESTATE_AGENCY =
@@ -25,11 +25,11 @@ public final class SQLScripts {
     public static final String CREATE_TABLE_REAL_ESTATE_AGENT =
                     "CREATE TABLE RealEstateAgent " +
                     "(" +
-                        "homeownerPhone          CHAR(20) PRIMARY KEY, " +
+                        "phone          CHAR(20) PRIMARY KEY, " +
                         "agentLicenseID INTEGER UNIQUE, " +
                         "yearsOfExp     INTEGER, " +
                         "agencyID       INTEGER NOT NULL, " +
-                        "FOREIGN KEY (homeownerPhone) REFERENCES Person (homeownerPhone) " +
+                        "FOREIGN KEY (phone) REFERENCES Person (phone) " +
                             "ON DELETE CASCADE, " +
                         "FOREIGN KEY (agencyID) REFERENCES RealEstateAgency (agencyID) " +
                             "ON DELETE CASCADE" +
@@ -78,7 +78,7 @@ public final class SQLScripts {
                         "FOREIGN KEY (province, cityName) REFERENCES City (province, name) " +
                             "ON DELETE CASCADE, " +
                         "FOREIGN KEY (strataID) REFERENCES Strata (strataID), " +
-                        "FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (homeownerPhone), " +
+                        "FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone), " +
                         "FOREIGN KEY (developerLicenseID) REFERENCES Developer (developerLicenseID) " +
                             "ON DELETE CASCADE" +
                     ")";
@@ -95,7 +95,7 @@ public final class SQLScripts {
                         "active               NUMBER(1, 0)," +
                         "FOREIGN KEY (streetAddress, cityName, province) REFERENCES Property (streetAddress, cityName, province)" +
                         "    ON DELETE CASCADE," +
-                        "FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (homeownerPhone)," +
+                        "FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (phone)," +
                         "UNIQUE (streetAddress, cityName, province)" +
                     ")";
     public static final String CREATE_TABLE_HIRES_REA =
@@ -104,9 +104,9 @@ public final class SQLScripts {
                         "homeownerPhone       CHAR(20), " +
                         "realEstateAgentPhone CHAR(20), " +
                         "PRIMARY KEY (homeownerPhone, realEstateAgentPhone), " +
-                        "FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (homeownerPhone) " +
+                        "FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone) " +
                             "ON DELETE CASCADE, " +
-                        "FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (homeownerPhone) " +
+                        "FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (phone) " +
                             "ON DELETE CASCADE" +
                     ")";
     public static final String CREATE_TABLE_HIRES_CONTRACTOR =
@@ -115,7 +115,7 @@ public final class SQLScripts {
                         "homeownerPhone CHAR(20), " +
                         "contractorID   INTEGER, " +
                         "PRIMARY KEY (homeownerPhone, contractorID), " +
-                        "FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (homeownerPhone) " +
+                        "FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone) " +
                             "ON DELETE CASCADE, " +
                         "FOREIGN KEY (contractorID) REFERENCES ContractorCompany (contractorID) " +
                             "ON DELETE CASCADE" +
@@ -127,7 +127,7 @@ public final class SQLScripts {
                         "strataID       INTEGER, " +
                         "fee            INTEGER, " +
                         "PRIMARY KEY (homeownerPhone, strataID), " +
-                        "FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (homeownerPhone) " +
+                        "FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone) " +
                             "ON DELETE CASCADE, " +
                         "FOREIGN KEY (strataID) REFERENCES Strata (strataID) " +
                             "ON DELETE CASCADE" +

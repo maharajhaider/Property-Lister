@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public record Homeowner(String phone) implements EntityModel {
     public Homeowner(ResultSet rs) throws SQLException {
-        this(rs.getString("homeownerPhone").trim());
+        this(rs.getString("phone").trim());
     }
 
     @Override

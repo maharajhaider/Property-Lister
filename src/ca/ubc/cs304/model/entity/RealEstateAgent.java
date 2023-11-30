@@ -7,7 +7,7 @@ public record RealEstateAgent(String phone, Integer agentLicenseId, Integer year
         implements HasID {
     public RealEstateAgent(ResultSet rs) throws SQLException {
         this(
-                rs.getString("homeownerPhone").trim(),
+                rs.getString("phone").trim(),
                 rs.getInt("agentLicenseID"),
                 rs.getInt("yearsOfExp"),
                 rs.getInt("agencyID")
