@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public record Person(String phone, String name, String email) implements EntityModel {
     public Person(ResultSet rs) throws SQLException {
         this(
-                rs.getString("phone").trim(),
+                rs.getString("homeownerPhone").trim(),
                 rs.getString("name").trim(),
                 rs.getString("email").trim()
         );

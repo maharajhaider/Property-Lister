@@ -45,7 +45,6 @@ public class DatabaseConnectionHandler {
         CREATE_TABLE_DDL.put("hirescontractor", CREATE_TABLE_HIRES_CONTRACTOR);
         CREATE_TABLE_DDL.put("pays", CREATE_TABLE_PAYS);
         CREATE_TABLE_DDL.put("maintains", CREATE_TABLE_MAINTAINS);
-        CREATE_TABLE_DDL.put("manageslisting", CREATE_TABLE_MANAGES_LISTING);
     }
 
     private Connection connection = null;
@@ -171,6 +170,7 @@ public class DatabaseConnectionHandler {
             while(rs.next()) {
                 Listing listing = new Listing(
                         rs.getInt("listingId"),
+                        rs.getString("realEstateAgentPhone").trim(),
                         rs.getString("streetAddress").trim(),
                         Province.fromLabel(rs.getString("province").trim()),
                         rs.getString("cityName").trim(),

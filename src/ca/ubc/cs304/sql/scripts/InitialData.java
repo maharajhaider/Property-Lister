@@ -84,11 +84,11 @@ public final class InitialData {
 
     private static final List<EntityModel> LISTING_DATA =
             List.of(
-                    new Listing(5000001, "123 Main St", Province.BRITISH_COLUMBIA, "Vancouver", ListingType.SALE, 500000, 1),
-                    new Listing(5000002, "456 Elm St", Province.ONTARIO, "Toronto", ListingType.SALE, 700000, 1),
-                    new Listing(5000003, "2525 West Mall", Province.ONTARIO, "Toronto", ListingType.RENT, 2500, 1),
-                    new Listing(5000004, "6331 Thunderbird Cres", Province.ALBERTA, "Calgary", ListingType.SALE, 1000000, 1),
-                    new Listing(5000005, "202 Birch St", Province.MANITOBA, "Winnipeg", ListingType.RENT, 3000, 1));
+                    new Listing(5000001, "123 456 7890", "123 Main St", Province.BRITISH_COLUMBIA, "Vancouver", ListingType.SALE, 500000, 1),
+                    new Listing(5000002, "234 567 8901", "456 Elm St", Province.ONTARIO, "Toronto", ListingType.SALE, 700000, 1),
+                    new Listing(5000003, "345 678 9012", "2525 West Mall", Province.ONTARIO, "Toronto", ListingType.RENT, 2500, 1),
+                    new Listing(5000004, "456 789 0123", "6331 Thunderbird Cres", Province.ALBERTA, "Calgary", ListingType.SALE, 1000000, 1),
+                    new Listing(5000005, "164 551 5313", "202 Birch St", Province.MANITOBA, "Winnipeg", ListingType.RENT, 3000, 1));
 
     private static final List<EntityModel> HIRES_REA_DATA =
             List.of(
@@ -122,14 +122,6 @@ public final class InitialData {
                     new Maintains(3000004, "6331 Thunderbird Cres", Province.ALBERTA, "Calgary", "HVAC"),
                     new Maintains(3000005, "202 Birch St", Province.MANITOBA, "Winnipeg", "Roofing"));
 
-    private static final List<EntityModel> MANAGES_LISTING_DATA =
-            List.of(
-                    new ManagesListing("123 456 7890", 5000001),
-                    new ManagesListing("234 567 8901", 5000002),
-                    new ManagesListing("345 678 9012", 5000003),
-                    new ManagesListing("456 789 0123", 5000004),
-                    new ManagesListing("164 551 5313", 5000005));
-
     public static final List<EntityModel> INITIAL_DATA =
             Stream.of(
                     PERSON_DATA,
@@ -145,8 +137,7 @@ public final class InitialData {
                     HIRES_REA_DATA,
                     HIRES_CONTRACTOR_DATA,
                     PAYS_DATA,
-                    MAINTAINS_DATA,
-                    MANAGES_LISTING_DATA)
+                    MAINTAINS_DATA)
                     .flatMap(Collection::stream)
                     .toList();
 }

@@ -1,9 +1,5 @@
 package ca.ubc.cs304.ui;
 
-import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.model.entity.EntityModel;
-import ca.ubc.cs304.model.entity.ManagesListing;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -41,9 +37,9 @@ public class ManagesListingForm extends JFrame {
         int listingId = Integer.parseInt(listingIdTextField.getText());
 
         // Create a ManagesListing object
-        EntityModel managesListing = new ManagesListing(realEstateAgentPhone, listingId);
-        DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.insertData(managesListing, null);
+//        EntityModel managesListing = new ManagesListing(realEstateAgentPhone, listingId);
+//        DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
+//        databaseConnectionHandler.insertData(managesListing, null);
     }
 
     public static void main(String[] args) {
