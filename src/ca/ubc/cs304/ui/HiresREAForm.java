@@ -11,7 +11,8 @@ public class HiresREAForm extends JFrame {
     private JTextField homeownerPhoneTextField;
     private JTextField realEstateAgentPhoneTextField;
 
-    public HiresREAForm() {
+
+    public HiresREAForm(String phone,DatabaseConnectionHandler databaseConnectionHandler) {
         // Set up the JFrame
         setTitle("Hires REA Form");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,30 +24,37 @@ public class HiresREAForm extends JFrame {
         homeownerPhoneTextField = new JTextField();
         add(homeownerPhoneTextField);
 
-        add(new JLabel("Real Estate Agent Phone:"));
-        realEstateAgentPhoneTextField = new JTextField();
-        add(realEstateAgentPhoneTextField);
-
         JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(e -> saveHiresREA());
+        saveButton.addActionListener(e -> saveHiresREA(phone,databaseConnectionHandler));
         add(saveButton);
 
         // Display the form
         setVisible(true);
     }
 
-    private void saveHiresREA() {
+    public String validate(String input) {
+        if (input == null || (!input.contains(".") && !input.contains("@"))) {
+            return input;
+        } else {
+            return null; // Invalid string
+        }
+    }
+
+
+    private void saveHiresREA(String realEstateAgentPhone,DatabaseConnectionHandler databaseConnectionHandler) {
         // Get values from the form
-        String homeownerPhone = homeownerPhoneTextField.getText();
-        String realEstateAgentPhone = realEstateAgentPhoneTextField.getText();
+        String homeownerPhone = validate(homeownerPhoneTextField.getText());
+
+        if(homeownerPhone == null){
+            JOptionPane.showMessageDialog(this, "please do not use . or @");
+            return;
+        }
 
         // Create a HiresREA object
         EntityModel hiresREA = new HiresREA(homeownerPhone, realEstateAgentPhone);
-        DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
+//        DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         databaseConnectionHandler.insertData(hiresREA, null);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new HiresREAForm());
-    }
+
 }

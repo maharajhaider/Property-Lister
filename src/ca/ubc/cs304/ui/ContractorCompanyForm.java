@@ -41,10 +41,23 @@ public class ContractorCompanyForm extends JFrame {
         setVisible(true);
     }
 
+    public String validate(String input) {
+        if (input == null || (!input.contains(".") && !input.contains("@"))) {
+            return input;
+        } else {
+            return null; // Invalid string
+        }
+    }
     private void saveContractorCompany() {
         // Get values from the form
-        String companyName = nameTextField.getText();
+        String companyName = validate(nameTextField.getText());
         ChargeSchedule selectedChargeSchedule = (ChargeSchedule) chargeScheduleComboBox.getSelectedItem();
+
+
+        if(companyName == null){
+            JOptionPane.showMessageDialog(this, "please do not use . or @");
+            return;
+        }
 
         // Create a ContractorCompany object
         HasID contractorCompany = new ContractorCompany(null, companyName, selectedChargeSchedule);

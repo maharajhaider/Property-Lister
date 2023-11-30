@@ -40,11 +40,39 @@ public class PaysForm extends JFrame {
         setVisible(true);
     }
 
+    public String validate(String input) {
+        if (input == null || (!input.contains(".") && !input.contains("@"))) {
+            return input;
+        } else {
+            return null; // Invalid string
+        }
+    }
+
+    public int validate1(int value){
+
+        if(value >= 0){
+            return 1;
+        }else{
+            return -1;
+        }
+
+    }
+
     private void savePays() {
         // Get values from the form
-        String homeownerPhone = homeownerPhoneTextField.getText();
-        int strataId = Integer.parseInt(strataIdTextField.getText());
-        int fee = Integer.parseInt(feeTextField.getText());
+        String homeownerPhone = validate(homeownerPhoneTextField.getText());
+        int strataId = validate1(Integer.parseInt(strataIdTextField.getText()));
+        int fee = validate1(Integer.parseInt(feeTextField.getText()));
+
+        if(homeownerPhone == null){
+            JOptionPane.showMessageDialog(this, "please do not use . or @");
+            return;
+        }
+
+        if(strataId == -1 || fee == -1){
+            JOptionPane.showMessageDialog(this, "please make sure to have id/fee positive");
+            return;
+        }
 
         // Create a Pays object
         EntityModel pays = new Pays(homeownerPhone, strataId, fee);

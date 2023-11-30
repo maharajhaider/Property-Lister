@@ -35,9 +35,23 @@ public class DeveloperForm extends JFrame {
         setVisible(true);
     }
 
+    public String validate(String input) {
+        if (input == null || (!input.contains(".") && !input.contains("@"))) {
+            return input;
+        } else {
+            return null; // Invalid string
+        }
+    }
+
+
     private void saveDeveloper() {
         // Get values from the form
-        String developerName = nameTextField.getText();
+        String developerName = validate(nameTextField.getText());
+
+        if(developerName == null){
+            JOptionPane.showMessageDialog(this, "please do not use . or @");
+            return;
+        }
 
         // Create a Developer object
         HasID developer = new Developer(null, developerName);

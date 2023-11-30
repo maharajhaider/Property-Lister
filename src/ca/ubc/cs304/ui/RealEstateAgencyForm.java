@@ -52,11 +52,28 @@ public class RealEstateAgencyForm extends JFrame {
         JLabel label = new JLabel(text);
         return label;
     }
-
+    public String validate(String input) {
+        if (input == null || (!input.contains(".") && !input.contains("@"))) {
+            return input;
+        } else {
+            return null; // Invalid string
+        }
+    }
     private void saveRealEstateAgency() {
         // Get values from the form
-        String name = nameTextField.getText();
+        String name = validate(nameTextField.getText());
         double rating = Double.parseDouble(ratingTextField.getText());
+
+        if (name == null) {
+            JOptionPane.showMessageDialog(this, "Name is without . and @");
+            return;
+
+        }
+
+        if(rating <0 || rating > 5){
+            JOptionPane.showMessageDialog(this, "Rating is between 0 and 5");
+            return;
+        }
 
         // Create a RealEstateAgency object
         HasID realEstateAgency = new RealEstateAgency(null, name, rating);
