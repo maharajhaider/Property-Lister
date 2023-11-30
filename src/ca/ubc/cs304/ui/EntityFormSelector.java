@@ -50,7 +50,7 @@ public class EntityFormSelector extends JFrame {
 //        formMap.put("HiresREA", HiresREAForm::new);
         formMap.put("Homeowner", HomeownerForm::new);
 //        formMap.put("Maintains", MaintainsForm::new);
-        formMap.put("ManagesListing", ManagesListingForm::new);
+//        formMap.put("ManagesListing", ManagesListingForm::new);
 //        formMap.put("Pays", PaysForm::new);
         formMap.put("Person", PersonForm::new);
         formMap.put("Property", PropertyForm::new);
