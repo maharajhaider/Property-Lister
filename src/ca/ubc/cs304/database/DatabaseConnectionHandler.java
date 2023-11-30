@@ -262,6 +262,29 @@ public class DatabaseConnectionHandler {
         return null;
     }
 
+    public Boolean updateListing(int active, ListingType type, int price, int listingID) {
+
+        try {
+
+            String query = "UPDATE Listing" +
+                    " SET "+
+                    "type = '"  + type.name().toLowerCase() + "'," +
+                    "price ="  + price + "," +
+                    "active ="  + active + "\n" +
+                    "WHERE listingID =" + listingID;
+            PrintablePreparedStatement ps = getPS(query);
+            ps.executeQuery();
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+
+
     public void deleteListing(int listingId) {
         //
     }
