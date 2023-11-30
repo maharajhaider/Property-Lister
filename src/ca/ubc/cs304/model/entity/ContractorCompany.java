@@ -1,17 +1,15 @@
 package ca.ubc.cs304.model.entity;
 
 import ca.ubc.cs304.model.enums.ChargeSchedule;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import ca.ubc.cs304.util.SimpleResultSet;
 
 public record ContractorCompany(Integer contractorId, String name, ChargeSchedule chargeSchedule)
         implements HasID {
-    public ContractorCompany(ResultSet rs) throws SQLException {
+    public ContractorCompany(SimpleResultSet rs) {
         this(
                 rs.getInt("contractorID"),
-                rs.getString("name").trim(),
-                ChargeSchedule.fromLabel(rs.getString("chargeSchedule").trim())
+                rs.getString("name"),
+                rs.getString("chargeSchedule") == null? null: ChargeSchedule.fromLabel(rs.getString("chargeSchedule"))
         );
     }
 

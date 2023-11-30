@@ -1,14 +1,13 @@
 package ca.ubc.cs304.model.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import ca.ubc.cs304.util.SimpleResultSet;
 
 public record Person(String phone, String name, String email) implements EntityModel {
-    public Person(ResultSet rs) throws SQLException {
+    public Person(SimpleResultSet rs) {
         this(
-                rs.getString("phone").trim(),
-                rs.getString("name").trim(),
-                rs.getString("email").trim()
+                rs.getString("phone"),
+                rs.getString("name"),
+                rs.getString("email")
         );
     }
 

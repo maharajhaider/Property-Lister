@@ -1,5 +1,8 @@
 package ca.ubc.cs304.sql.scripts;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public final class SQLScripts {
     public static final String CREATE_TABLE_PERSON =
                     "CREATE TABLE Person " +
@@ -147,4 +150,23 @@ public final class SQLScripts {
                             "ON DELETE CASCADE, " +
                         "UNIQUE (streetAddress, province, cityName, areaOfResponsibility)" +
                     ")";
+    public static final List<String> CREATE_TABLES;
+
+    static {
+        CREATE_TABLES = new LinkedList<>();
+        CREATE_TABLES.add(CREATE_TABLE_PERSON);
+        CREATE_TABLES.add(CREATE_TABLE_HOMEOWNER);
+        CREATE_TABLES.add(CREATE_TABLE_REAL_ESTATE_AGENCY);
+        CREATE_TABLES.add(CREATE_TABLE_REAL_ESTATE_AGENT);
+        CREATE_TABLES.add(CREATE_TABLE_DEVELOPER);
+        CREATE_TABLES.add(CREATE_TABLE_CONTRACTOR_COMPANY);
+        CREATE_TABLES.add(CREATE_TABLE_STRATA);
+        CREATE_TABLES.add(CREATE_TABLE_CITY);
+        CREATE_TABLES.add(CREATE_TABLE_PROPERTY);
+        CREATE_TABLES.add(CREATE_TABLE_LISTING);
+        CREATE_TABLES.add(CREATE_TABLE_HIRES_REA);
+        CREATE_TABLES.add(CREATE_TABLE_HIRES_CONTRACTOR);
+        CREATE_TABLES.add(CREATE_TABLE_PAYS);
+        CREATE_TABLES.add(CREATE_TABLE_MAINTAINS);
+    }
 }

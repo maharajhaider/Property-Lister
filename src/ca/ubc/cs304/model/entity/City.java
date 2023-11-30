@@ -1,15 +1,13 @@
 package ca.ubc.cs304.model.entity;
 
 import ca.ubc.cs304.model.enums.Province;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import ca.ubc.cs304.util.SimpleResultSet;
 
 public record City(Province province, String name, Double taxRate) implements EntityModel {
-    public City(ResultSet rs) throws SQLException {
+    public City(SimpleResultSet rs) {
         this(
-                Province.fromLabel(rs.getString("province").trim()),
-                rs.getString("name").trim(),
+                rs.getString("province") == null? null: Province.fromLabel(rs.getString("province")),
+                rs.getString("name"),
                 rs.getDouble("taxRate")
         );
     }

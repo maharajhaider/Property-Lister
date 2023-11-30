@@ -1,8 +1,7 @@
 package ca.ubc.cs304.model.entity;
 
 import ca.ubc.cs304.model.enums.Province;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import ca.ubc.cs304.util.SimpleResultSet;
 
 public record Maintains(
         Integer contractorId,
@@ -10,13 +9,13 @@ public record Maintains(
         Province province,
         String cityName,
         String areaOfResponsibility) implements EntityModel {
-    public Maintains(ResultSet rs) throws SQLException {
+    public Maintains(SimpleResultSet rs) {
         this(
                 rs.getInt("contractorID"),
-                rs.getString("streetAddress").trim(),
-                Province.fromLabel(rs.getString("province").trim()),
-                rs.getString("cityName").trim(),
-                rs.getString("areaOfResponsibility").trim()
+                rs.getString("streetAddress"),
+                rs.getString("province") == null? null: Province.fromLabel(rs.getString("province")),
+                rs.getString("cityName"),
+                rs.getString("areaOfResponsibility")
         );
     }
 

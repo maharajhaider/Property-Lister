@@ -1,13 +1,12 @@
 package ca.ubc.cs304.model.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import ca.ubc.cs304.util.SimpleResultSet;
 
 public record RealEstateAgent(String phone, Integer agentLicenseId, Integer yearsOfExp, Integer agencyId)
         implements HasID {
-    public RealEstateAgent(ResultSet rs) throws SQLException {
+    public RealEstateAgent(SimpleResultSet rs) {
         this(
-                rs.getString("phone").trim(),
+                rs.getString("phone"),
                 rs.getInt("agentLicenseID"),
                 rs.getInt("yearsOfExp"),
                 rs.getInt("agencyID")

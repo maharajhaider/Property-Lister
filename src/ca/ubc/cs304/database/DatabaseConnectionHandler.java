@@ -1,14 +1,13 @@
 package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.model.ListingInfo;
-import ca.ubc.cs304.model.entity.EntityModel;
-import ca.ubc.cs304.model.entity.HasID;
-import ca.ubc.cs304.model.entity.Listing;
-import ca.ubc.cs304.model.entity.Property;
+import ca.ubc.cs304.model.entity.*;
 import ca.ubc.cs304.model.enums.ListingType;
 import ca.ubc.cs304.model.enums.Province;
 import ca.ubc.cs304.util.PrintablePreparedStatement;
+import ca.ubc.cs304.util.SimpleResultSet;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -29,24 +28,24 @@ public class DatabaseConnectionHandler {
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
 
-    private static final Map<String, String> CREATE_TABLE_DDL;
+    private static final Map<String, Class<? extends EntityModel>> TABLES_AND_ENTITIES;
 
     static {
-        CREATE_TABLE_DDL = new LinkedHashMap<>();
-        CREATE_TABLE_DDL.put("person", CREATE_TABLE_PERSON);
-        CREATE_TABLE_DDL.put("homeowner", CREATE_TABLE_HOMEOWNER);
-        CREATE_TABLE_DDL.put("realestateagency", CREATE_TABLE_REAL_ESTATE_AGENCY);
-        CREATE_TABLE_DDL.put("realestateagent", CREATE_TABLE_REAL_ESTATE_AGENT);
-        CREATE_TABLE_DDL.put("developer", CREATE_TABLE_DEVELOPER);
-        CREATE_TABLE_DDL.put("contractorcompany", CREATE_TABLE_CONTRACTOR_COMPANY);
-        CREATE_TABLE_DDL.put("strata", CREATE_TABLE_STRATA);
-        CREATE_TABLE_DDL.put("city", CREATE_TABLE_CITY);
-        CREATE_TABLE_DDL.put("property", CREATE_TABLE_PROPERTY);
-        CREATE_TABLE_DDL.put("listing", CREATE_TABLE_LISTING);
-        CREATE_TABLE_DDL.put("hiresrea", CREATE_TABLE_HIRES_REA);
-        CREATE_TABLE_DDL.put("hirescontractor", CREATE_TABLE_HIRES_CONTRACTOR);
-        CREATE_TABLE_DDL.put("pays", CREATE_TABLE_PAYS);
-        CREATE_TABLE_DDL.put("maintains", CREATE_TABLE_MAINTAINS);
+        TABLES_AND_ENTITIES = new LinkedHashMap<>();
+        TABLES_AND_ENTITIES.put("Person", Person.class);
+        TABLES_AND_ENTITIES.put("Homeowner", Homeowner.class);
+        TABLES_AND_ENTITIES.put("RealEstateAgency", RealEstateAgency.class);
+        TABLES_AND_ENTITIES.put("RealEstateAgent", RealEstateAgent.class);
+        TABLES_AND_ENTITIES.put("Developer", Developer.class);
+        TABLES_AND_ENTITIES.put("ContractorCompany", ContractorCompany.class);
+        TABLES_AND_ENTITIES.put("Strata", Strata.class);
+        TABLES_AND_ENTITIES.put("City", City.class);
+        TABLES_AND_ENTITIES.put("Property", Property.class);
+        TABLES_AND_ENTITIES.put("Listing", Listing.class);
+        TABLES_AND_ENTITIES.put("HiresREA", HiresREA.class);
+        TABLES_AND_ENTITIES.put("HiresContractor", HiresContractor.class);
+        TABLES_AND_ENTITIES.put("Pays", Pays.class);
+        TABLES_AND_ENTITIES.put("Maintains", Maintains.class);
     }
 
     private Connection connection = null;
@@ -105,12 +104,10 @@ public class DatabaseConnectionHandler {
 
     private void dropTablesIfExist() {
         try {
-            String query = "select table_name from user_tables";
-            PrintablePreparedStatement ps =
-                    new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            PrintablePreparedStatement ps = getPS("placeholder");
 
-            Set<String> tableNames = CREATE_TABLE_DDL.keySet();
-            for (String table: tableNames) {
+            List<String> tables = getTables();
+            for (String table: tables) {
                 try {
                     ps.execute("DROP TABLE " + table + " CASCADE CONSTRAINTS");
                     System.out.println("Dropped " + table);
@@ -118,7 +115,8 @@ public class DatabaseConnectionHandler {
                     // Do nothing
                 }
             }
-
+            
+            connection.commit();
             ps.close();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
@@ -127,12 +125,14 @@ public class DatabaseConnectionHandler {
 
     private void createTables() {
         try {
-            for (String table : CREATE_TABLE_DDL.keySet()) {
-                String query = CREATE_TABLE_DDL.get(table);
-                PrintablePreparedStatement ps = getPS(query);
-                ps.executeUpdate();
-                ps.close();
+            PrintablePreparedStatement ps = getPS("placeholder");
+            for (String query : CREATE_TABLES) {
+                ps.executeUpdate(query);
+                System.out.println("Running Query: " + query);
             }
+
+            connection.commit();
+            ps.close();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
@@ -167,16 +167,16 @@ public class DatabaseConnectionHandler {
             String query = "SELECT * FROM Listing" +
                     " WHERE streetAddress LIKE '%"+ startOfAddress+"%'";
             PrintablePreparedStatement ps = getPS(query);
-            ResultSet rs = ps.executeQuery();
+            SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
 
             while(rs.next()) {
                 Listing listing = new Listing(
                         rs.getInt("listingId"),
-                        rs.getString("realEstateAgentPhone").trim(),
-                        rs.getString("streetAddress").trim(),
-                        Province.fromLabel(rs.getString("province").trim()),
-                        rs.getString("cityName").trim(),
-                        ListingType.fromLabel(rs.getString("type").trim()),
+                        rs.getString("realEstateAgentPhone"),
+                        rs.getString("streetAddress"),
+                        rs.getString("province") == null? null: Province.fromLabel(rs.getString("province")),
+                        rs.getString("cityName"),
+                        rs.getString("type") == null? null: ListingType.fromLabel(rs.getString("type")),
                         rs.getInt("price"),
                         rs.getInt("active"));
                 result.add(listing);
@@ -194,7 +194,7 @@ public class DatabaseConnectionHandler {
         try {
             String query = model.getIdSQL();
             PrintablePreparedStatement ps = getPS(query);
-            ResultSet rs = ps.executeQuery();
+            SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
             int id;
             if (rs.next()) {
                 int largestId = rs.getInt(1);
@@ -212,15 +212,15 @@ public class DatabaseConnectionHandler {
         return null;
     }
 
-    public <T extends EntityModel> List<T> getAllEntities(Class<T> type) {
+    public <T extends EntityModel> List<T> getAllTuples(Class<T> type) {
         List<T> result = new ArrayList<>();
         try {
             String query = "SELECT * FROM " + type.getSimpleName();
             PrintablePreparedStatement ps = getPS(query);
-            ResultSet rs = ps.executeQuery();
+            SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
 
             while(rs.next()) {
-                T newTuple = type.getConstructor(ResultSet.class).newInstance(rs);
+                T newTuple = type.getConstructor(SimpleResultSet.class).newInstance(rs);
                 result.add(newTuple);
             }
 
@@ -246,7 +246,7 @@ public class DatabaseConnectionHandler {
                     "AND Listing.cityName = Property.cityName " +
                     "WHERE Listing.listingID = " + listingID;
             PrintablePreparedStatement ps = getPS(query);
-            ResultSet rs = ps.executeQuery();
+            SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
 
             rs.next();
             Listing listing = new Listing(rs);
@@ -263,9 +263,7 @@ public class DatabaseConnectionHandler {
     }
 
     public Boolean updateListing(int active, ListingType type, int price, int listingID) {
-
         try {
-
             String query = "UPDATE Listing" +
                     " SET "+
                     "type = '"  + type.name().toLowerCase() + "'," +
@@ -283,7 +281,72 @@ public class DatabaseConnectionHandler {
         return true;
     }
 
+    public List<String> getTables() {
+        List<String> tablesFound = new ArrayList<>();
+        try {
+            String query = "SELECT table_name FROM user_tables";
+            PrintablePreparedStatement ps = getPS(query);
+            SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
 
+            List<String> tables = new ArrayList<>(TABLES_AND_ENTITIES.keySet());
+            List<String> tableLookup = tables
+                    .stream()
+                    .map(String::toLowerCase)
+                    .toList();
+            while(rs.next()) {
+                String table = rs.getString(1).toLowerCase();
+                if(tableLookup.contains(table)) {
+                    tablesFound.add(tables.get(tableLookup.indexOf(table)));
+                }
+            }
+
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return tablesFound.stream()
+                .map(table -> table.substring(0, 1).toUpperCase() + table.substring(1))
+                .toList();
+    }
+
+    public List<String> getColumns(String table) {
+        List<String> columns = new ArrayList<>();
+        try {
+            columns = Arrays
+                    .stream(TABLES_AND_ENTITIES.get(table).getDeclaredFields())
+                    .map(Field::getName)
+                    .toList();
+        } catch (SecurityException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return columns;
+    }
+
+    public List<EntityModel> projectData(String table, List<String> columns) {
+        List<EntityModel> result = new ArrayList<>();
+        if (columns == null || columns.size() == 0) {
+            return result;
+        }
+        try {
+            String columnList = columns
+                    .stream()
+                    .reduce((c1, c2) -> c1 + ", " + c2)
+                    .get();
+            String query = "SELECT " + columnList + " FROM " + table;
+            PrintablePreparedStatement ps = getPS(query);
+            SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
+
+            while(rs.next()) {
+                EntityModel newTuple = TABLES_AND_ENTITIES.get(table).getConstructor(SimpleResultSet.class).newInstance(rs);
+                result.add(newTuple);
+            }
+
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return result;
+    }
 
     public void deleteListing(int listingId) {
         //

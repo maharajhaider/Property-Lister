@@ -1,12 +1,11 @@
 package ca.ubc.cs304.model.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import ca.ubc.cs304.util.SimpleResultSet;
 
 public record Pays(String homeownerPhone, Integer strataId, Integer fee) implements EntityModel {
-    public Pays(ResultSet rs) throws SQLException {
+    public Pays(SimpleResultSet rs) {
         this(
-                rs.getString("homeownerPhone").trim(),
+                rs.getString("homeownerPhone"),
                 rs.getInt("strataID"),
                 rs.getInt("fee")
         );

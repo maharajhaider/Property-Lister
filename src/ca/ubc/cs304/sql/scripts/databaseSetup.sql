@@ -144,17 +144,6 @@ CREATE TABLE Maintains
     UNIQUE (streetAddress, province, cityName, areaOfResponsibility)
 );
 
-CREATE TABLE ManagesListing
-(
-    realEstateAgentPhone CHAR(20),
-    listingID            INTEGER,
-    PRIMARY KEY (listingID, realEstateAgentPhone),
-    FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (phone)
-        ON DELETE CASCADE,
-    FOREIGN KEY (listingID) REFERENCES Listing (listingID)
-        ON DELETE CASCADE
-);
-
 
 INSERT INTO Person (phone, name, email)
 VALUES ('123 456 7890', 'John Doe', 'john.doe@email.com');
@@ -245,19 +234,19 @@ INSERT INTO City (province, name, taxRate)
 VALUES ('ON', 'Toronto', 0.10);
 
 INSERT INTO Property
-(streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
+(streetAddress, province, cityName, developerLicenseID, strataID, homeownerPhone, bedrooms, bathrooms, sizeInSqft, hasAC)
 VALUES ('123 Main St', 'BC', 'Vancouver', 2000001, 4000001, '123 456 7890', 2, 2, 1200, 1);
 INSERT INTO Property
-(streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
+(streetAddress, province, cityName, developerLicenseID, strataID, homeownerPhone, bedrooms, bathrooms, sizeInSqft, hasAC)
 VALUES ('456 Elm St', 'ON', 'Toronto', 2000002, 4000001, '234 567 8901', 3, 2, 1500, 0);
 INSERT INTO Property
-(streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
+(streetAddress, province, cityName, developerLicenseID, strataID, homeownerPhone, bedrooms, bathrooms, sizeInSqft, hasAC)
 VALUES ('2525 West Mall', 'ON', 'Toronto', 2000001, 4000005, '345 678 9012', 3, 2, 1500, 0);
 INSERT INTO Property
-(streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
+(streetAddress, province, cityName, developerLicenseID, strataID, homeownerPhone, bedrooms, bathrooms, sizeInSqft, hasAC)
 VALUES ('6331 Thunderbird Cres', 'AB', 'Calgary', 2000001, 4000004, '456 789 0123', 3, 2, 1500, 1);
 INSERT INTO Property
-(streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
+(streetAddress, province, cityName, developerLicenseID, strataID, homeownerPhone, bedrooms, bathrooms, sizeInSqft, hasAC)
 VALUES ('202 Birch St', 'MB', 'Winnipeg', 2000003, 4000002, '164 551 5313', 3, 2, 1500, 1);
 
 INSERT INTO Listing (listingID, realEstateAgentPhone, streetAddress, province, cityName, type, price, active)

@@ -83,7 +83,7 @@ public class PropertyForm extends JFrame {
 
 
 
-        realEstateAgents = dbhandler.getAllEntities(RealEstateAgent.class);
+        realEstateAgents = dbhandler.getAllTuples(RealEstateAgent.class);
         List<String> realEstateNames = new ArrayList<>();
 
         for (RealEstateAgent realEstateAgent : realEstateAgents) {
@@ -123,7 +123,7 @@ public class PropertyForm extends JFrame {
                 contractorComboBox.setEnabled(true);
 
                 // Update the content of contractorComboBox
-                contractorDataList = dbhandler.getAllEntities(ContractorCompany.class);
+                contractorDataList = dbhandler.getAllTuples(ContractorCompany.class);
                 List<String> contractorNames = new ArrayList<>();
 
                 for (ContractorCompany contractorCompany : contractorDataList) {

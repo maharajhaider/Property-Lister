@@ -1,11 +1,10 @@
 package ca.ubc.cs304.model.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import ca.ubc.cs304.util.SimpleResultSet;
 
 public record Homeowner(String phone) implements EntityModel {
-    public Homeowner(ResultSet rs) throws SQLException {
-        this(rs.getString("phone").trim());
+    public Homeowner(SimpleResultSet rs) {
+        this(rs.getString("phone"));
     }
 
     @Override

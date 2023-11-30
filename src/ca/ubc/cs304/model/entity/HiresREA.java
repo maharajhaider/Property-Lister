@@ -1,13 +1,12 @@
 package ca.ubc.cs304.model.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import ca.ubc.cs304.util.SimpleResultSet;
 
 public record HiresREA(String homeownerPhone, String realEstateAgentPhone) implements EntityModel {
-    public HiresREA(ResultSet rs) throws SQLException {
+    public HiresREA(SimpleResultSet rs) {
         this(
-                rs.getString("homeownerPhone").trim(),
-                rs.getString("realEstateAgentPhone").trim()
+                rs.getString("homeownerPhone"),
+                rs.getString("realEstateAgentPhone")
         );
     }
 

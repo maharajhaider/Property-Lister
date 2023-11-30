@@ -1,13 +1,12 @@
 package ca.ubc.cs304.model.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import ca.ubc.cs304.util.SimpleResultSet;
 
 public record Developer(Integer developerLicenseId, String name) implements HasID {
-    public Developer(ResultSet rs) throws SQLException {
+    public Developer(SimpleResultSet rs) {
         this(
                 rs.getInt("developerLicenseID"),
-                rs.getString("name").trim()
+                rs.getString("name")
         );
     }
 
