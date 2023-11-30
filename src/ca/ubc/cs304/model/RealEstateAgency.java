@@ -13,7 +13,7 @@ public record RealEstateAgency(Integer agencyId, String name, Double rating) imp
     public RealEstateAgency(ResultSet rs) throws SQLException {
         this(
                 rs.getInt("agencyID"),
-                rs.getString("name"),
+                rs.getString("name").trim(),
                 rs.getDouble("rating")
         );
     }

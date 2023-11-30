@@ -13,10 +13,10 @@ public record Maintains(
     public Maintains(ResultSet rs) throws SQLException {
         this(
                 rs.getInt("contractorID"),
-                rs.getString("streetAddress"),
-                Province.fromLabel(rs.getString("province")),
-                rs.getString("cityName"),
-                rs.getString("areaOfResponsibility")
+                rs.getString("streetAddress").trim(),
+                Province.fromLabel(rs.getString("province").trim()),
+                rs.getString("cityName").trim(),
+                rs.getString("areaOfResponsibility").trim()
         );
     }
 

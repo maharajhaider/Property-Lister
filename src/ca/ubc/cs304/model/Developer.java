@@ -7,7 +7,7 @@ public record Developer(Integer developerLicenseId, String name) implements HasI
     public Developer(ResultSet rs) throws SQLException {
         this(
                 rs.getInt("developerLicenseID"),
-                rs.getString("name")
+                rs.getString("name").trim()
         );
     }
 

@@ -10,8 +10,8 @@ public record ContractorCompany(Integer contractorId, String name, ChargeSchedul
     public ContractorCompany(ResultSet rs) throws SQLException {
         this(
                 rs.getInt("contractorID"),
-                rs.getString("name"),
-                ChargeSchedule.fromLabel(rs.getString("chargeSchedule"))
+                rs.getString("name").trim(),
+                ChargeSchedule.fromLabel(rs.getString("chargeSchedule").trim())
         );
     }
 

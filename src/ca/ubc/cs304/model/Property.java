@@ -23,12 +23,12 @@ public record Property(
 
     public Property(ResultSet rs) throws SQLException {
         this(
-                rs.getString("streetAddress"),
-                Province.fromLabel(rs.getString("province")),
-                rs.getString("cityName"),
+                rs.getString("streetAddress").trim(),
+                Province.fromLabel(rs.getString("province").trim()),
+                rs.getString("cityName").trim(),
                 rs.getInt("developerLicenseID"),
                 rs.getInt("strataID"),
-                rs.getString("phone"),
+                rs.getString("phone").trim(),
                 rs.getInt("bedrooms"),
                 rs.getInt("bathroom"),
                 rs.getInt("sizeInSqft"),

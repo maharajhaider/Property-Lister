@@ -6,8 +6,8 @@ import java.sql.SQLException;
 public record HiresREA(String homeownerPhone, String realEstateAgentPhone) implements EntityModel {
     public HiresREA(ResultSet rs) throws SQLException {
         this(
-                rs.getString("homeownerPhone"),
-                rs.getString("realEstateAgentPhone")
+                rs.getString("homeownerPhone").trim(),
+                rs.getString("realEstateAgentPhone").trim()
         );
     }
 

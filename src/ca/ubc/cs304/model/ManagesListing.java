@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public record ManagesListing(String realEstateAgentPhone, Integer listingId) implements EntityModel {
     public ManagesListing(ResultSet rs) throws SQLException {
         this(
-                rs.getString("realEstateAgentPhone"),
+                rs.getString("realEstateAgentPhone").trim(),
                 rs.getInt("listingID")
         );
     }

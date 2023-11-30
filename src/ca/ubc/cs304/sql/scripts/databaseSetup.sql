@@ -177,59 +177,59 @@ INSERT INTO Homeowner (phone)
 VALUES ('164 551 5313');
 
 INSERT INTO RealEstateAgency (agencyID, name, rating)
-VALUES (01000001, 'ABC Realty', 4.5);
+VALUES (1000001, 'ABC Realty', 4.5);
 INSERT INTO RealEstateAgency (agencyID, name, rating)
-VALUES (01000002, 'XYZ Realty', 4.2);
+VALUES (1000002, 'XYZ Realty', 4.2);
 INSERT INTO RealEstateAgency (agencyID, name, rating)
-VALUES (01000003, 'PQR Realty', 4.0);
+VALUES (1000003, 'PQR Realty', 4.0);
 INSERT INTO RealEstateAgency (agencyID, name, rating)
-VALUES (01000004, 'Best Realtor', 4.2);
+VALUES (1000004, 'Best Realtor', 4.2);
 INSERT INTO RealEstateAgency (agencyID, name, rating)
-VALUES (01000005, 'Dream Inc', 3.5);
+VALUES (1000005, 'Dream Inc', 3.5);
 
 INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
-VALUES ('123 456 7890', 9876, 5, 01000001);
+VALUES ('123 456 7890', 6000001, 5, 1000001);
 INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
-VALUES ('234 567 8901', 6543, 3, 01000002);
+VALUES ('234 567 8901', 6000001, 3, 1000002);
 INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
-VALUES ('345 678 9012', 7890, 7, 01000003);
+VALUES ('345 678 9012', 6000001, 7, 1000003);
 INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
-VALUES ('456 789 0123', 7290, 0, 01000002);
+VALUES ('456 789 0123', 6000001, 0, 1000002);
 INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
-VALUES ('164 551 5313', 7990, 12, 01000005);
+VALUES ('164 551 5313', 6000001, 12, 1000005);
 
 INSERT INTO Developer (developerLicenseID, name)
-VALUES (02000001, 'ABC Developers');
+VALUES (2000001, 'ABC Developers');
 INSERT INTO Developer (developerLicenseID, name)
-VALUES (02000002, 'XYZ Builders');
+VALUES (2000002, 'XYZ Builders');
 INSERT INTO Developer (developerLicenseID, name)
-VALUES (02000003, 'UBC Builders');
+VALUES (2000003, 'UBC Builders');
 INSERT INTO Developer (developerLicenseID, name)
-VALUES (02000004, 'Thunder Developers');
+VALUES (2000004, 'Thunder Developers');
 INSERT INTO Developer (developerLicenseID, name)
-VALUES (02000005, 'Blue Inc');
+VALUES (2000005, 'Blue Inc');
 
 INSERT INTO ContractorCompany (contractorID, name, chargeSchedule)
-VALUES (03000001, 'FixIt Inc.', 'Hourly');
+VALUES (3000001, 'FixIt Inc.', 'Hourly');
 INSERT INTO ContractorCompany (contractorID, name, chargeSchedule)
-VALUES (03000002, 'FixAll Construction', 'Fixed Price');
+VALUES (3000002, 'FixAll Construction', 'Fixed Price');
 INSERT INTO ContractorCompany (contractorID, name, chargeSchedule)
-VALUES (03000003, 'Fix Roofing Inc', 'Hourly');
+VALUES (3000003, 'Fix Roofing Inc', 'Hourly');
 INSERT INTO ContractorCompany (contractorID, name, chargeSchedule)
-VALUES (03000004, 'New Maintenance Company', 'Hourly');
+VALUES (3000004, 'New Maintenance Company', 'Hourly');
 INSERT INTO ContractorCompany (contractorID, name, chargeSchedule)
-VALUES (03000005, 'FixAll Construction', 'Fixed Price');
+VALUES (3000005, 'FixAll Construction', 'Fixed Price');
 
 INSERT INTO Strata (strataID, name)
-VALUES (04000001, 'Sunny Heights Condos');
+VALUES (4000001, 'Sunny Heights Condos');
 INSERT INTO Strata (strataID, name)
-VALUES (04000002, 'Pineview Estates');
+VALUES (4000002, 'Pineview Estates');
 INSERT INTO Strata (strataID, name)
-VALUES (04000003, 'Thunderbird Condos');
+VALUES (4000003, 'Thunderbird Condos');
 INSERT INTO Strata (strataID, name)
-VALUES (04000004, 'KWTQ Estates');
+VALUES (4000004, 'KWTQ Estates');
 INSERT INTO Strata (strataID, name)
-VALUES (04000005, 'Marine Condos');
+VALUES (4000005, 'Marine Condos');
 
 INSERT INTO City (province, name, taxRate)
 VALUES ('AB', 'Calgary', 0.11);
@@ -244,30 +244,30 @@ VALUES ('ON', 'Toronto', 0.10);
 
 INSERT INTO Property
 (streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
-VALUES ('123 Main St', 'BC', 'Vancouver', 02000001, 04000001, '123 456 7890', 2, 2, 1200, 1);
+VALUES ('123 Main St', 'BC', 'Vancouver', 2000001, 4000001, '123 456 7890', 2, 2, 1200, 1);
 INSERT INTO Property
 (streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
-VALUES ('456 Elm St', 'ON', 'Toronto', 02000002, 04000001, '234 567 8901', 3, 2, 1500, 0);
+VALUES ('456 Elm St', 'ON', 'Toronto', 2000002, 4000001, '234 567 8901', 3, 2, 1500, 0);
 INSERT INTO Property
 (streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
-VALUES ('2525 West Mall', 'ON', 'Toronto', 02000001, 04000005, '345 678 9012', 3, 2, 1500, 0);
+VALUES ('2525 West Mall', 'ON', 'Toronto', 2000001, 4000005, '345 678 9012', 3, 2, 1500, 0);
 INSERT INTO Property
 (streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
-VALUES ('6331 Thunderbird Cres', 'AB', 'Calgary', 02000001, 04000004,'456 789 0123', 3, 2, 1500, 1);
+VALUES ('6331 Thunderbird Cres', 'AB', 'Calgary', 2000001, 4000004,'456 789 0123', 3, 2, 1500, 1);
 INSERT INTO Property
 (streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
-VALUES ('202 Birch St', 'MB', 'Winnipeg', 02000003, 04000002, '164 551 5313', 3, 2, 1500, 1);
+VALUES ('202 Birch St', 'MB', 'Winnipeg', 2000003, 4000002, '164 551 5313', 3, 2, 1500, 1);
 
 INSERT INTO Listing (listingID, streetAddress, province, cityName, type, price, active)
-VALUES (05000001, '123 Main St', 'BC', 'Vancouver', 'sale', 500000, 1);
+VALUES (5000001, '123 Main St', 'BC', 'Vancouver', 'sale', 500000, 1);
 INSERT INTO Listing (listingID, streetAddress, province, cityName, type, price, active)
-VALUES (05000002, '456 Elm St', 'ON', 'Toronto', 'sale', 700000, 1);
+VALUES (5000002, '456 Elm St', 'ON', 'Toronto', 'sale', 700000, 1);
 INSERT INTO Listing (listingID, streetAddress, province, cityName, type, price, active)
-VALUES (05000003, '2525 West Mall', 'ON', 'Toronto', 'rent', 500000, 1);
+VALUES (5000003, '2525 West Mall', 'ON', 'Toronto', 'rent', 500000, 1);
 INSERT INTO Listing (listingID, streetAddress, province, cityName, type, price, active)
-VALUES (05000004, '6331 Thunderbird Cres', 'AB', 'Calgary', 'sale', 100000, 1);
+VALUES (5000004, '6331 Thunderbird Cres', 'AB', 'Calgary', 'sale', 100000, 1);
 INSERT INTO Listing (listingID, streetAddress, province, cityName, type, price, active)
-VALUES (05000005, '202 Birch St', 'MB', 'Winnipeg', 'rent', 250000, 1);
+VALUES (5000005, '202 Birch St', 'MB', 'Winnipeg', 'rent', 250000, 1);
 
 INSERT INTO HiresREA (homeownerPhone, realEstateAgentPhone)
 VALUES ('123 456 7890', '234 567 8901');
@@ -281,45 +281,45 @@ INSERT INTO HiresREA (homeownerPhone, realEstateAgentPhone)
 VALUES ('456 789 0123', '164 551 5313');
 
 INSERT INTO HiresContractor (homeownerPhone, contractorID)
-VALUES ('123 456 7890', 03000001);
+VALUES ('123 456 7890', 3000001);
 INSERT INTO HiresContractor (homeownerPhone, contractorID)
-VALUES ('234 567 8901', 03000002);
+VALUES ('234 567 8901', 3000002);
 INSERT INTO HiresContractor (homeownerPhone, contractorID)
-VALUES ('345 678 9012', 03000003);
+VALUES ('345 678 9012', 3000003);
 INSERT INTO HiresContractor (homeownerPhone, contractorID)
-VALUES ('456 789 0123', 03000004);
+VALUES ('456 789 0123', 3000004);
 INSERT INTO HiresContractor (homeownerPhone, contractorID)
-VALUES ('164 551 5313', 03000005);
+VALUES ('164 551 5313', 3000005);
 
 INSERT INTO Pays (homeownerPhone, strataID, fee)
-VALUES ('123 456 7890', 04000001, 243);
+VALUES ('123 456 7890', 4000001, 243);
 INSERT INTO Pays (homeownerPhone, strataID, fee)
-VALUES ('234 567 8901', 04000002, 542);
+VALUES ('234 567 8901', 4000002, 542);
 INSERT INTO Pays (homeownerPhone, strataID, fee)
-VALUES ('345 678 9012', 04000003, 340);
+VALUES ('345 678 9012', 4000003, 340);
 INSERT INTO Pays (homeownerPhone, strataID, fee)
-VALUES ('456 789 0123', 04000004, 459);
+VALUES ('456 789 0123', 4000004, 459);
 INSERT INTO Pays (homeownerPhone, strataID, fee)
-VALUES ('164 551 5313', 04000005, 321);
+VALUES ('164 551 5313', 4000005, 321);
 
 INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfResponsibility)
-VALUES (03000001, '123 Main St', 'BC', 'Vancouver', 'Landscaping');
+VALUES (3000001, '123 Main St', 'BC', 'Vancouver', 'Landscaping');
 INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfResponsibility)
-VALUES (03000002, '456 Elm St', 'ON', 'Toronto', 'Plumbing');
+VALUES (3000002, '456 Elm St', 'ON', 'Toronto', 'Plumbing');
 INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfResponsibility)
-VALUES (03000003, '2525 West Mall', 'ON', 'Toronto', 'Electrical');
+VALUES (3000003, '2525 West Mall', 'ON', 'Toronto', 'Electrical');
 INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfResponsibility)
-VALUES (03000004, '6331 Thunderbird Cres', 'AB', 'Calgary', 'HVAC');
+VALUES (3000004, '6331 Thunderbird Cres', 'AB', 'Calgary', 'HVAC');
 INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfResponsibility)
-VALUES (03000005, '202 Birch St', 'MB', 'Winnipeg', 'Roofing');
+VALUES (3000005, '202 Birch St', 'MB', 'Winnipeg', 'Roofing');
 
 INSERT INTO ManagesListing (realEstateAgentPhone, listingID)
-VALUES ('123 456 7890', 05000001);
+VALUES ('123 456 7890', 5000001);
 INSERT INTO ManagesListing (realEstateAgentPhone, listingID)
-VALUES ('234 567 8901', 05000002);
+VALUES ('234 567 8901', 5000002);
 INSERT INTO ManagesListing (realEstateAgentPhone, listingID)
-VALUES ('345 678 9012', 05000003);
+VALUES ('345 678 9012', 5000003);
 INSERT INTO ManagesListing (realEstateAgentPhone, listingID)
-VALUES ('456 789 0123', 05000004);
+VALUES ('456 789 0123', 5000004);
 INSERT INTO ManagesListing (realEstateAgentPhone, listingID)
-VALUES ('164 551 5313', 05000005);
+VALUES ('164 551 5313', 5000005);

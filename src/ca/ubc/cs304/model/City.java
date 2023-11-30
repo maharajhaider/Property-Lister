@@ -8,8 +8,8 @@ import java.sql.SQLException;
 public record City(Province province, String name, Double taxRate) implements EntityModel {
     public City(ResultSet rs) throws SQLException {
         this(
-                Province.fromLabel(rs.getString("province")),
-                rs.getString("name"),
+                Province.fromLabel(rs.getString("province").trim()),
+                rs.getString("name").trim(),
                 rs.getDouble("taxRate")
         );
     }

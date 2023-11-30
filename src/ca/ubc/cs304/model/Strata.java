@@ -7,7 +7,7 @@ public record Strata(Integer strataId, String name) implements HasID {
     public Strata(ResultSet rs) throws SQLException {
         this(
                 rs.getInt("strataID"),
-                rs.getString("name")
+                rs.getString("name").trim()
         );
     }
 
