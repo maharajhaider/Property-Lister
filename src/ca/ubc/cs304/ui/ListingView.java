@@ -116,7 +116,7 @@ public class ListingView extends JFrame {
 
     private DatabaseConnectionHandler databaseConnectionHandler;
 
-    public ListingView(Listing listing) {
+    public ListingView(DatabaseConnectionHandler databaseConnectionHandler, Listing listing) {
         // Set up the frame
         setTitle("Listing View");
         setSize(400, 300); // Adjusted size
@@ -124,7 +124,7 @@ public class ListingView extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        databaseConnectionHandler = new DatabaseConnectionHandler();
+        this.databaseConnectionHandler = databaseConnectionHandler;
 
         // Create components
         listingTextArea = createStyledTextArea(listing);
@@ -158,12 +158,12 @@ public class ListingView extends JFrame {
 
         // Add action listener for the editButton
         editButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "Going to edit screen");
+            new EditListingScreen(databaseConnectionHandler,listing.listingId()).setVisible(true);
         });
 
         // Add action listener for the deleteButton
         deleteButton.addActionListener(e -> {
-            databaseConnectionHandler.deleteListing(listing.listingId()); //change to listing only
+            databaseConnectionHandler.deleteListing(listing.listingId());
         });
 
 

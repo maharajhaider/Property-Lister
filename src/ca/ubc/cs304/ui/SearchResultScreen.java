@@ -14,7 +14,10 @@ import java.util.List;
 public class SearchResultScreen extends JFrame {
     JList<ButtonItem> resultJList;
 
+    DatabaseConnectionHandler databaseConnectionHandler;
+
     public SearchResultScreen(List<Listing> results, DatabaseConnectionHandler databaseConnectionHandler) {
+        this.databaseConnectionHandler = databaseConnectionHandler;
 
         // Set the layout manager for the JFrame
         setLayout(new BorderLayout());
@@ -87,8 +90,7 @@ public class SearchResultScreen extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("View clicked");
-                new ListingView(listing).setVisible(true);
+                new ListingView(databaseConnectionHandler,listing).setVisible(true);
             }
         }
     }

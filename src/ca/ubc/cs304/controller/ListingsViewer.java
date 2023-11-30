@@ -1,7 +1,7 @@
 package ca.ubc.cs304.controller;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.model.Listing;
+import ca.ubc.cs304.model.entity.Listing;
 
 import java.util.Arrays;
 
