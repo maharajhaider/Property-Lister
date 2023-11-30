@@ -1,8 +1,10 @@
 package ca.ubc.cs304.database;
 
+import ca.ubc.cs304.model.ListingInfo;
 import ca.ubc.cs304.model.entity.EntityModel;
 import ca.ubc.cs304.model.entity.HasID;
 import ca.ubc.cs304.model.entity.Listing;
+import ca.ubc.cs304.model.entity.Property;
 import ca.ubc.cs304.model.enums.ListingType;
 import ca.ubc.cs304.model.enums.Province;
 import ca.ubc.cs304.util.PrintablePreparedStatement;
@@ -45,7 +47,6 @@ public class DatabaseConnectionHandler {
         CREATE_TABLE_DDL.put("hirescontractor", CREATE_TABLE_HIRES_CONTRACTOR);
         CREATE_TABLE_DDL.put("pays", CREATE_TABLE_PAYS);
         CREATE_TABLE_DDL.put("maintains", CREATE_TABLE_MAINTAINS);
-        CREATE_TABLE_DDL.put("manageslisting", CREATE_TABLE_MANAGES_LISTING);
     }
 
     private Connection connection = null;
@@ -171,6 +172,7 @@ public class DatabaseConnectionHandler {
             while(rs.next()) {
                 Listing listing = new Listing(
                         rs.getInt("listingId"),
+                        rs.getString("realEstateAgentPhone").trim(),
                         rs.getString("streetAddress").trim(),
                         Province.fromLabel(rs.getString("province").trim()),
                         rs.getString("cityName").trim(),
@@ -187,29 +189,6 @@ public class DatabaseConnectionHandler {
         }
         return result;
     }
-
-    public Boolean updateListing(int active, ListingType type, int price, int listingID) {
-
-        try {
-
-            String query = "UPDATE Listing" +
-                    " SET "+
-                    "type = '"  + type.name().toLowerCase() + "'," +
-                    "price ="  + price + "," +
-                    "active ="  + active + "\n" +
-                    "WHERE listingID =" + listingID;
-            PrintablePreparedStatement ps = getPS(query);
-            ps.executeQuery();
-            connection.commit();
-            ps.close();
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-            return false;
-        }
-        return true;
-    }
-
-
 
     public Integer generateId(HasID model) {
         try {
@@ -253,7 +232,35 @@ public class DatabaseConnectionHandler {
         return result;
     }
 
+    public ListingInfo getListingInfo(Integer listingID) {
+        try {
+            String query = "SELECT " +
+                    "Listing.listingID, Listing.type, Listing.price, Listing.active, Property.streetAddress, " +
+                    "Property.province, Property.cityName, Property.developerLicenseID, Property.strataID, " +
+                    "Property.homeownerPhone, Listing.realEstateAgentPhone, Property.bedrooms, Property.bathrooms, " +
+                    "Property.sizeInSqft, Property.hasAC " +
+                    "FROM Listing " +
+                    "INNER JOIN Property " +
+                    "ON Listing.streetAddress = Property.streetAddress " +
+                    "AND Listing.province = Property.province " +
+                    "AND Listing.cityName = Property.cityName " +
+                    "WHERE Listing.listingID = " + listingID;
+            PrintablePreparedStatement ps = getPS(query);
+            ResultSet rs = ps.executeQuery();
 
+            rs.next();
+            Listing listing = new Listing(rs);
+            Property property = new Property(rs);
+            ListingInfo listingInfo = new ListingInfo(listing, property);
+
+            rs.close();
+            ps.close();
+            return listingInfo;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return null;
+    }
 
     public void deleteListing(int listingId) {
         //

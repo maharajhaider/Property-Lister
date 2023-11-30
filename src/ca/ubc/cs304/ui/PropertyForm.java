@@ -342,6 +342,7 @@ public class PropertyForm extends JFrame {
 
         HasID listing = new Listing(
                 null,
+                "replace this",
                 streetAddress,
                 selectedProvince,
                 cityName,

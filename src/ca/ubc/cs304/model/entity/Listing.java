@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 public record Listing(
         Integer listingId,
+        String realEstateAgentPhone,
         String streetAddress,
         Province province,
         String cityName,
@@ -21,8 +22,10 @@ public record Listing(
     }
 
     public Listing(ResultSet rs) throws SQLException {
+
         this(
-                rs.getInt("listingId"),
+                rs.getInt("listingID"),
+                rs.getString("realEstateAgentPhone").trim(),
                 rs.getString("streetAddress").trim(),
                 Province.fromLabel(rs.getString("province").trim()),
                 rs.getString("cityName").trim(),
@@ -34,8 +37,17 @@ public record Listing(
     
     @Override
     public String insertStatement(Integer id) {
-        return "INSERT INTO Listing VALUES (%d, '%s', '%s', '%s', '%s', %d, %d)"
-                .formatted(id == null? listingId : id, streetAddress, province.label, cityName, type.label, price, active);
+        return "INSERT INTO Listing VALUES (%d, '%s', '%s', '%s', '%s', '%s', %d, %d)"
+                .formatted(
+                        id == null? listingId : id,
+                        realEstateAgentPhone,
+                        streetAddress,
+                        province.label,
+                        cityName,
+                        type.label,
+                        price,
+                        active
+                );
     }
 
     @Override

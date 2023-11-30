@@ -1,156 +1,158 @@
 CREATE TABLE Person
 (
-	phone CHAR(20) PRIMARY KEY,
-	name  CHAR(255),
-	email CHAR(255)
+    phone CHAR(20) PRIMARY KEY,
+    name  CHAR(255),
+    email CHAR(255)
 );
 
 CREATE TABLE Homeowner
 (
-	phone CHAR(20) PRIMARY KEY,
-	FOREIGN KEY (phone) REFERENCES Person (phone)
-		ON DELETE CASCADE
+    phone CHAR(20) PRIMARY KEY,
+    FOREIGN KEY (phone) REFERENCES Person (phone)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE RealEstateAgency
 (
-	agencyID INTEGER PRIMARY KEY,
-	name     CHAR(255),
-	rating   DOUBLE PRECISION
+    agencyID INTEGER PRIMARY KEY,
+    name     CHAR(255),
+    rating   DOUBLE PRECISION
 );
 
 CREATE TABLE RealEstateAgent
 (
-	phone          CHAR(20) PRIMARY KEY,
-	agentLicenseId INTEGER UNIQUE,
-	yearsOfExp     INTEGER,
-	agencyID       INTEGER NOT NULL,
-	FOREIGN KEY (phone) REFERENCES Person (phone)
-		ON DELETE CASCADE,
-	FOREIGN KEY (agencyID) REFERENCES RealEstateAgency (agencyID)
-		ON DELETE CASCADE
+    phone          CHAR(20) PRIMARY KEY,
+    agentLicenseId INTEGER UNIQUE,
+    yearsOfExp     INTEGER,
+    agencyID       INTEGER NOT NULL,
+    FOREIGN KEY (phone) REFERENCES Person (phone)
+        ON DELETE CASCADE,
+    FOREIGN KEY (agencyID) REFERENCES RealEstateAgency (agencyID)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE Developer
 (
-	developerLicenseID INTEGER PRIMARY KEY,
-	name               CHAR(255)
+    developerLicenseID INTEGER PRIMARY KEY,
+    name               CHAR(255)
 );
 
 CREATE TABLE ContractorCompany
 (
-	contractorID   INTEGER PRIMARY KEY,
-	name           CHAR(255),
-	chargeSchedule CHAR(255)
+    contractorID   INTEGER PRIMARY KEY,
+    name           CHAR(255),
+    chargeSchedule CHAR(255)
 );
 
 CREATE TABLE Strata
 (
-	strataID INTEGER PRIMARY KEY,
-	name     VARCHAR(255)
+    strataID INTEGER PRIMARY KEY,
+    name     VARCHAR(255)
 );
 
 CREATE TABLE City
 (
-	province CHAR(255),
-	name     CHAR(255),
-	taxRate  DOUBLE PRECISION,
-	PRIMARY KEY (province, name)
+    province CHAR(255),
+    name     CHAR(255),
+    taxRate  DOUBLE PRECISION,
+    PRIMARY KEY (province, name)
 );
 
 CREATE TABLE Property
 (
-	streetAddress      CHAR(255),
-	province           CHAR(255),
-	cityName           CHAR(255),
-	developerLicenseID INTEGER NOT NULL,
-	strataID           INTEGER,
-	phone              CHAR(20),
-	bedrooms           INTEGER,
-	bathrooms          INTEGER,
-	sizeInSqft         INTEGER,
-	hasAC              Number(1,0),
-	PRIMARY KEY (streetAddress, province, cityName),
-	FOREIGN KEY (province, cityName) REFERENCES City (province, name)
-		ON DELETE CASCADE,
-	FOREIGN KEY (strataID) REFERENCES Strata (strataID),
-	FOREIGN KEY (phone) REFERENCES Homeowner (phone),
-	FOREIGN KEY (developerLicenseID) REFERENCES Developer (developerLicenseID)
-		ON DELETE CASCADE
+    streetAddress      CHAR(255),
+    province           CHAR(255),
+    cityName           CHAR(255),
+    developerLicenseID INTEGER NOT NULL,
+    strataID           INTEGER,
+    homeownerPhone     CHAR(20),
+    bedrooms           INTEGER,
+    bathrooms          INTEGER,
+    sizeInSqft         INTEGER,
+    hasAC              Number(1, 0),
+    PRIMARY KEY (streetAddress, province, cityName),
+    FOREIGN KEY (province, cityName) REFERENCES City (province, name)
+        ON DELETE CASCADE,
+    FOREIGN KEY (strataID) REFERENCES Strata (strataID),
+    FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone),
+    FOREIGN KEY (developerLicenseID) REFERENCES Developer (developerLicenseID)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE Listing
 (
-	listingID     INTEGER PRIMARY KEY,
-	streetAddress CHAR(255),
-	province      CHAR(255),
-	cityName      CHAR(255),
-	type          CHAR(255),
-	price         INTEGER,
-	active        NUMBER(1,0),
-	FOREIGN KEY (streetAddress, cityName, province) REFERENCES Property (streetAddress, cityName, province)
-		ON DELETE CASCADE,
-	UNIQUE (streetAddress, cityName, province)
+    listingID            INTEGER PRIMARY KEY,
+    realEstateAgentPhone CHAR(20) NOT NULL,
+    streetAddress        CHAR(255),
+    province             CHAR(255),
+    cityName             CHAR(255),
+    type                 CHAR(255),
+    price                INTEGER,
+    active               NUMBER(1, 0),
+    FOREIGN KEY (streetAddress, cityName, province) REFERENCES Property (streetAddress, cityName, province)
+        ON DELETE CASCADE,
+    FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (phone),
+    UNIQUE (streetAddress, cityName, province)
 );
 
 CREATE TABLE HiresREA
 (
-	homeownerPhone       CHAR(20),
-	realEstateAgentPhone CHAR(20),
-	PRIMARY KEY (homeownerPhone, realEstateAgentPhone),
-	FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone)
-		ON DELETE CASCADE,
-	FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (phone)
-		ON DELETE CASCADE
+    homeownerPhone       CHAR(20),
+    realEstateAgentPhone CHAR(20),
+    PRIMARY KEY (homeownerPhone, realEstateAgentPhone),
+    FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone)
+        ON DELETE CASCADE,
+    FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (phone)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE HiresContractor
 (
-	homeownerPhone CHAR(20),
-	contractorID   INTEGER,
-	PRIMARY KEY (homeownerPhone, contractorID),
-	FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone)
-		ON DELETE CASCADE,
-	FOREIGN KEY (contractorID) REFERENCES ContractorCompany (contractorID)
-		ON DELETE CASCADE
+    homeownerPhone CHAR(20),
+    contractorID   INTEGER,
+    PRIMARY KEY (homeownerPhone, contractorID),
+    FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone)
+        ON DELETE CASCADE,
+    FOREIGN KEY (contractorID) REFERENCES ContractorCompany (contractorID)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE Pays
 (
-	homeownerPhone CHAR(20),
-	strataID       INTEGER,
-	fee            INTEGER,
-	PRIMARY KEY (homeownerPhone, strataID),
-	FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone)
-		ON DELETE CASCADE,
-	FOREIGN KEY (strataID) REFERENCES Strata (strataID)
-		ON DELETE CASCADE
+    homeownerPhone CHAR(20),
+    strataID       INTEGER,
+    fee            INTEGER,
+    PRIMARY KEY (homeownerPhone, strataID),
+    FOREIGN KEY (homeownerPhone) REFERENCES Homeowner (phone)
+        ON DELETE CASCADE,
+    FOREIGN KEY (strataID) REFERENCES Strata (strataID)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE Maintains
 (
-	contractorID         INTEGER,
-	streetAddress        CHAR(255),
-	province             CHAR(255),
-	cityName             CHAR(255),
-	areaOfResponsibility CHAR(255),
-	PRIMARY KEY (contractorID, streetAddress, province, cityName),
-	FOREIGN KEY (streetAddress, cityName, province) REFERENCES Property (streetAddress, cityName, province)
-		ON DELETE CASCADE,
-	FOREIGN KEY (contractorID) REFERENCES ContractorCompany (contractorID)
-		ON DELETE CASCADE,
-	UNIQUE (streetAddress, province, cityName, areaOfResponsibility)
+    contractorID         INTEGER,
+    streetAddress        CHAR(255),
+    province             CHAR(255),
+    cityName             CHAR(255),
+    areaOfResponsibility CHAR(255),
+    PRIMARY KEY (contractorID, streetAddress, province, cityName),
+    FOREIGN KEY (streetAddress, cityName, province) REFERENCES Property (streetAddress, cityName, province)
+        ON DELETE CASCADE,
+    FOREIGN KEY (contractorID) REFERENCES ContractorCompany (contractorID)
+        ON DELETE CASCADE,
+    UNIQUE (streetAddress, province, cityName, areaOfResponsibility)
 );
 
 CREATE TABLE ManagesListing
 (
-	realEstateAgentPhone CHAR(20),
-	listingID            INTEGER,
-	PRIMARY KEY (listingID, realEstateAgentPhone),
-	FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (phone)
-		ON DELETE CASCADE,
-	FOREIGN KEY (listingID) REFERENCES Listing (listingID)
-		ON DELETE CASCADE
+    realEstateAgentPhone CHAR(20),
+    listingID            INTEGER,
+    PRIMARY KEY (listingID, realEstateAgentPhone),
+    FOREIGN KEY (realEstateAgentPhone) REFERENCES RealEstateAgent (phone)
+        ON DELETE CASCADE,
+    FOREIGN KEY (listingID) REFERENCES Listing (listingID)
+        ON DELETE CASCADE
 );
 
 
@@ -253,21 +255,21 @@ INSERT INTO Property
 VALUES ('2525 West Mall', 'ON', 'Toronto', 2000001, 4000005, '345 678 9012', 3, 2, 1500, 0);
 INSERT INTO Property
 (streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
-VALUES ('6331 Thunderbird Cres', 'AB', 'Calgary', 2000001, 4000004,'456 789 0123', 3, 2, 1500, 1);
+VALUES ('6331 Thunderbird Cres', 'AB', 'Calgary', 2000001, 4000004, '456 789 0123', 3, 2, 1500, 1);
 INSERT INTO Property
 (streetAddress, province, cityName, developerLicenseID, strataID, phone, bedrooms, bathrooms, sizeInSqft, hasAC)
 VALUES ('202 Birch St', 'MB', 'Winnipeg', 2000003, 4000002, '164 551 5313', 3, 2, 1500, 1);
 
-INSERT INTO Listing (listingID, streetAddress, province, cityName, type, price, active)
-VALUES (5000001, '123 Main St', 'BC', 'Vancouver', 'sale', 500000, 1);
-INSERT INTO Listing (listingID, streetAddress, province, cityName, type, price, active)
-VALUES (5000002, '456 Elm St', 'ON', 'Toronto', 'sale', 700000, 1);
-INSERT INTO Listing (listingID, streetAddress, province, cityName, type, price, active)
-VALUES (5000003, '2525 West Mall', 'ON', 'Toronto', 'rent', 500000, 1);
-INSERT INTO Listing (listingID, streetAddress, province, cityName, type, price, active)
-VALUES (5000004, '6331 Thunderbird Cres', 'AB', 'Calgary', 'sale', 100000, 1);
-INSERT INTO Listing (listingID, streetAddress, province, cityName, type, price, active)
-VALUES (5000005, '202 Birch St', 'MB', 'Winnipeg', 'rent', 250000, 1);
+INSERT INTO Listing (listingID, realEstateAgentPhone, streetAddress, province, cityName, type, price, active)
+VALUES (5000001, '123 456 7890', '123 Main St', 'BC', 'Vancouver', 'sale', 500000, 1);
+INSERT INTO Listing (listingID, realEstateAgentPhone, streetAddress, province, cityName, type, price, active)
+VALUES (5000002, '234 567 8901', '456 Elm St', 'ON', 'Toronto', 'sale', 700000, 1);
+INSERT INTO Listing (listingID, realEstateAgentPhone, streetAddress, province, cityName, type, price, active)
+VALUES (5000003, '345 678 9012', '2525 West Mall', 'ON', 'Toronto', 'rent', 500000, 1);
+INSERT INTO Listing (listingID, realEstateAgentPhone, streetAddress, province, cityName, type, price, active)
+VALUES (5000004, '456 789 0123', '6331 Thunderbird Cres', 'AB', 'Calgary', 'sale', 100000, 1);
+INSERT INTO Listing (listingID, realEstateAgentPhone, streetAddress, province, cityName, type, price, active)
+VALUES (5000005, '164 551 5313', '202 Birch St', 'MB', 'Winnipeg', 'rent', 250000, 1);
 
 INSERT INTO HiresREA (homeownerPhone, realEstateAgentPhone)
 VALUES ('123 456 7890', '234 567 8901');
@@ -276,7 +278,7 @@ VALUES ('164 551 5313', '345 678 9012');
 INSERT INTO HiresREA (homeownerPhone, realEstateAgentPhone)
 VALUES ('345 678 9012', '123 456 7890');
 INSERT INTO HiresREA (homeownerPhone, realEstateAgentPhone)
-VALUES ( '234 567 8901', '456 789 0123');
+VALUES ('234 567 8901', '456 789 0123');
 INSERT INTO HiresREA (homeownerPhone, realEstateAgentPhone)
 VALUES ('456 789 0123', '164 551 5313');
 
@@ -312,14 +314,3 @@ INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfRe
 VALUES (3000004, '6331 Thunderbird Cres', 'AB', 'Calgary', 'HVAC');
 INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfResponsibility)
 VALUES (3000005, '202 Birch St', 'MB', 'Winnipeg', 'Roofing');
-
-INSERT INTO ManagesListing (realEstateAgentPhone, listingID)
-VALUES ('123 456 7890', 5000001);
-INSERT INTO ManagesListing (realEstateAgentPhone, listingID)
-VALUES ('234 567 8901', 5000002);
-INSERT INTO ManagesListing (realEstateAgentPhone, listingID)
-VALUES ('345 678 9012', 5000003);
-INSERT INTO ManagesListing (realEstateAgentPhone, listingID)
-VALUES ('456 789 0123', 5000004);
-INSERT INTO ManagesListing (realEstateAgentPhone, listingID)
-VALUES ('164 551 5313', 5000005);
