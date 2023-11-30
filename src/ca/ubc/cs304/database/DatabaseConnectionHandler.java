@@ -1,8 +1,10 @@
 package ca.ubc.cs304.database;
 
+import ca.ubc.cs304.model.ListingInfo;
 import ca.ubc.cs304.model.entity.EntityModel;
 import ca.ubc.cs304.model.entity.HasID;
 import ca.ubc.cs304.model.entity.Listing;
+import ca.ubc.cs304.model.entity.Property;
 import ca.ubc.cs304.model.enums.ListingType;
 import ca.ubc.cs304.model.enums.Province;
 import ca.ubc.cs304.util.PrintablePreparedStatement;
@@ -228,6 +230,36 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
         return result;
+    }
+
+    public ListingInfo getListingInfo(Integer listingID) {
+        try {
+            String query = "SELECT " +
+                    "Listing.listingID, Listing.type, Listing.price, Listing.active, Property.streetAddress, " +
+                    "Property.province, Property.cityName, Property.developerLicenseID, Property.strataID, " +
+                    "Property.homeownerPhone, Listing.realEstateAgentPhone, Property.bedrooms, Property.bathrooms, " +
+                    "Property.sizeInSqft, Property.hasAC " +
+                    "FROM Listing " +
+                    "INNER JOIN Property " +
+                    "ON Listing.streetAddress = Property.streetAddress " +
+                    "AND Listing.province = Property.province " +
+                    "AND Listing.cityName = Property.cityName " +
+                    "WHERE Listing.listingID = " + listingID;
+            PrintablePreparedStatement ps = getPS(query);
+            ResultSet rs = ps.executeQuery();
+
+            rs.next();
+            Listing listing = new Listing(rs);
+            Property property = new Property(rs);
+            ListingInfo listingInfo = new ListingInfo(listing, property);
+
+            rs.close();
+            ps.close();
+            return listingInfo;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return null;
     }
 
     public void deleteListing(int listingId) {

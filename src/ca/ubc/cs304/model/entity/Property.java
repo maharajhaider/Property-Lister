@@ -30,7 +30,7 @@ public record Property(
                 rs.getInt("strataID"),
                 rs.getString("homeownerPhone").trim(),
                 rs.getInt("bedrooms"),
-                rs.getInt("bathroom"),
+                rs.getInt("bathrooms"),
                 rs.getInt("sizeInSqft"),
                 rs.getInt("hasAC")
         );

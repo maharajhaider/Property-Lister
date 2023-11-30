@@ -22,8 +22,9 @@ public record Listing(
     }
 
     public Listing(ResultSet rs) throws SQLException {
+
         this(
-                rs.getInt("listingId"),
+                rs.getInt("listingID"),
                 rs.getString("realEstateAgentPhone").trim(),
                 rs.getString("streetAddress").trim(),
                 Province.fromLabel(rs.getString("province").trim()),
