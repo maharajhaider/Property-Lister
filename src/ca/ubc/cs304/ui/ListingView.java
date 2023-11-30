@@ -101,7 +101,7 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.model.entity.Listing;
+import ca.ubc.cs304.model.ListingInfo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -116,7 +116,7 @@ public class ListingView extends JFrame {
 
     private DatabaseConnectionHandler databaseConnectionHandler;
 
-    public ListingView(DatabaseConnectionHandler databaseConnectionHandler, Listing listing) {
+    public ListingView(DatabaseConnectionHandler databaseConnectionHandler, ListingInfo listing) {
         // Set up the frame
         setTitle("Listing View");
         setSize(400, 300); // Adjusted size
@@ -136,7 +136,7 @@ public class ListingView extends JFrame {
         setLayout(null);
 
         // Add components to the frame manually
-        listingTextArea.setBounds(10, 10, 380, 170); // Adjusted size
+        listingTextArea.setBounds(10, 10, 380, 400); // Adjusted size
         add(listingTextArea);
 
         backButton.setBounds(10, 220, 80, 30);
@@ -169,13 +169,13 @@ public class ListingView extends JFrame {
 
     }
 
-    private JTextArea createStyledTextArea(Listing listing) {
+    private JTextArea createStyledTextArea(ListingInfo listing) {
         JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setForeground(Color.GREEN);
         textArea.setFont(new Font("Arial", Font.ITALIC, 16)); // Adjusted font size
 
-        if(listing.active() == 1) {
+
             textArea.append("Listing Info is below: " + "\n");
             textArea.append("ID: " + listing.listingId() + "\n");
             textArea.append("Address: " + listing.streetAddress() + "\n");
@@ -183,9 +183,17 @@ public class ListingView extends JFrame {
             textArea.append("City: " + listing.cityName() + "\n");
             textArea.append("Type: " + listing.type() + "\n");
             textArea.append("Price: $" + listing.price() + "\n");
+            textArea.append("DeveloperLicenseID: " + listing.developerLicenseID() + "\n");
+            textArea.append("Strata Id: " + listing.strataID() + "\n");
+            textArea.append("Homeowner Phone: " + listing.homeownerPhone() + "\n");
+            textArea.append("Real Estate Agent Phone: "+listing.realEstateAgentPhone()+"\n");
+            textArea.append("Bedrooms: "+listing.bedrooms()+"\n");
+            textArea.append("Bathrooms: "+listing.bathrooms()+"\n");
+            textArea.append("sizeInSqft: "+listing.sizeInSqft()+"\n");
+            textArea.append("Active: " + (listing.hasAC() == 1 ? "Yes" : "No") + "\n");
             // textArea.append("Active: " + (listing.active() == 1 ? "Yes" : "No") + "\n");
             textArea.append("\n");
-        }
+
         return textArea;
     }
 
