@@ -1,8 +1,8 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.model.EntityModel;
-import ca.ubc.cs304.model.HiresREA;
+import ca.ubc.cs304.model.entity.EntityModel;
+import ca.ubc.cs304.model.entity.HiresREA;
 
 import javax.swing.*;
 import java.awt.*;

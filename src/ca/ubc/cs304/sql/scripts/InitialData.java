@@ -1,6 +1,6 @@
 package ca.ubc.cs304.sql.scripts;
 
-import ca.ubc.cs304.model.*;
+import ca.ubc.cs304.model.entity.*;
 import ca.ubc.cs304.model.enums.ChargeSchedule;
 import ca.ubc.cs304.model.enums.ListingType;
 import ca.ubc.cs304.model.enums.Province;

@@ -1,8 +1,8 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.model.EntityModel;
-import ca.ubc.cs304.model.Pays;
+import ca.ubc.cs304.model.entity.EntityModel;
+import ca.ubc.cs304.model.entity.Pays;
 
 import javax.swing.*;
 import java.awt.*;

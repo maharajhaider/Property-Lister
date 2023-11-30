@@ -1,7 +1,7 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.model.Listing;
+import ca.ubc.cs304.model.entity.Listing;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -40,7 +40,7 @@ public class SearchScreen extends JFrame {
         JButton searchButton = new JButton("Search");
         searchButton.addActionListener(e -> {
             String searchText = searchBar.getText();
-            List<Listing> resultListings = databaseConnectionHandler.getListingInfo(searchText);
+            List<Listing> resultListings = databaseConnectionHandler.getListings(searchText);
             new SearchResultScreen(resultListings,databaseConnectionHandler);
         });
 

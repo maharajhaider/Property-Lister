@@ -1,8 +1,8 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.model.EntityModel;
-import ca.ubc.cs304.model.HiresContractor;
+import ca.ubc.cs304.model.entity.EntityModel;
+import ca.ubc.cs304.model.entity.HiresContractor;
 import ca.ubc.cs304.model.enums.Province;
 
 import javax.swing.*;

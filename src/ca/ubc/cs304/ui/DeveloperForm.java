@@ -1,8 +1,8 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.model.Developer;
-import ca.ubc.cs304.model.HasID;
+import ca.ubc.cs304.model.entity.Developer;
+import ca.ubc.cs304.model.entity.HasID;
 
 import javax.swing.*;
 import java.awt.*;

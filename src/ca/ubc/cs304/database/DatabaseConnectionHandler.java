@@ -1,8 +1,8 @@
 package ca.ubc.cs304.database;
 
-import ca.ubc.cs304.model.EntityModel;
-import ca.ubc.cs304.model.HasID;
-import ca.ubc.cs304.model.Listing;
+import ca.ubc.cs304.model.entity.EntityModel;
+import ca.ubc.cs304.model.entity.HasID;
+import ca.ubc.cs304.model.entity.Listing;
 import ca.ubc.cs304.model.enums.ListingType;
 import ca.ubc.cs304.model.enums.Province;
 import ca.ubc.cs304.util.PrintablePreparedStatement;
@@ -160,7 +160,7 @@ public class DatabaseConnectionHandler {
         return new PrintablePreparedStatement(connection.prepareStatement(script), script, false);
     }
 
-    public List<Listing> getListingInfo(String startOfAddress) {
+    public List<Listing> getListings(String startOfAddress) {
         List<Listing> result = new ArrayList<>();
         try {
             String query = "SELECT * FROM Listing" +

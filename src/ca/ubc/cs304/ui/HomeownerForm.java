@@ -1,8 +1,8 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
-import ca.ubc.cs304.model.EntityModel;
-import ca.ubc.cs304.model.Homeowner;
+import ca.ubc.cs304.model.entity.EntityModel;
+import ca.ubc.cs304.model.entity.Homeowner;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package ca.ubc.cs304.model;
+package ca.ubc.cs304.model.entity;
 
 import ca.ubc.cs304.model.enums.Province;
 import java.sql.ResultSet;
