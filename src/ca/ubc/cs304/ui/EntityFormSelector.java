@@ -22,9 +22,15 @@ public class EntityFormSelector extends JFrame {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         add(titleLabel);
 
+//        entitySelector = new JComboBox<>(new String[]{
+//                "City", "ContractorCompany", "Developer", "HiresContractor", "HiresREA",
+//                "Homeowner", "Maintains", "ManagesListing", "Pays", "Person", "Property",
+//                "RealEstateAgency", "RealEstateAgent", "Strata"
+//        });
+
         entitySelector = new JComboBox<>(new String[]{
-                "City", "ContractorCompany", "Developer", "HiresContractor", "HiresREA",
-                "Homeowner", "Maintains", "ManagesListing", "Pays", "Person", "Property",
+                "City", "ContractorCompany", "Developer", "HiresREA",
+                "Homeowner","Person", "Property",
                 "RealEstateAgency", "RealEstateAgent", "Strata"
         });
         entitySelector.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -40,15 +46,14 @@ public class EntityFormSelector extends JFrame {
         formMap.put("City", CityForm::new);
         formMap.put("ContractorCompany", ContractorCompanyForm::new);
         formMap.put("Developer", DeveloperForm::new);
-        formMap.put("HiresContractor", HiresContractorForm::new);
-        formMap.put("HiresREA", HiresREAForm::new);
+//        formMap.put("HiresContractor", HiresContractorForm::new);
+//        formMap.put("HiresREA", HiresREAForm::new);
         formMap.put("Homeowner", HomeownerForm::new);
-        formMap.put("Maintains", MaintainsForm::new);
+//        formMap.put("Maintains", MaintainsForm::new);
         formMap.put("ManagesListing", ManagesListingForm::new);
-        formMap.put("Pays", PaysForm::new);
+//        formMap.put("Pays", PaysForm::new);
         formMap.put("Person", PersonForm::new);
         formMap.put("Property", PropertyForm::new);
-        formMap.put("RealEstateAgency", RealEstateAgencyForm::new);
         formMap.put("RealEstateAgent", RealEstateAgentForm::new);
         formMap.put("Strata", StrataForm::new);
 

@@ -40,12 +40,28 @@ public class CityForm extends JFrame {
         // Display the form
         setVisible(true);
     }
-
+    public String validate(String input) {
+        if (input == null || (!input.contains(".") && !input.contains("@"))) {
+            return input;
+        } else {
+            return null; // Invalid string
+        }
+    }
     private void saveCity() {
         // Get values from the form
         Province selectedProvince = (Province) provinceComboBox.getSelectedItem();
-        String cityName = nameTextField.getText();
-        double taxRate = Double.parseDouble(taxRateTextField.getText());
+        String cityName = validate(nameTextField.getText());
+        double taxRate = validateInt(Double.parseDouble(taxRateTextField.getText()));
+
+        if(cityName == null){
+            JOptionPane.showMessageDialog(this, "please do not use . or @");
+            return;
+        }
+
+        if(taxRate == -1){
+            JOptionPane.showMessageDialog(this, "Invalid input. Please check your input fields.");
+            return;
+        }
 
         // Create a City object
         EntityModel city = new City(selectedProvince, cityName, taxRate);
@@ -55,6 +71,15 @@ public class CityForm extends JFrame {
 
         // Print the insert statement (you can replace this with your database interaction)
         System.out.println(city.insertStatement(null));
+    }
+
+    private double validateInt(double v) {
+
+        if(v >=0){
+            return 1;
+        }
+
+        return -1;
     }
 
     public static void main(String[] args) {

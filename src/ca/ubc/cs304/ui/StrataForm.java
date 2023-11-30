@@ -59,8 +59,21 @@ public class StrataForm extends JFrame {
         return label;
     }
 
+    public String validate(String input) {
+        if (input == null || (!input.contains(".") && !input.contains("@"))) {
+            return input;
+        } else {
+            return null; // Invalid string
+        }
+    }
     private void saveStrata() {
-        String name = nameTextField.getText();
+        String name = validate(nameTextField.getText());
+
+        if (name == null) {
+            JOptionPane.showMessageDialog(this, "Name is without . and @");
+            return;
+
+        }
 
         // Create a Strata object
         HasID strata = new Strata(null, name);

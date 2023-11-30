@@ -39,12 +39,26 @@ public class PersonForm extends JFrame {
         // Display the form
         setVisible(true);
     }
+    public String validate(String input) {
+        if (input == null || (!input.contains(".") && !input.contains("@"))) {
+            return input;
+        } else {
+            return null; // Invalid string
+        }
+    }
+
 
     private void savePerson() {
         // Get values from the form
-        String phone = phoneTextField.getText();
-        String name = nameTextField.getText();
-        String email = emailTextField.getText();
+        String phone = validate(phoneTextField.getText());
+        String name = validate(nameTextField.getText());
+        String email = validate(emailTextField.getText());
+
+        if(phone == null || name == null || email == null){
+            JOptionPane.showMessageDialog(this, "please do not use . or @");
+            return;
+
+        }
 
         // Create a Person object
         EntityModel person = new Person(phone, name, email);

@@ -30,9 +30,22 @@ public class HomeownerForm extends JFrame {
         setVisible(true);
     }
 
+    public String validate(String input) {
+        if (input == null || (!input.contains(".") && !input.contains("@"))) {
+            return input;
+        } else {
+            return null; // Invalid string
+        }
+    }
+
     private void saveHomeowner() {
         // Get value from the form
-        String phone = phoneTextField.getText();
+        String phone = validate(phoneTextField.getText());
+
+        if(phone == null){
+            JOptionPane.showMessageDialog(this, "please do not use . or @");
+            return;
+        }
 
         // Create a Homeowner object
         EntityModel homeowner = new Homeowner(phone);

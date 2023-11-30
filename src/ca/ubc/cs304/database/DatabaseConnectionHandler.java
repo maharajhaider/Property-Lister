@@ -1,6 +1,5 @@
 package ca.ubc.cs304.database;
 
-import ca.ubc.cs304.model.ContractorCompany;
 import ca.ubc.cs304.model.EntityModel;
 import ca.ubc.cs304.model.HasID;
 import ca.ubc.cs304.model.Listing;
