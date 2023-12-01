@@ -69,8 +69,7 @@ public class CityForm extends JFrame {
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         databaseConnectionHandler.insertData(city, null);
 
-        // Print the insert statement (you can replace this with your database interaction)
-        System.out.println(city.insertStatement(null));
+        JOptionPane.showMessageDialog(this, "Success");
     }
 
     private double validateInt(double v) {

@@ -80,6 +80,7 @@ public class RealEstateAgencyForm extends JFrame {
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         int agencyId = databaseConnectionHandler.generateId(realEstateAgency);
         databaseConnectionHandler.insertData(realEstateAgency, agencyId);
+        JOptionPane.showMessageDialog(this, "Success");
     }
 
     public static void main(String[] args) {

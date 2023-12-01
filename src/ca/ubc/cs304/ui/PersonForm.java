@@ -78,6 +78,7 @@ public class PersonForm extends JFrame {
         EntityModel person = new Person(phone, name, email);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         databaseConnectionHandler.insertData(person, null);
+        JOptionPane.showMessageDialog(this, "Success");
     }
 
     public static void main(String[] args) {

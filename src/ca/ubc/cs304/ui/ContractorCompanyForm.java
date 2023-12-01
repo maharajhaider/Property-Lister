@@ -64,6 +64,7 @@ public class ContractorCompanyForm extends JFrame {
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         int contractorId = databaseConnectionHandler.generateId(contractorCompany);
         databaseConnectionHandler.insertData(contractorCompany, contractorId);
+        JOptionPane.showMessageDialog(this, "Success");
     }
 
     public static void main(String[] args) {

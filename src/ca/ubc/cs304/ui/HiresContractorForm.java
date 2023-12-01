@@ -107,6 +107,7 @@ public class HiresContractorForm extends JFrame {
         EntityModel hiresContractor = new HiresContractor(homeownerPhone, contractorId);
 //        DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         databaseConnectionHandler.insertData(hiresContractor, null);
+        JOptionPane.showMessageDialog(this, "Success");
     }
 
 
