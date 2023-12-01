@@ -538,24 +538,21 @@ public class DatabaseConnectionHandler {
      */
     public CityRealEstatePrice findCheapestCity(ListingType listingType) {
         try {
-            String joinedTable = "City " +
-                    "RIGHT JOIN (Listing " +
+            String joinedTable = "Listing " +
                     "INNER JOIN Property " +
                     "ON Listing.province = Property.province " +
                     "AND Listing.cityName = Property.cityName " +
-                    "AND Listing.streetAddress = Property.streetAddress) " +
-                    "ON City.province = Property.province " +
-                    "AND City.name = Property.cityName ";
+                    "AND Listing.streetAddress = Property.streetAddress ";
             String query =
-                    "SELECT City.province, City.name, AVG(Listing.price / Property.sizeInSqft) " +
+                    "SELECT Property.province, Property.cityName, AVG(Listing.price / Property.sizeInSqft) " +
                             "FROM " + joinedTable +
                             "WHERE Listing.type = '" + listingType.label + "' " +
-                            "GROUP BY City.province, City.name " +
+                            "GROUP BY Property.province, Property.cityName " +
                             "HAVING AVG(Listing.price / Property.sizeInSqft) <= ALL(" +
                             "SELECT AVG(Listing.price / Property.sizeInSqft) " +
                             "FROM " + joinedTable +
                             "WHERE Listing.type = '" + listingType.label + "' " +
-                            "GROUP BY City.province, City.name)";
+                            "GROUP BY Property.province, Property.cityName)";
             PrintablePreparedStatement ps = getPS(query);
             SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
 
