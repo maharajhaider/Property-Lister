@@ -9,20 +9,20 @@ import java.awt.*;
 import java.util.List;
 
 public class ReputableAgenciesUI extends JFrame {
-    private final DatabaseConnectionHandler databaseConnectionHandler;
+   ;
 
     private JTable table;
     private DefaultTableModel tableModel;
 
-    public ReputableAgenciesUI() {
+    public ReputableAgenciesUI(DatabaseConnectionHandler databaseConnectionHandler) {
         super("Reputable Agencies");
 
-        databaseConnectionHandler = new DatabaseConnectionHandler();
+
         tableModel = new DefaultTableModel();
         table = new JTable(tableModel);
 
         setupUI();
-        loadReputableAgenciesData();
+        loadReputableAgenciesData(databaseConnectionHandler);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
@@ -37,7 +37,7 @@ public class ReputableAgenciesUI extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    private void loadReputableAgenciesData() {
+    private void loadReputableAgenciesData(DatabaseConnectionHandler databaseConnectionHandler) {
         List<AgencyInfo> reputableAgencies = databaseConnectionHandler.getReputableAgencies();
 
 
@@ -56,7 +56,5 @@ public class ReputableAgenciesUI extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(ReputableAgenciesUI::new);
-    }
+
 }
