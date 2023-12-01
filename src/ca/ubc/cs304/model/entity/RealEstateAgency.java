@@ -25,7 +25,7 @@ public record RealEstateAgency(Integer agencyId, String name, Double rating) imp
 
     @Override
     public String getIdSQL() {
-        return "SELECT max(agencyID) FROM RealEstateAgency";
+        return "SELECT MAX(agencyID) FROM RealEstateAgency";
     }
 
     @Override

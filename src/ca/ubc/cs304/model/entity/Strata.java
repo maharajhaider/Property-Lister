@@ -18,7 +18,7 @@ public record Strata(Integer strataId, String name) implements HasID {
 
     @Override
     public String getIdSQL() {
-        return "SELECT max(strataID) FROM Strata";
+        return "SELECT MAX(strataID) FROM Strata";
     }
 
     @Override

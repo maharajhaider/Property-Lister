@@ -49,7 +49,7 @@ public record Listing(
 
     @Override
     public String getIdSQL() {
-        return "SELECT max(listingID) FROM Listing";
+        return "SELECT MAX(listingID) FROM Listing";
     }
 
     @Override

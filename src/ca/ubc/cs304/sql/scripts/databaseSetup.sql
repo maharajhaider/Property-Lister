@@ -155,6 +155,12 @@ INSERT INTO Person (phone, name, email)
 VALUES ('456 789 0123', 'Alice Brown', 'alice.brown@email.com');
 INSERT INTO Person (phone, name, email)
 VALUES ('164 551 5313', 'Alice Brown', 'alice23@name.com');
+INSERT INTO Person (phone, name, email)
+VALUES ('703 582 1740', 'Danny Brown', 'dan56@name.com');
+INSERT INTO Person (phone, name, email)
+VALUES ('849 284 0582', 'John Smith', 'josh@name.com');
+INSERT INTO Person (phone, name, email)
+VALUES ('195 588 7561', 'Russel Johnson', 'brussel@name.com');
 
 INSERT INTO Homeowner (phone)
 VALUES ('123 456 7890');
@@ -181,13 +187,19 @@ VALUES (1000005, 'Dream Inc', 3.5);
 INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
 VALUES ('123 456 7890', 6000001, 5, 1000001);
 INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
-VALUES ('234 567 8901', 6000001, 3, 1000002);
+VALUES ('234 567 8901', 6000002, 3, 1000002);
 INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
-VALUES ('345 678 9012', 6000001, 7, 1000003);
+VALUES ('345 678 9012', 6000003, 7, 1000003);
 INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
-VALUES ('456 789 0123', 6000001, 0, 1000002);
+VALUES ('456 789 0123', 6000004, 0, 1000002);
 INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
-VALUES ('164 551 5313', 6000001, 12, 1000005);
+VALUES ('164 551 5313', 6000005, 12, 1000005);
+INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
+VALUES ('703 582 1740', 6000006, 3, 1000001);
+INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
+VALUES ('849 284 0582', 6000007, 4, 1000005);
+INSERT INTO RealEstateAgent (phone, agentLicenseId, yearsOfExp, agencyID)
+VALUES ('195 588 7561', 6000008, 6, 1000001);
 
 INSERT INTO Developer (developerLicenseID, name)
 VALUES (2000001, 'ABC Developers');
