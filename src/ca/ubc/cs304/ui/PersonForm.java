@@ -48,7 +48,7 @@ public class PersonForm extends JFrame {
     }
 
 
-    public String validateEmail(String input){
+    public String validateEmailSepearte(String input){
         if (input == null || (input.contains(".") && input.contains("@"))) {
             return input;
         }else {
@@ -61,12 +61,17 @@ public class PersonForm extends JFrame {
         // Get values from the form
         String phone = validate(phoneTextField.getText());
         String name = validate(nameTextField.getText());
-        String email = validateEmail(emailTextField.getText());
+        String email = validateEmailSepearte(emailTextField.getText());
 
-        if(phone == null || name == null || email == null){
+        if(phone == null || name == null){
             JOptionPane.showMessageDialog(this, "please do not use . or @");
             return;
 
+        }
+
+        if(email == null){
+            JOptionPane.showMessageDialog(this, "please use . or @ in email");
+            return;
         }
 
         // Create a Person object
