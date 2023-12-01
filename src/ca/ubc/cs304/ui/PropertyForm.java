@@ -355,6 +355,7 @@ public class PropertyForm extends JFrame {
         databaseConnectionHandler.insertData(property, null);
         int listingId = databaseConnectionHandler.generateId(listing);
         databaseConnectionHandler.insertData(listing, listingId);
+        JOptionPane.showMessageDialog(this, "Success");
     }
 
     public static void main(String[] args) {

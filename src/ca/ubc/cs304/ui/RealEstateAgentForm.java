@@ -105,6 +105,7 @@ public class RealEstateAgentForm extends JFrame {
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         int agentLicenseId = databaseConnectionHandler.generateId(realEstateAgent);
         databaseConnectionHandler.insertData(realEstateAgent, agentLicenseId);
+        JOptionPane.showMessageDialog(this, "Success");
     }
 
     public static void main(String[] args) {

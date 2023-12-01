@@ -58,6 +58,7 @@ public class DeveloperForm extends JFrame {
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         int developerLicenseId = databaseConnectionHandler.generateId(developer);
         databaseConnectionHandler.insertData(developer, developerLicenseId);
+        JOptionPane.showMessageDialog(this, "Success");
     }
 
     public static void main(String[] args) {

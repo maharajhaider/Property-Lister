@@ -78,6 +78,7 @@ public class PaysForm extends JFrame {
         EntityModel pays = new Pays(homeownerPhone, strataId, fee);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         databaseConnectionHandler.insertData(pays, null);
+        JOptionPane.showMessageDialog(this, "Success");
     }
 
     public static void main(String[] args) {

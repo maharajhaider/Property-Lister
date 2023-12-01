@@ -51,6 +51,7 @@ public class HomeownerForm extends JFrame {
         EntityModel homeowner = new Homeowner(phone);
         DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         databaseConnectionHandler.insertData(homeowner, null);
+        JOptionPane.showMessageDialog(this, "Success");
     }
 
     public static void main(String[] args) {

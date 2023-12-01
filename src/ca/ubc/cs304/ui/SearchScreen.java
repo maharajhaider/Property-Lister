@@ -3,6 +3,7 @@ package ca.ubc.cs304.ui;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.AgencyInfo;
 import ca.ubc.cs304.model.entity.Listing;
+import ca.ubc.cs304.model.enums.ListingType;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -59,6 +60,9 @@ public class SearchScreen extends JFrame {
 
         // search button
         JButton searchButton = new JButton("Search Listing");
+        searchButton.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        searchButton.setBackground(Color.WHITE);
+        searchButton.setOpaque(true);
         searchButton.addActionListener(e -> {
             queryParameters.clear();
             queryParameters.add((String) operatorComboBoxSearchBar.getSelectedItem());
@@ -80,11 +84,19 @@ public class SearchScreen extends JFrame {
             new SearchResultScreen(resultListings,databaseConnectionHandler);
         });
 
-        JButton viewDatabaseButton = new JButton("Go to search data page");
-        viewDatabaseButton.addActionListener(e -> {
-
-            new ViewDatabaseInfoScreen(databaseConnectionHandler).setVisible(true);
+        JButton cheapestCityBuyButton = new JButton("Find cheapest city to buy");
+        cheapestCityBuyButton.addActionListener(e-> {
+            new ViewCheapestCityScreen(ListingType.SALE, databaseConnectionHandler);
         });
+
+        JButton cheapestCityRentButton = new JButton("Find cheapest city to rent");
+        cheapestCityRentButton.addActionListener(e-> {
+            new ViewCheapestCityScreen(ListingType.RENT, databaseConnectionHandler);
+        });
+
+
+        JButton viewDatabaseButton = new JButton("Go to search data page");
+        viewDatabaseButton.addActionListener(e -> new ViewDatabaseInfoScreen(databaseConnectionHandler).setVisible(true));
 
         listingIDTextField = new JTextField("Enter listing id");
         String [] type = {"sale", "rent"};
@@ -118,6 +130,8 @@ public class SearchScreen extends JFrame {
         backgroundPanel.add(activeCheckBox);
         backgroundPanel.add(searchButton);
         backgroundPanel.add(viewDatabaseButton);
+        backgroundPanel.add(cheapestCityBuyButton);
+        backgroundPanel.add(cheapestCityRentButton);
 
 
 

@@ -54,6 +54,7 @@ public class HiresREAForm extends JFrame {
         EntityModel hiresREA = new HiresREA(homeownerPhone, realEstateAgentPhone);
 //        DatabaseConnectionHandler databaseConnectionHandler = new DatabaseConnectionHandler();
         databaseConnectionHandler.insertData(hiresREA, null);
+        JOptionPane.showMessageDialog(this, "Success");
     }
 
 

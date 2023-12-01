@@ -29,7 +29,7 @@ public class EntityFormSelector extends JFrame {
 //        });
 
         entitySelector = new JComboBox<>(new String[]{
-                "City", "ContractorCompany", "Developer", "HiresREA",
+                "City", "ContractorCompany", "Developer",
                 "Homeowner","Person", "Property",
                 "RealEstateAgency", "RealEstateAgent", "Strata"
         });
@@ -56,6 +56,7 @@ public class EntityFormSelector extends JFrame {
         formMap.put("Property", PropertyForm::new);
         formMap.put("RealEstateAgent", RealEstateAgentForm::new);
         formMap.put("Strata", StrataForm::new);
+        formMap.put("RealEstateAgency",RealEstateAgencyForm::new);
 
         // Display the form
         setVisible(true);
