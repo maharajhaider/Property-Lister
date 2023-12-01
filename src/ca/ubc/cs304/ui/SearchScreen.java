@@ -57,6 +57,7 @@ public class SearchScreen extends JFrame {
         // search button
         JButton searchButton = new JButton("Search Listing");
         searchButton.addActionListener(e -> {
+            queryParameters.clear();
             queryParameters.add((String) operatorComboBoxSearchBar.getSelectedItem());
             queryParameters.add(searchBar.getText());
 
