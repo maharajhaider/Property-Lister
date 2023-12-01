@@ -1,6 +1,7 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
+import ca.ubc.cs304.model.AgencyInfo;
 import ca.ubc.cs304.model.entity.Listing;
 
 import javax.imageio.ImageIO;
@@ -57,6 +58,7 @@ public class SearchScreen extends JFrame {
         // search button
         JButton searchButton = new JButton("Search Listing");
         searchButton.addActionListener(e -> {
+            queryParameters.clear();
             queryParameters.add((String) operatorComboBoxSearchBar.getSelectedItem());
             queryParameters.add(searchBar.getText());
 
@@ -115,6 +117,13 @@ public class SearchScreen extends JFrame {
         backgroundPanel.add(searchButton);
         backgroundPanel.add(viewDatabaseButton);
 
+
+        JButton viewReputableAgenciesButton = new JButton("View Reputable Agencies");
+        viewReputableAgenciesButton.addActionListener(e -> {
+            List<AgencyInfo> reputableAgencies = databaseConnectionHandler.getReputableAgencies();
+            new ReputableAgenciesUI(databaseConnectionHandler).setVisible(true);
+        });
+        backgroundPanel.add(viewReputableAgenciesButton);
         add(backgroundPanel);
 
         setTitle("Search Listing");
@@ -123,9 +132,6 @@ public class SearchScreen extends JFrame {
         setLocationRelativeTo(null); // Center the JFrame
         setVisible(true);
         }
-
-
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

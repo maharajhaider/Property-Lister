@@ -196,6 +196,8 @@ public class DatabaseConnectionHandler {
         String streetAddressEnabled ="";
         String streetAddressEquality= "";
         String streetAddressParam= "";
+        String addressStarting = "";
+        String addressEnding ="";
 
         String listingIDEnabled= "";
         String listingEquality= "";
@@ -221,6 +223,8 @@ public class DatabaseConnectionHandler {
             streetAddressEnabled= "streetAddress ";
             streetAddressEquality= "LIKE ";
             streetAddressParam= parameters.get(1);
+            addressStarting = "'%";
+            addressEnding =  "%'";
 
         }
 
@@ -228,34 +232,44 @@ public class DatabaseConnectionHandler {
             listingIDEnabled= "listingId ";
             listingEquality= "= ";
             listingIDParam= parameters.get(3);
-            listingIDOperator = parameters.get(2);
-
+            if (isEnabled(parameters.get(0))){
+                listingIDOperator = parameters.get(2);
+            }
         }
         if (isEnabled(parameters.get(4))) {
             typeEnabled= "active ";
             typeEquality= "= ";
             typeParam= processBool(parameters.get(5));
-            typeOperator = parameters.get(4);
+            if (isEnabled(parameters.get(0)) | isEnabled(parameters.get(2))) {
+                typeOperator = parameters.get(4);
+
+            }
 
         }
         if (isEnabled(parameters.get(6))) {
             priceEnabled= "price ";
             pricingEquality= "= ";
             priceParam= parameters.get(7);
-            priceOperator = parameters.get(6);
+            if (isEnabled(parameters.get(0)) | isEnabled(parameters.get(2)) | isEnabled(parameters.get(4))) {
+                priceOperator = parameters.get(6);
+
+            }
         }
         if (isEnabled(parameters.get(8))) {
             activeEnabled= "type ";
             activeEquality= "= ";
-            activeParam= parameters.get(9);
-            activeOperator = parameters.get(8);
+            activeParam= "'"+ parameters.get(9) + "'";
+            if (isEnabled(parameters.get(0)) | isEnabled(parameters.get(2)) | isEnabled(parameters.get(4)) | isEnabled(parameters.get(6))) {
+                activeOperator = parameters.get(8);
+            }
+
         }
 
 
         try {
             String query =
                     "SELECT * FROM Listing" +
-                    " WHERE "+ streetAddressEnabled + streetAddressEquality + "'%"+ streetAddressParam+ "%'"
+                    " WHERE "+ streetAddressEnabled + streetAddressEquality + addressStarting+ streetAddressParam+ addressEnding
                             + listingIDOperator+" " + listingIDEnabled + listingEquality + listingIDParam
                             + typeOperator+" " + typeEnabled  + typeEquality + typeParam
                             + priceOperator+" " + priceEnabled + pricingEquality + priceParam
