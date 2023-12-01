@@ -10,12 +10,11 @@ import ca.ubc.cs304.util.SimpleResultSet;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
 import static ca.ubc.cs304.sql.scripts.InitialData.INITIAL_DATA;
-import static ca.ubc.cs304.sql.scripts.SQLScripts.*;
+import static ca.ubc.cs304.sql.scripts.SQLScripts.CREATE_TABLES;
 
 /**
  * This class handles all database related transactions
@@ -55,7 +54,7 @@ public class DatabaseConnectionHandler {
             // Load the Oracle JDBC driver
             // Note that the path could change for new drivers
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-
+            login("ora_bansal21","a67617654");
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
