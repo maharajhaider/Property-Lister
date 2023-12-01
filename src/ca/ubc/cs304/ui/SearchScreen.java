@@ -47,14 +47,14 @@ public class SearchScreen extends JFrame {
 
 
         // search button
-        JButton searchButton = new JButton("Search");
+        JButton searchButton = new JButton("Search Listing");
         searchButton.addActionListener(e -> {
             String searchText = searchBar.getText();
             List<Listing> resultListings = databaseConnectionHandler.getListings(searchText);
             new SearchResultScreen(resultListings,databaseConnectionHandler);
         });
 
-        JButton viewDatabaseButton = new JButton("Search Data");
+        JButton viewDatabaseButton = new JButton("Go to search data page");
         viewDatabaseButton.addActionListener(e -> {
 
             new ViewDatabaseInfoScreen(databaseConnectionHandler).setVisible(true);

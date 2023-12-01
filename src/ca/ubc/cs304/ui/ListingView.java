@@ -119,8 +119,8 @@ public class ListingView extends JFrame {
     public ListingView(DatabaseConnectionHandler databaseConnectionHandler, ListingInfo listing) {
         // Set up the frame
         setTitle("Listing View");
-        setSize(400, 300); // Adjusted size
-        setResizable(false); // Restrict resizing
+        setSize(600, 600); // Adjusted size
+        setResizable(true); // Restrict resizing
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -136,18 +136,19 @@ public class ListingView extends JFrame {
         setLayout(null);
 
         // Add components to the frame manually
-        listingTextArea.setBounds(10, 10, 380, 400); // Adjusted size
+        listingTextArea.setLayout(new BorderLayout());
+        listingTextArea.setBounds(10, 10, 380, 400);
         add(listingTextArea);
 
-        backButton.setBounds(10, 220, 80, 30);
-        add(backButton);
+        backButton.setBounds(10, 350, 80, 30);
+        listingTextArea.add(backButton,BorderLayout.SOUTH);
 
-        editButton.setBounds(100, 220, 80, 30);
+        editButton.setBounds(100, 350, 80, 30);
         editButton.setVisible(true);
-        add(editButton);
+        listingTextArea.add(editButton,BorderLayout.SOUTH);
 
-        deleteButton.setBounds(200, 220, 80, 30);
-        add(deleteButton);
+        deleteButton.setBounds(200, 350, 80, 30);
+        listingTextArea.add(deleteButton,BorderLayout.SOUTH);
 
         // Add action listener for the back button
         backButton.addActionListener(e -> {
@@ -163,6 +164,7 @@ public class ListingView extends JFrame {
 
         // Add action listener for the deleteButton
         deleteButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(null, "Deleted");
             databaseConnectionHandler.deleteListing(listing.listingId());
         });
 
