@@ -220,6 +220,8 @@ public class DatabaseConnectionHandler {
         String activeParam= "";
         String activeOperator = "";
 
+        String where = "WHERE ";
+
         if (isEnabled(parameters.get(0))) {
             streetAddressEnabled= "streetAddress ";
             streetAddressEquality= "LIKE ";
@@ -265,12 +267,16 @@ public class DatabaseConnectionHandler {
             }
 
         }
+        if (!(isEnabled(parameters.get(0)) | isEnabled(parameters.get(2)) | isEnabled(parameters.get(4)) | isEnabled(parameters.get(6)) | isEnabled(parameters.get(8)))) {
+            where ="";
+        }
+
 
 
         try {
             String query =
                     "SELECT * FROM Listing" +
-                    " WHERE "+ streetAddressEnabled + streetAddressEquality + addressStarting+ streetAddressParam+ addressEnding
+                    where+ streetAddressEnabled + streetAddressEquality + addressStarting+ streetAddressParam+ addressEnding
                             + listingIDOperator+" " + listingIDEnabled + listingEquality + listingIDParam
                             + typeOperator+" " + typeEnabled  + typeEquality + typeParam
                             + priceOperator+" " + priceEnabled + pricingEquality + priceParam
