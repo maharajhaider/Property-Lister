@@ -51,10 +51,18 @@ public class CityForm extends JFrame {
         // Get values from the form
         Province selectedProvince = (Province) provinceComboBox.getSelectedItem();
         String cityName = validate(nameTextField.getText());
-        double taxRate = validateInt(Double.parseDouble(taxRateTextField.getText()));
+        double taxRate;
+        try {
+             taxRate = validateInt(Double.parseDouble(taxRateTextField.getText()));
 
-        if(cityName == null){
-            JOptionPane.showMessageDialog(this, "please do not use . or @");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "please enter a valid tax rate");
+            return;
+        }
+
+
+        if(cityName == null | cityName.isEmpty()){
+            JOptionPane.showMessageDialog(this, "please enter a valid city name without . or @");
             return;
         }
 
