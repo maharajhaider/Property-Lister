@@ -7,6 +7,8 @@ import ca.ubc.cs304.model.entity.Listing;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -124,6 +126,15 @@ public class SearchScreen extends JFrame {
             new ReputableAgenciesUI(databaseConnectionHandler).setVisible(true);
         });
         backgroundPanel.add(viewReputableAgenciesButton);
+
+        JButton managePropertyInfoButton = new JButton("Add Entity Information");
+        managePropertyInfoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new EntityFormSelector().setVisible(true);
+            }
+        });
+        backgroundPanel.add(managePropertyInfoButton);
         add(backgroundPanel);
 
         setTitle("Search Listing");
