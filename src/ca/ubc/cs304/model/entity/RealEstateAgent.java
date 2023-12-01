@@ -21,7 +21,7 @@ public record RealEstateAgent(String phone, Integer agentLicenseId, Integer year
 
     @Override
     public String getIdSQL() {
-        return "SELECT max(agentLicenseID) FROM RealEstateAgent";
+        return "SELECT MAX(agentLicenseID) FROM RealEstateAgent";
     }
 
     @Override

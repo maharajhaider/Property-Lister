@@ -16,7 +16,10 @@ public final class InitialData {
                     new Person("234 567 8901", "Jane Smith", "jane.smith@email.com"),
                     new Person("345 678 9012", "Bob Johnson", "bob.johnson@email.com"),
                     new Person("456 789 0123", "Alice Brown", "alice.brown@email.com"),
-                    new Person("164 551 5313", "Alice Brown", "alice23@name.com"));
+                    new Person("164 551 5313", "Alice Brown", "alice23@name.com"),
+                    new Person("703 582 1740", "Danny Brown", "dan56@name.com"),
+                    new Person("849 284 0582", "John Smith", "josh@name.com"),
+                    new Person("195 588 7561", "Russel Johnson", "brussel@name.com"));
 
     private static final List<EntityModel> HOMEOWNER_DATA =
             List.of(
@@ -40,7 +43,10 @@ public final class InitialData {
                     new RealEstateAgent("234 567 8901", 6000002, 3, 1000002),
                     new RealEstateAgent("345 678 9012", 6000003, 7, 1000003),
                     new RealEstateAgent("456 789 0123", 6000004, 0, 1000002),
-                    new RealEstateAgent("164 551 5313", 6000005, 12, 1000005));
+                    new RealEstateAgent("164 551 5313", 6000005, 12, 1000005),
+                    new RealEstateAgent("703 582 1740", 6000006, 3, 1000001), 
+                    new RealEstateAgent("849 284 0582", 6000007, 4, 1000005), 
+                    new RealEstateAgent("195 588 7561", 6000008, 6, 1000001));
 
     private static final List<EntityModel> DEVELOPER_DATA =
             List.of(
