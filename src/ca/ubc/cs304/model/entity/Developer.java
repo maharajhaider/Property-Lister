@@ -18,7 +18,7 @@ public record Developer(Integer developerLicenseId, String name) implements HasI
 
     @Override
     public String getIdSQL() {
-        return "SELECT max(developerLicenseID) FROM Listing";
+        return "SELECT max(developerLicenseID) FROM Developer";
     }
 
     @Override

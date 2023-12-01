@@ -21,7 +21,7 @@ public record ContractorCompany(Integer contractorId, String name, ChargeSchedul
 
     @Override
     public String getIdSQL() {
-        return "SELECT max(contractorID) FROM Listing";
+        return "SELECT max(contractorID) FROM ContractorCompany";
     }
 
     @Override
