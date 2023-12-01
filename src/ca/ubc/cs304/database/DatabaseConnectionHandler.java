@@ -3,6 +3,7 @@ package ca.ubc.cs304.database;
 import ca.ubc.cs304.model.AgencyInfo;
 import ca.ubc.cs304.model.CityPropertyCount;
 import ca.ubc.cs304.model.ListingInfo;
+import ca.ubc.cs304.model.CityRealEstatePrice;
 import ca.ubc.cs304.model.entity.*;
 import ca.ubc.cs304.model.enums.ListingType;
 import ca.ubc.cs304.model.enums.Province;
@@ -529,6 +530,49 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
         return agencies;
+    }
+
+    /**
+     *
+     * @return a
+     */
+    public CityRealEstatePrice findCheapestCity(ListingType listingType) {
+        try {
+            String joinedTable = "City " +
+                    "RIGHT JOIN (Listing " +
+                    "INNER JOIN Property " +
+                    "ON Listing.province = Property.province " +
+                    "AND Listing.cityName = Property.cityName " +
+                    "AND Listing.streetAddress = Property.streetAddress) " +
+                    "ON City.province = Property.province " +
+                    "AND City.name = Property.cityName ";
+            String query =
+                    "SELECT City.province, City.name, AVG(Listing.price / Property.sizeInSqft) " +
+                            "FROM " + joinedTable +
+                            "WHERE Listing.type = '" + listingType.label + "' " +
+                            "GROUP BY City.province, City.name " +
+                            "HAVING AVG(Listing.price / Property.sizeInSqft) <= ALL(" +
+                            "SELECT AVG(Listing.price / Property.sizeInSqft) " +
+                            "FROM " + joinedTable +
+                            "WHERE Listing.type = '" + listingType.label + "' " +
+                            "GROUP BY City.province, City.name)";
+            PrintablePreparedStatement ps = getPS(query);
+            SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
+
+            rs.next();
+            CityRealEstatePrice cityRealEstatePrice = new CityRealEstatePrice(
+                    Province.fromLabel(rs.getString(1)),
+                    rs.getString(2),
+                    listingType,
+                    rs.getDouble(3)
+            );
+
+            ps.close();
+            return cityRealEstatePrice;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return null;
     }
 
     public void deleteListing(int listingId) {
