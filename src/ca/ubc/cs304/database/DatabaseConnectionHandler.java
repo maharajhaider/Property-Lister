@@ -534,7 +534,7 @@ public class DatabaseConnectionHandler {
 
     /**
      *
-     * @return a
+     * @return the city with properties of the lowest price per sqft, rent/sale specified by the caller
      */
     public CityRealEstatePrice findCheapestCity(ListingType listingType) {
         try {
