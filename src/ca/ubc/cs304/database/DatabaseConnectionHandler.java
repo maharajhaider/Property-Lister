@@ -190,6 +190,112 @@ public class DatabaseConnectionHandler {
         return result;
     }
 
+    public List<Listing> getListings(List<String> parameters) {
+        List<Listing> result = new ArrayList<>();
+        String streetAddressEnabled ="";
+        String streetAddressEquality= "";
+        String streetAddressParam= "";
+
+        String listingIDEnabled= "";
+        String listingEquality= "";
+        String listingIDParam= "";
+        String listingIDOperator = "";
+
+        String typeEnabled= "";
+        String typeEquality= "";
+        String typeParam= "";
+        String typeOperator = "";
+
+        String priceEnabled= "";
+        String pricingEquality= "";
+        String priceParam= "";
+        String priceOperator = "";
+
+        String activeEnabled= "";
+        String activeEquality= "";
+        String activeParam= "";
+        String activeOperator = "";
+
+        if (isEnabled(parameters.get(0))) {
+            streetAddressEnabled= "streetAddress ";
+            streetAddressEquality= "LIKE ";
+            streetAddressParam= parameters.get(1);
+
+        }
+
+        if (isEnabled(parameters.get(2))) {
+            listingIDEnabled= "listingId ";
+            listingEquality= "= ";
+            listingIDParam= parameters.get(3);
+            listingIDOperator = parameters.get(2);
+
+        }
+        if (isEnabled(parameters.get(4))) {
+            typeEnabled= "active ";
+            typeEquality= "= ";
+            typeParam= processBool(parameters.get(5));
+            typeOperator = parameters.get(4);
+
+        }
+        if (isEnabled(parameters.get(6))) {
+            priceEnabled= "price ";
+            pricingEquality= "= ";
+            priceParam= parameters.get(7);
+            priceOperator = parameters.get(6);
+        }
+        if (isEnabled(parameters.get(8))) {
+            activeEnabled= "type ";
+            activeEquality= "= ";
+            activeParam= parameters.get(9);
+            activeOperator = parameters.get(8);
+        }
+
+
+        try {
+            String query =
+                    "SELECT * FROM Listing" +
+                    " WHERE "+ streetAddressEnabled + streetAddressEquality + "'%"+ streetAddressParam+ "%'"
+                            + listingIDOperator+" " + listingIDEnabled + listingEquality + listingIDParam
+                            + typeOperator+" " + typeEnabled  + typeEquality + typeParam
+                            + priceOperator+" " + priceEnabled + pricingEquality + priceParam
+                            + activeOperator+" " + activeEnabled+ activeEquality +activeParam;
+
+            PrintablePreparedStatement ps = getPS(query);
+            SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
+
+            while(rs.next()) {
+                Listing listing = new Listing(
+                        rs.getInt("listingId"),
+                        rs.getString("realEstateAgentPhone"),
+                        rs.getString("streetAddress"),
+                        rs.getString("province") == null? null: Province.fromLabel(rs.getString("province")),
+                        rs.getString("cityName"),
+                        rs.getString("type") == null? null: ListingType.fromLabel(rs.getString("type")),
+                        rs.getInt("price"),
+                        rs.getInt("active"));
+                result.add(listing);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return result;
+    }
+
+    private String processBool(String s) {
+        if (s.equals("true") ){
+            return "1";
+        }else {
+            return "0";
+        }
+    }
+
+    public Boolean isEnabled(String marker) {
+        return !(marker.equalsIgnoreCase("disable filter ->"));
+    }
+
     public Integer generateId(HasID model) {
         try {
             String query = model.getIdSQL();
