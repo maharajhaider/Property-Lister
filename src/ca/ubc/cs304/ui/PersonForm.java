@@ -48,11 +48,20 @@ public class PersonForm extends JFrame {
     }
 
 
+    public String validateEmail(String input){
+        if (input == null || (input.contains(".") && input.contains("@"))) {
+            return input;
+        }else {
+            return null;
+        }
+    }
+
+
     private void savePerson() {
         // Get values from the form
         String phone = validate(phoneTextField.getText());
         String name = validate(nameTextField.getText());
-        String email = validate(emailTextField.getText());
+        String email = validateEmail(emailTextField.getText());
 
         if(phone == null || name == null || email == null){
             JOptionPane.showMessageDialog(this, "please do not use . or @");
