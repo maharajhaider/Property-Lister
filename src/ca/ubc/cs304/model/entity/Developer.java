@@ -13,7 +13,7 @@ public record Developer(Integer developerLicenseId, String name) implements HasI
     @Override
     public String insertStatement(Integer id) {
         return "INSERT INTO Developer VALUES (%d, '%s')"
-                .formatted(developerLicenseId, name);
+                .formatted(id == null? developerLicenseId: id, name);
     }
 
     @Override

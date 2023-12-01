@@ -16,7 +16,7 @@ public record RealEstateAgent(String phone, Integer agentLicenseId, Integer year
     @Override
     public String insertStatement(Integer id) {
         return "INSERT INTO RealEstateAgent VALUES ('%s', %d, %d, %d)"
-                .formatted(phone, agentLicenseId, yearsOfExp, agencyId);
+                .formatted(phone, id == null? agentLicenseId: id, yearsOfExp, agencyId);
     }
 
     @Override

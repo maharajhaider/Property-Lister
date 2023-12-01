@@ -20,7 +20,7 @@ public record RealEstateAgency(Integer agencyId, String name, Double rating) imp
     @Override
     public String insertStatement(Integer id) {
         return "INSERT INTO RealEstateAgency VALUES (%d, '%s', %f)"
-                .formatted(id, name, rating);
+                .formatted(id == null? agencyId: id, name, rating);
     }
 
     @Override

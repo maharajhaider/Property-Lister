@@ -13,7 +13,7 @@ public record Strata(Integer strataId, String name) implements HasID {
     @Override
     public String insertStatement(Integer id) {
         return "INSERT INTO Strata VALUES (%d, '%s')"
-                .formatted(id, name);
+                .formatted(id == null? strataId: id, name);
     }
 
     @Override
