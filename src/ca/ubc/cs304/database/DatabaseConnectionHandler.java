@@ -322,8 +322,8 @@ public class DatabaseConnectionHandler {
         return columns;
     }
 
-    public List<EntityModel> projectData(String table, List<String> columns) {
-        List<EntityModel> result = new ArrayList<>();
+    public <T extends EntityModel> List<T> projectData(String table, List<String> columns) {
+        List<T> result = new ArrayList<>();
         if (columns == null || columns.size() == 0) {
             return result;
         }
@@ -337,7 +337,7 @@ public class DatabaseConnectionHandler {
             SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
 
             while(rs.next()) {
-                EntityModel newTuple = TABLES_AND_ENTITIES.get(table).getConstructor(SimpleResultSet.class).newInstance(rs);
+                T newTuple = (T) TABLES_AND_ENTITIES.get(table).getConstructor(SimpleResultSet.class).newInstance(rs);
                 result.add(newTuple);
             }
 
