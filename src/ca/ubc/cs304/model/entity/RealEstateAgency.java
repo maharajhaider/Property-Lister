@@ -4,7 +4,7 @@ import ca.ubc.cs304.util.SimpleResultSet;
 
 public record RealEstateAgency(Integer agencyId, String name, Double rating) implements HasID {
     public RealEstateAgency {
-        if (rating != null && rating < 0.0 || rating > 5.0) {
+        if (rating != null && (rating < 0.0 || rating > 5.0)) {
             throw new IllegalArgumentException("rating must be between 0 and 5");
         }
     }
