@@ -86,6 +86,11 @@ public class EditListingScreen extends JFrame {
         } else {
             listingType = ListingType.RENT;
         }
-        System.out.println(databaseConnectionHandler.updateListing(active,listingType,price, listingID));
+        boolean successFlag = databaseConnectionHandler.updateListing(active,listingType,price, listingID);
+        if (successFlag) {
+            JOptionPane.showMessageDialog(null, "Edit completed successfully");
+        } else {
+            JOptionPane.showMessageDialog(null, "Edit failed: Check entry");
+        }
     }
 }

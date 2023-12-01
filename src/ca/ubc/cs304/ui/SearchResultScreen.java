@@ -1,6 +1,7 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
+import ca.ubc.cs304.model.ListingInfo;
 import ca.ubc.cs304.model.entity.Listing;
 
 import javax.swing.*;
@@ -90,7 +91,8 @@ public class SearchResultScreen extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ListingView(databaseConnectionHandler,listing).setVisible(true);
+
+                new ListingView(databaseConnectionHandler, databaseConnectionHandler.getListingInfo(listing.listingId())).setVisible(true);
             }
         }
     }
