@@ -120,6 +120,7 @@ public class SearchScreen extends JFrame {
         backgroundPanel.add(viewDatabaseButton);
 
 
+
         JButton viewReputableAgenciesButton = new JButton("View Reputable Agencies");
         viewReputableAgenciesButton.addActionListener(e -> {
             List<AgencyInfo> reputableAgencies = databaseConnectionHandler.getReputableAgencies();
