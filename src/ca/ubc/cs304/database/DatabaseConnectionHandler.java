@@ -1,6 +1,7 @@
 package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.model.AgencyInfo;
+import ca.ubc.cs304.model.CityPropertyCount;
 import ca.ubc.cs304.model.ListingInfo;
 import ca.ubc.cs304.model.entity.*;
 import ca.ubc.cs304.model.enums.ListingType;
@@ -466,6 +467,35 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
         return result;
+    }
+
+    public List<CityPropertyCount> getPropertyCountByCity() {
+        List<CityPropertyCount> propertyCountList = new ArrayList<>();
+        try {
+            String query =
+                    "SELECT City.province, City.name, COUNT(Property.streetAddress) " +
+                            "FROM City " +
+                            "RIGHT JOIN Property " +
+                            "ON City.province = Property.province " +
+                            "AND City.name = Property.cityName " +
+                            "GROUP BY City.province, CIty.name";
+            PrintablePreparedStatement ps = getPS(query);
+            SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
+
+            while(rs.next()) {
+                CityPropertyCount count = new CityPropertyCount(
+                        Province.fromLabel(rs.getString(1)),
+                        rs.getString(2),
+                        rs.getInt(3)
+                );
+                propertyCountList.add(count);
+            }
+
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return propertyCountList;
     }
 
     public List<AgencyInfo> getReputableAgencies() {
