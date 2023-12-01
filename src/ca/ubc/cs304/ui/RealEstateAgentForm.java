@@ -23,9 +23,9 @@ public class RealEstateAgentForm extends JFrame {
 
         // Create and add components with labels
         addTextFieldWithLabel("Phone:", phoneTextField);
-        addTextFieldWithLabel("Agent License ID:", agentLicenseIdTextField);
+//        addTextFieldWithLabel("Agent License ID:", agentLicenseIdTextField);
         addTextFieldWithLabel("Years of Experience:", yearsOfExpTextField);
-//        addTextFieldWithLabel("Agency ID:", agencyIdTextField);
+        addTextFieldWithLabel("Agency ID:", agencyIdTextField);
 
         validationLabel = new JLabel("");
         validationLabel.setForeground(Color.RED); // Set the text color to red for better visibility
@@ -85,7 +85,7 @@ public class RealEstateAgentForm extends JFrame {
 
             agencyId = Integer.parseInt(agencyIdTextField.getText());
 
-            // Validate agencyId
+//             Validate agencyId
             if (agencyId < 0) {
                 validationLabel.setText("Agency ID should be non-negative");
                 return; // Stop processing if validation fails
