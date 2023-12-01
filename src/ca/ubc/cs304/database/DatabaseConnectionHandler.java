@@ -473,7 +473,7 @@ public class DatabaseConnectionHandler {
         List<CityPropertyCount> propertyCountList = new ArrayList<>();
         try {
             String query =
-                    "SELECT City.province, City.name, COUNT(Property.streetAddress) " +
+                    "SELECT City.province, City.name, COUNT(*) " +
                             "FROM City " +
                             "RIGHT JOIN Property " +
                             "ON City.province = Property.province " +
