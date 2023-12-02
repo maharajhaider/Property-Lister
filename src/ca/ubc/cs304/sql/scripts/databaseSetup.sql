@@ -172,6 +172,10 @@ INSERT INTO Homeowner (phone)
 VALUES ('456 789 0123');
 INSERT INTO Homeowner (phone)
 VALUES ('164 551 5313');
+INSERT INTO Homeowner (phone)
+VALUES ('703 582 1740');
+INSERT INTO Homeowner (phone)
+VALUES ('849 284 0582');
 
 INSERT INTO RealEstateAgency (agencyID, name, rating)
 VALUES (1000001, 'ABC Realty', 4.5);
@@ -237,13 +241,19 @@ VALUES (4000005, 'Marine Condos');
 INSERT INTO City (province, name, taxRate)
 VALUES ('AB', 'Calgary', 0.11);
 INSERT INTO City (province, name, taxRate)
+VALUES ('AB', 'Edmonton', 0.10);
+INSERT INTO City (province, name, taxRate)
 VALUES ('QC', 'Montreal', 0.14);
 INSERT INTO City (province, name, taxRate)
 VALUES ('MB', 'Winnipeg', 0.10);
 INSERT INTO City (province, name, taxRate)
 VALUES ('BC', 'Vancouver', 0.08);
 INSERT INTO City (province, name, taxRate)
+VALUES ('BC', 'Kelowna', 0.08);
+INSERT INTO City (province, name, taxRate)
 VALUES ('ON', 'Toronto', 0.10);
+INSERT INTO City (province, name, taxRate)
+VALUES ('ON', 'Ottawa', 0.10);
 
 INSERT INTO Property
 (streetAddress, province, cityName, developerLicenseID, strataID, homeownerPhone, bedrooms, bathrooms, sizeInSqft, hasAC)
@@ -260,6 +270,18 @@ VALUES ('6331 Thunderbird Cres', 'AB', 'Calgary', 2000001, 4000004, '456 789 012
 INSERT INTO Property
 (streetAddress, province, cityName, developerLicenseID, strataID, homeownerPhone, bedrooms, bathrooms, sizeInSqft, hasAC)
 VALUES ('202 Birch St', 'MB', 'Winnipeg', 2000003, 4000002, '164 551 5313', 3, 2, 1500, 1);
+INSERT INTO Property
+(streetAddress, province, cityName, developerLicenseID, strataID, homeownerPhone, bedrooms, bathrooms, sizeInSqft, hasAC)
+VALUES ('3001 Oak St', 'AB', 'Edmonton', 2000001, 4000004, '703 582 1740', 3, 2, 1500, 1);
+INSERT INTO Property
+(streetAddress, province, cityName, developerLicenseID, strataID, homeownerPhone, bedrooms, bathrooms, sizeInSqft, hasAC)
+VALUES ('204 Birch St', 'MB', 'Winnipeg', 2000003, 4000002, '123 456 7890', 3, 2, 1500, 1);
+INSERT INTO Property
+(streetAddress, province, cityName, developerLicenseID, strataID, homeownerPhone, bedrooms, bathrooms, sizeInSqft, hasAC)
+VALUES ('120 Reis Road', 'ON', 'Ottawa', 2000001, 4000005, '123 456 7890', 3, 2, 1500, 1);
+INSERT INTO Property
+(streetAddress, province, cityName, developerLicenseID, strataID, homeownerPhone, bedrooms, bathrooms, sizeInSqft, hasAC)
+VALUES ('845 Cawston Ave', 'BC', 'Kelowna', 2000001, 4000001, '849 284 0582', 3, 2, 1500, 1);
 
 INSERT INTO Listing (listingID, realEstateAgentPhone, streetAddress, province, cityName, type, price, active)
 VALUES (5000001, '123 456 7890', '123 Main St', 'BC', 'Vancouver', 'sale', 500000, 1);
@@ -315,3 +337,11 @@ INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfRe
 VALUES (3000004, '6331 Thunderbird Cres', 'AB', 'Calgary', 'HVAC');
 INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfResponsibility)
 VALUES (3000005, '202 Birch St', 'MB', 'Winnipeg', 'Roofing');
+INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfResponsibility)
+VALUES (3000002, '3001 Oak St', 'AB', 'Edmonton', 'Plumbing');
+INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfResponsibility)
+VALUES (3000002, '204 Birch St', 'MB', 'Winnipeg', 'Plumbing');
+INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfResponsibility)
+VALUES (3000002, '120 Reis Road', 'ON', 'Ottawa', 'Plumbing');
+INSERT INTO Maintains (contractorID, streetAddress, province, cityName, areaOfResponsibility)
+VALUES (3000002, '845 Cawston Ave', 'BC', 'Kelowna', 'Plumbing');

@@ -27,7 +27,9 @@ public final class InitialData {
                     new Homeowner("234 567 8901"),
                     new Homeowner("345 678 9012"),
                     new Homeowner("456 789 0123"),
-                    new Homeowner("164 551 5313"));
+                    new Homeowner("164 551 5313"),
+                    new Homeowner("703 582 1740"),
+                    new Homeowner("849 284 0582"));
 
     private static final List<EntityModel> REAL_ESTATE_AGENCY_DATA =
             List.of(
@@ -75,10 +77,13 @@ public final class InitialData {
     private static final List<EntityModel> CITY_DATA =
             List.of(
                     new City(Province.ALBERTA, "Calgary", 0.11),
+                    new City(Province.ALBERTA, "Edmonton", 0.10),
                     new City(Province.QUEBEC, "Montreal", 0.14),
                     new City(Province.MANITOBA, "Winnipeg", 0.10),
                     new City(Province.BRITISH_COLUMBIA, "Vancouver", 0.08),
-                    new City(Province.ONTARIO, "Toronto", 0.10));
+                    new City(Province.BRITISH_COLUMBIA, "Kelowna", 0.08),
+                    new City(Province.ONTARIO, "Toronto", 0.10),
+                    new City(Province.ONTARIO, "Ottawa", 0.10));
 
     private static final List<EntityModel> PROPERTY_DATA =
             List.of(
@@ -86,7 +91,11 @@ public final class InitialData {
                     new Property("456 Elm St", Province.ONTARIO, "Toronto", 2000002, 4000001, "234 567 8901", 3, 2, 1500, 0),
                     new Property("2525 West Mall", Province.ONTARIO, "Toronto", 2000001, 4000005, "345 678 9012", 3, 2, 1500, 0),
                     new Property("6331 Thunderbird Cres", Province.ALBERTA, "Calgary", 2000001, 4000004, "456 789 0123", 3, 2, 1500, 1),
-                    new Property("202 Birch St", Province.MANITOBA, "Winnipeg", 2000003, 4000002, "164 551 5313", 3, 2, 1500, 1));
+                    new Property("202 Birch St", Province.MANITOBA, "Winnipeg", 2000003, 4000002, "164 551 5313", 3, 2, 1500, 1),
+                    new Property("3001 Oak St", Province.ALBERTA, "Edmonton", 2000001, 4000004, "703 582 1740", 3, 2, 1500, 1),
+                    new Property("204 Birch St", Province.MANITOBA, "Winnipeg", 2000003, 4000002, "123 456 7890", 3, 2, 1500, 1),
+                    new Property("120 Reis Road", Province.ONTARIO, "Ottawa", 2000001, 4000005, "123 456 7890", 3, 2, 1500, 1),
+                    new Property("845 Cawston Ave", Province.BRITISH_COLUMBIA, "Kelowna", 2000001, 4000001, "849 284 0582", 3, 2, 1500, 1));
 
     private static final List<EntityModel> LISTING_DATA =
             List.of(
@@ -126,7 +135,11 @@ public final class InitialData {
                     new Maintains(3000002, "456 Elm St", Province.ONTARIO, "Toronto", "Plumbing"),
                     new Maintains(3000003, "2525 West Mall", Province.ONTARIO, "Toronto", "Electrical"),
                     new Maintains(3000004, "6331 Thunderbird Cres", Province.ALBERTA, "Calgary", "HVAC"),
-                    new Maintains(3000005, "202 Birch St", Province.MANITOBA, "Winnipeg", "Roofing"));
+                    new Maintains(3000005, "202 Birch St", Province.MANITOBA, "Winnipeg", "Roofing"),
+                    new Maintains(3000002, "3001 Oak St", Province.ALBERTA, "Edmonton", "Plumbing"),
+                    new Maintains(3000002, "204 Birch St", Province.MANITOBA, "Winnipeg", "Plumbing"),
+                    new Maintains(3000002, "120 Reis Road", Province.ONTARIO, "Ottawa", "Plumbing"),
+                    new Maintains(3000002, "845 Cawston Ave", Province.BRITISH_COLUMBIA, "Kelowna", "Plumbing"));
 
     public static final List<EntityModel> INITIAL_DATA =
             Stream.of(
