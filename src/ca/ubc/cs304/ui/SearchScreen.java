@@ -2,6 +2,7 @@ package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.AgencyInfo;
+import ca.ubc.cs304.model.ContractorRange;
 import ca.ubc.cs304.model.entity.Listing;
 import ca.ubc.cs304.model.enums.ListingType;
 
@@ -155,6 +156,14 @@ public class SearchScreen extends JFrame {
             new DeletePropertySwing(databaseConnectionHandler);
         });
         backgroundPanel.add(deletePropertyButton);
+
+        JButton openContractorRangeButton = new JButton("Open Contractor Range");
+        openContractorRangeButton.addActionListener(e -> {
+            List<ContractorRange> contractorRanges =  databaseConnectionHandler.findWideRangedContractors(); // Replace with your actual method to get ContractorRanges
+            new ContractorRangeGUI(contractorRanges).setVisible(true);
+        });
+        backgroundPanel.add(openContractorRangeButton);
+
         add(backgroundPanel);
 
         setTitle("Search Listing");
