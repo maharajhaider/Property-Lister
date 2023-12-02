@@ -2,13 +2,16 @@ package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.AgencyInfo;
+import ca.ubc.cs304.model.ContractorRange;
 import ca.ubc.cs304.model.entity.Listing;
 import ca.ubc.cs304.model.enums.ListingType;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,7 @@ public class SearchScreen extends JFrame {
     public SearchScreen(DatabaseConnectionHandler databaseConnectionHandler) throws IOException {
         queryParameters = new ArrayList<>();
         //background
-//        backgroundImage = ImageIO.read(new File("resources/SearchScreenBackground.png"));
+        backgroundImage = ImageIO.read(new File("resources/SearchScreenBackground.png"));
         setLayout(new BorderLayout());
         backgroundPanel = new JPanel() {
             @Override
@@ -155,6 +158,14 @@ public class SearchScreen extends JFrame {
             new DeletePropertySwing(databaseConnectionHandler);
         });
         backgroundPanel.add(deletePropertyButton);
+
+        JButton openContractorRangeButton = new JButton("View Contractors with experience in every city");
+        openContractorRangeButton.addActionListener(e -> {
+            List<ContractorRange> contractorRanges =  databaseConnectionHandler.findWideRangedContractors(); // Replace with your actual method to get ContractorRanges
+            new ContractorRangeGUI(contractorRanges).setVisible(true);
+        });
+        backgroundPanel.add(openContractorRangeButton);
+
         add(backgroundPanel);
 
         setTitle("Search Listing");
