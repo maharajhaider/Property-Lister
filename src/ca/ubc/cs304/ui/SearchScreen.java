@@ -34,10 +34,7 @@ public class SearchScreen extends JFrame {
 
     private DatabaseConnectionHandler databaseConnectionHandler;
 
-    public SearchScreen() throws IOException {
-        databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.login("ora_mhaider0", "a94579901");
-        databaseConnectionHandler.databaseSetup();
+    public SearchScreen(DatabaseConnectionHandler databaseConnectionHandler) throws IOException {
         queryParameters = new ArrayList<>();
         //background
         backgroundImage = ImageIO.read(new File("resources/SearchScreenBackground.png"));
@@ -163,14 +160,5 @@ public class SearchScreen extends JFrame {
         setVisible(true);
         }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                new SearchScreen();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
 }
