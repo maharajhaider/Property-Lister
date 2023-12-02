@@ -112,7 +112,7 @@ public class ListingView extends JFrame {
 
     private JButton editButton;
 
-    private JButton deleteButton;
+
 
     private DatabaseConnectionHandler databaseConnectionHandler;
 
@@ -130,7 +130,6 @@ public class ListingView extends JFrame {
         listingTextArea = createStyledTextArea(listing);
         backButton = createStyledButton("Back");
         editButton = createStyledButton("Edit");
-        deleteButton = createStyledButton("Delete");
 
         // Set layout to null
         setLayout(null);
@@ -147,8 +146,6 @@ public class ListingView extends JFrame {
         editButton.setVisible(true);
         listingTextArea.add(editButton,BorderLayout.SOUTH);
 
-        deleteButton.setBounds(200, 350, 80, 30);
-        listingTextArea.add(deleteButton,BorderLayout.SOUTH);
 
         // Add action listener for the back button
         backButton.addActionListener(e -> {
@@ -162,11 +159,7 @@ public class ListingView extends JFrame {
             new EditListingScreen(databaseConnectionHandler,listing.listingId()).setVisible(true);
         });
 
-        // Add action listener for the deleteButton
-        deleteButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "Deleted");
-            databaseConnectionHandler.deleteListing(listing.listingId());
-        });
+
 
 
     }
@@ -212,25 +205,4 @@ public class ListingView extends JFrame {
         getContentPane().setBackground(new Color(51, 153, 255)); // Light blue background
         setVisible(true);
     }
-
-    //dummy main method to test the feature
-
-//    public static void main(String[] args) {
-//        // Create a dummy Listing object
-//        Listing dummyListing = new Listing(
-//                1,                  // Replace with an actual ID
-//                "123 Main St",      // Replace with an actual address
-//                Province.ALBERTA,   // Replace with an actual province
-//                "Vancouver",        // Replace with an actual city
-//                null,               // Replace with an actual type
-//                null,               // Replace with an actual price
-//                1                   // Replace with an actual active status
-//        );
-//
-//        // Create and display the ListingView with the dummy Listing
-//        SwingUtilities.invokeLater(() -> {
-//            ListingView listingView = new ListingView(dummyListing);
-//            listingView.display();
-//        });
-//    }
 }

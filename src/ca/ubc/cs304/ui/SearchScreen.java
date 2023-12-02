@@ -98,6 +98,9 @@ public class SearchScreen extends JFrame {
         JButton viewDatabaseButton = new JButton("Go to search data page");
         viewDatabaseButton.addActionListener(e -> new ViewDatabaseInfoScreen(databaseConnectionHandler).setVisible(true));
 
+        JButton viewNoOfProperties = new JButton("View no. of properties in each city");
+        viewNoOfProperties.addActionListener(e -> new ViewPropertyByCityScreen(databaseConnectionHandler).setVisible(true));
+
         listingIDTextField = new JTextField("Enter listing id");
         String [] type = {"sale", "rent"};
         typeComboBox = new JComboBox<>(type);
@@ -132,6 +135,7 @@ public class SearchScreen extends JFrame {
         backgroundPanel.add(viewDatabaseButton);
         backgroundPanel.add(cheapestCityBuyButton);
         backgroundPanel.add(cheapestCityRentButton);
+        backgroundPanel.add(viewNoOfProperties);
 
 
 
