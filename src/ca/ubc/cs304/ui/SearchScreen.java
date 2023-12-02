@@ -5,12 +5,10 @@ import ca.ubc.cs304.model.AgencyInfo;
 import ca.ubc.cs304.model.entity.Listing;
 import ca.ubc.cs304.model.enums.ListingType;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +35,7 @@ public class SearchScreen extends JFrame {
     public SearchScreen(DatabaseConnectionHandler databaseConnectionHandler) throws IOException {
         queryParameters = new ArrayList<>();
         //background
-        backgroundImage = ImageIO.read(new File("resources/SearchScreenBackground.png"));
+//        backgroundImage = ImageIO.read(new File("resources/SearchScreenBackground.png"));
         setLayout(new BorderLayout());
         backgroundPanel = new JPanel() {
             @Override
@@ -151,6 +149,12 @@ public class SearchScreen extends JFrame {
             }
         });
         backgroundPanel.add(managePropertyInfoButton);
+
+        JButton deletePropertyButton = new JButton("Delete Property");
+        deletePropertyButton.addActionListener(e -> {
+            new DeletePropertySwing(databaseConnectionHandler);
+        });
+        backgroundPanel.add(deletePropertyButton);
         add(backgroundPanel);
 
         setTitle("Search Listing");
@@ -159,6 +163,10 @@ public class SearchScreen extends JFrame {
         setLocationRelativeTo(null); // Center the JFrame
         setVisible(true);
         }
+
+    public static void main(String[] args) throws IOException {
+        new SearchScreen(new DatabaseConnectionHandler());
+    }
 
 
 }
