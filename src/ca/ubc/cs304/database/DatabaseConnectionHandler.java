@@ -1,9 +1,6 @@
 package ca.ubc.cs304.database;
 
-import ca.ubc.cs304.model.AgencyInfo;
-import ca.ubc.cs304.model.CityPropertyCount;
-import ca.ubc.cs304.model.ListingInfo;
-import ca.ubc.cs304.model.CityRealEstatePrice;
+import ca.ubc.cs304.model.*;
 import ca.ubc.cs304.model.entity.*;
 import ca.ubc.cs304.model.enums.ListingType;
 import ca.ubc.cs304.model.enums.Province;
@@ -15,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static ca.ubc.cs304.sql.scripts.InitialData.INITIAL_DATA;
 import static ca.ubc.cs304.sql.scripts.SQLScripts.CREATE_TABLES;
@@ -600,5 +598,82 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             return false;
         }
+    }
+
+    /**
+     *
+     * @return a list of contractors contracted in every province,
+     *         and the number of cities they work on in each province
+     */
+    public List<ContractorRange> findWideRangedContractors() {
+        List<ContractorRange> data = new ArrayList<>();
+        try {
+            String query =
+                    "SELECT Maintains.contractorID, ContractorCompany.name, Maintains.province, COUNT(Maintains.cityName) " +
+                            "FROM Maintains " +
+                            "    LEFT JOIN ContractorCompany " +
+                            "        ON Maintains.contractorID = ContractorCompany.contractorID " +
+                            "WHERE NOT EXISTS " +
+                            "    ((SELECT Maintains.province " +
+                            "      FROM Maintains " +
+                            "      GROUP BY Maintains.province) " +
+                            "    MINUS (SELECT M.province " +
+                            "           FROM Maintains M " +
+                            "               LEFT JOIN ContractorCompany " +
+                            "                   ON M.contractorID = ContractorCompany.contractorID " +
+                            "           WHERE M.contractorID = Maintains.contractorID " +
+                            "           GROUP BY M.province)) " +
+                            "GROUP BY Maintains.contractorID, ContractorCompany.name, Maintains.province " +
+                            "ORDER BY Maintains.contractorID, Maintains.province";
+            PrintablePreparedStatement ps = getPS(query);
+            SimpleResultSet rs = new SimpleResultSet(ps.executeQuery());
+
+            List<RawContractorRange> rawData = new ArrayList<>();
+            while(rs.next()) {
+                RawContractorRange rawDataPoint = new RawContractorRange(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        Province.fromLabel(rs.getString(3)),
+                        rs.getInt(4)
+                );
+                rawData.add(rawDataPoint);
+            }
+
+            Map<Integer, List<RawContractorRange>> groupedByContractor = rawData
+                    .stream()
+                    .collect(Collectors.toMap(
+                            RawContractorRange::contractorId,
+                            raw -> {
+                                List<RawContractorRange> list = new ArrayList<>();
+                                list.add(raw);
+                                return list;
+                            },
+                            (existing, replacement) -> {
+                                existing.addAll(replacement);
+                                return existing;
+                            }
+                    ));
+            data = groupedByContractor.entrySet()
+                    .stream()
+                    .map(entry -> {
+                        List<RawContractorRange> involvementData = entry.getValue();
+                        ContractorRange contractorRange =
+                                new ContractorRange(entry.getKey(), involvementData.get(0).contractorName());
+                        involvementData.forEach(singleProvinceInvolvement ->
+                                contractorRange.addProvinceData(
+                                        singleProvinceInvolvement.province(),
+                                        singleProvinceInvolvement.citiesInvolved()));
+                        return contractorRange;
+                    })
+                    .toList();
+
+            rs.close();
+            ps.close();
+
+            return data;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return data;
     }
 }
