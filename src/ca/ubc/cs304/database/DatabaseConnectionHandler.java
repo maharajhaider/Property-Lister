@@ -331,6 +331,7 @@ public class DatabaseConnectionHandler {
                 id = model.defaultId();
             }
 
+            rs.close();
             ps.close();
             return id;
         } catch (SQLException e) {
@@ -428,6 +429,7 @@ public class DatabaseConnectionHandler {
                 }
             }
 
+            rs.close();
             ps.close();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
@@ -469,6 +471,7 @@ public class DatabaseConnectionHandler {
                 result.add(newTuple);
             }
 
+            rs.close();
             ps.close();
         } catch (Exception e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
@@ -498,6 +501,7 @@ public class DatabaseConnectionHandler {
                 propertyCountList.add(count);
             }
 
+            rs.close();
             ps.close();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
@@ -531,6 +535,7 @@ public class DatabaseConnectionHandler {
                 agencies.add(agency);
             }
 
+            rs.close();
             ps.close();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
@@ -570,6 +575,7 @@ public class DatabaseConnectionHandler {
                     rs.getDouble(3)
             );
 
+            rs.close();
             ps.close();
             return cityRealEstatePrice;
         } catch (SQLException e) {
@@ -578,7 +584,21 @@ public class DatabaseConnectionHandler {
         return null;
     }
 
-    public void deleteListing(int listingId) {
-        //
+    public boolean deleteProperty(Province province, String cityName, String streetAddress) {
+        try {
+            String query = "DELETE FROM Property " +
+                    "WHERE StreetAddress = '" + streetAddress + "' " +
+                    "AND Province = '" + province.label + "' " +
+                    "AND CityName = '" + cityName + "'";
+            PrintablePreparedStatement ps = getPS(query);
+            ps.executeUpdate();
+
+            connection.commit();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return false;
+        }
     }
 }
