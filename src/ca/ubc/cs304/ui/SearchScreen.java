@@ -34,10 +34,7 @@ public class SearchScreen extends JFrame {
 
     private DatabaseConnectionHandler databaseConnectionHandler;
 
-    public SearchScreen() throws IOException {
-        databaseConnectionHandler = new DatabaseConnectionHandler();
-        databaseConnectionHandler.login("ora_mhaider0", "a94579901");
-        databaseConnectionHandler.databaseSetup();
+    public SearchScreen(DatabaseConnectionHandler databaseConnectionHandler) throws IOException {
         queryParameters = new ArrayList<>();
         //background
         backgroundImage = ImageIO.read(new File("resources/SearchScreenBackground.png"));
@@ -98,6 +95,9 @@ public class SearchScreen extends JFrame {
         JButton viewDatabaseButton = new JButton("Go to search data page");
         viewDatabaseButton.addActionListener(e -> new ViewDatabaseInfoScreen(databaseConnectionHandler).setVisible(true));
 
+        JButton viewNoOfProperties = new JButton("View no. of properties in each city");
+        viewNoOfProperties.addActionListener(e -> new ViewPropertyByCityScreen(databaseConnectionHandler).setVisible(true));
+
         listingIDTextField = new JTextField("Enter listing id");
         String [] type = {"sale", "rent"};
         typeComboBox = new JComboBox<>(type);
@@ -132,6 +132,7 @@ public class SearchScreen extends JFrame {
         backgroundPanel.add(viewDatabaseButton);
         backgroundPanel.add(cheapestCityBuyButton);
         backgroundPanel.add(cheapestCityRentButton);
+        backgroundPanel.add(viewNoOfProperties);
 
 
 
@@ -159,14 +160,5 @@ public class SearchScreen extends JFrame {
         setVisible(true);
         }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                new SearchScreen();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
 }

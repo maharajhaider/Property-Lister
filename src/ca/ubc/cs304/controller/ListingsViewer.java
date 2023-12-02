@@ -2,7 +2,9 @@ package ca.ubc.cs304.controller;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.model.entity.Listing;
+import ca.ubc.cs304.ui.SearchScreen;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -15,9 +17,10 @@ public class ListingsViewer {
 		dbHandler = new DatabaseConnectionHandler();
 	}
 
-	private void start() {
+	private void start() throws IOException {
 		dbHandler.login("ora_jean9739", "a81824658");
 		dbHandler.databaseSetup();
+		new SearchScreen(dbHandler);
 	}
     
     public void databaseSetup() {
@@ -27,7 +30,7 @@ public class ListingsViewer {
 	/**
 	 * Main method called at launch time
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		ListingsViewer listingsViewer = new ListingsViewer();
 		listingsViewer.start();
 	}
