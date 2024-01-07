@@ -55,7 +55,7 @@ public class DatabaseConnectionHandler {
             // Load the Oracle JDBC driver
             // Note that the path could change for new drivers
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            login("ora_bansal21","a67617654");
+            login("","");
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
@@ -273,7 +273,7 @@ public class DatabaseConnectionHandler {
 
         try {
             String query =
-                    "SELECT * FROM Listing" +
+                    "SELECT * FROM Listing " +
                     where+ streetAddressEnabled + streetAddressEquality + addressStarting+ streetAddressParam+ addressEnding
                             + listingIDOperator+" " + listingIDEnabled + listingEquality + listingIDParam
                             + typeOperator+" " + typeEnabled  + typeEquality + typeParam

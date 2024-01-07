@@ -18,7 +18,7 @@ public class ListingsViewer {
 	}
 
 	private void start() throws IOException {
-		dbHandler.login("ora_jean9739", "a81824658");
+		dbHandler.login("", "");
 		dbHandler.databaseSetup();
 		new SearchScreen(dbHandler);
 	}
